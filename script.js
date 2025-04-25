@@ -86,6 +86,21 @@ document.addEventListener('DOMContentLoaded', function() {
             filteredShows = filteredShows.filter(show => 
                 show.tags.includes('book'));
         }
+
+         if (isSupernatural) {
+            filteredShows = filteredShows.filter(show => 
+                show.tags.includes('supernatural'));
+        }
+
+        if (isPeriod) {
+            filteredShows = filteredShows.filter(show => 
+                show.tags.includes('period'));
+        }
+
+        if (isScandi) {
+            filteredShows = filteredShows.filter(show => 
+                show.tags.includes('scandi'));
+        }
         
         // Apply search filter
         if (searchQuery) {
@@ -199,6 +214,13 @@ document.addEventListener('DOMContentLoaded', function() {
             supernaturalTag.className = 'tag tag-supernatural';
             supernaturalTag.textContent = 'supernatural 🧙🏽';
             tagsDiv.appendChild(supernaturalTag);
+        }
+
+        if (show.tags.includes('period')) {
+            const bookTag = document.createElement('span');
+            periodTag.className = 'tag tag-supernatural';
+            periodTag.textContent = 'period 📼';
+            tagsDiv.appendChild(periodTag);
         }
         
         // Append elements to info div
