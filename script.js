@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         showsContainer.innerHTML = ''; // Clear the loading message *before* rendering
 
-        let filteredShows = tvShowsData[selectedRegion] || Object.values(tvShowsData).flat();
+        let filteredShows = selectedRegion && selectedRegion !== 'all' ? tvShowsData[selectedRegion] : Object.values(tvShowsData).flat();
 
         filteredShows = filteredShows.filter(show => {
             const matchesRegion = !selectedRegion || (tvShowsData[selectedRegion] && tvShowsData[selectedRegion].includes(show));
