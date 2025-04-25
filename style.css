@@ -293,6 +293,21 @@ header h1 {
     color: #db2777;
 }
 
+.tag-mini {
+    background-color: #bfdbfe; /* Light Blue */
+    color: #1d4ed8; /* Darker Blue */
+}
+
+.tag-animated {
+    background-color: #dcfce7; /* Light Green */
+    color: #15803d; /* Darker Green */
+}
+
+.tag-pwd {
+    background-color: #f3e8ff; /* Light Purple */
+    color: #7e22ce; /* Darker Purple */
+}
+
 .loading {
     text-align: center;
     padding: 2rem;
