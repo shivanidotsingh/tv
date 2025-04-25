@@ -5,64 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My TV Show Collection</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <div class="header-content">
-            <div class="site-title">My TV Show Collection</div>
-            <div class="controls">
-                <div class="view-options">
-                    <button id="view-region" class="active">By Region</button>
-                    <button id="view-alphabetical">Alphabetical</button>
-                    <button id="view-color">By Color</button>
-                </div>
-                <div class="filter-options">
-                    <select id="region-filter">
-                        <option value="all">All Regions</option>
-                        <option value="United Kingdom">United Kingdom</option>
-                        <option value="America">America</option>
-                        <option value="World">World</option>
-                        <option value="Indian">Indian</option>
-                    </select>
-                </div>
-                <div class="search-bar">
-                    <input type="text" id="search-input" placeholder="Search shows...">
+        <h1>My TV Show Collection</h1>
+        <div class="filter-container">
+            <div class="filter-group">
+                <label for="region-filter">Region:</label>
+                <select id="region-filter">
+                    <option value="all">All Regions</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Special Features:</label>
+                <div class="checkbox-filters">
+                    <label><input type="checkbox" id="therapist-filter"> Features a Therapist 💊</label>
+                    <label><input type="checkbox" id="gem-filter"> Hidden Gem 💎</label>
                 </div>
             </div>
+            <div class="filter-group">
+                <label for="search">Search:</label>
+                <input type="text" id="search" placeholder="Search shows...">
+            </div>
+            <button id="reset-filters">Reset Filters</button>
         </div>
     </header>
     
-    <main id="main-content">
-        <div class="loader" id="loader">
-            <div class="spinner"></div>
-        </div>
+    <main id="shows-container">
+        <div class="loading">Loading your collection...</div>
     </main>
-    
-    <div class="modal" id="show-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <img id="modal-poster" src="/api/placeholder/800/300" alt="Show poster">
-                <div class="close-modal" id="close-modal">×</div>
-            </div>
-            <div class="modal-body">
-                <h2 class="modal-title" id="modal-title">Show Title</h2>
-                <div class="modal-info">
-                    <div class="info-item">
-                        <span class="info-label">Creator</span>
-                        <span class="info-value" id="modal-creator">Creator Name</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Region</span>
-                        <span class="info-value" id="modal-region">Region</span>
-                    </div>
-                </div>
-                <div class="modal-tags" id="modal-tags">
-                    <!-- Tags will be added here dynamically -->
-                </div>
-            </div>
-        </div>
-    </div>
 
+    <footer>
+        <p>My TV Show Collection &copy; 2025</p>
+    </footer>
+
+    <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
