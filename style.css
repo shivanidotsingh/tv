@@ -188,6 +188,16 @@ main {
     color: #2e7d32;
 }
 
+.tag-scandi {
+    background-color: #e3f2fd; /* Light blue */
+    color: #1e88e5; /* Blue */
+}
+
+.tag-period {
+    background-color: #FFB6C1; /* Light pink */
+    color: #d6204e; /* reddish */
+}
+
 .loading {
     text-align: center;
     font-size: 1.2rem;
