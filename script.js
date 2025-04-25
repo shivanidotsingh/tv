@@ -186,6 +186,12 @@ document.addEventListener('DOMContentLoaded', function() {
         titleEl.className = show.tags.includes('book') ? 'show-title book-based' : 'show-title';
         titleEl.textContent = show.title;
         
+        // Add the year display here
+        const showYear = document.createElement('p');
+        showYear.classList.add('show-year');
+        showYear.textContent = show.year; // Assuming 'year' is the property name
+        showInfo.appendChild(showYear);
+
         const regionEl = document.createElement('div');
         regionEl.className = 'show-region';
         regionEl.textContent = show.region;
