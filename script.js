@@ -8,10 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const supernaturalFilter = document.getElementById('supernatural-filter');
     const periodFilter = document.getElementById('period-filter');
     const scandiFilter = document.getElementById('scandi-filter');
-    
     const searchInput = document.getElementById('search');
     const resetButton = document.getElementById('reset-filters');
-    
 
     // Populate region filter
     populateRegionFilter();
@@ -27,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
     supernaturalFilter.addEventListener('change', renderShows);
     periodFilter.addEventListener('change', renderShows);
     scandiFilter.addEventListener('change', renderShows);
-    
     searchInput.addEventListener('input', renderShows);
     resetButton.addEventListener('click', resetFilters);
 
@@ -59,144 +56,109 @@ document.addEventListener('DOMContentLoaded', function() {
         const isSupernatural = supernaturalFilter.checked;
         const isPeriod = periodFilter.checked;
         const isScandi = scandiFilter.checked;
-        
         const searchQuery = searchInput.value.toLowerCase().trim();
-        
-        // Clear container
-        showsContainer.innerHTML = '';
-        
-        // Get filtered shows
-        let filteredShows = [];
-        
-        if (selectedRegion === 'all') {
-            // Get all shows from all regions
-            Object.keys(tvShowsData).forEach(region => {
-                filteredShows = [...filteredShows, ...tvShowsData[region].map(show => ({
-                    ...show,
-                    region: region
-                }))];
+
+        showsContainer.innerHTML = '<div class="loading">Loading shows...</div>';
+
+        setTimeout(() => {
+            showsContainer.innerHTML = '';
+            let filteredShows = tvShowsData[selectedRegion] || Object.values(tvShowsData).flat();
+
+            filteredShows = filteredShows.filter(show => {
+                const matchesRegion = !selectedRegion || (tvShowsData[selectedRegion] && tvShowsData[selectedRegion].includes(show));
+                const matchesTags = [
+                    hasTherapist && show.tags.includes('therapist'),
+                    isGem && show.tags.includes('gem'),
+                    isBook && show.tags.includes('book'),
+                    isSupernatural && show.tags.includes('supernatural'),
+                    isPeriod && show.tags.includes('period'),
+                    isScandi && show.tags.includes('scandi')
+                ].every(Boolean);  // Check that ALL conditions in the array are true
+                const matchesSearch = !searchQuery || show.title.toLowerCase().includes(searchQuery);
+                return matchesRegion && matchesTags && matchesSearch;
             });
-        } else {
-            // Get shows from selected region
-            filteredShows = tvShowsData[selectedRegion].map(show => ({
-                ...show,
-                region: selectedRegion
-            }));
-        }
-        
-        // Apply tag filters
-        if (hasTherapist) {
-            filteredShows = filteredShows.filter(show => 
-                show.tags.includes('therapist'));
-        }
-        
-        if (isGem) {
-            filteredShows = filteredShows.filter(show => 
-                show.tags.includes('gem'));
-        }
-        
-        if (isBook) {
-            filteredShows = filteredShows.filter(show => 
-                show.tags.includes('book'));
-        }
 
-         if (isSupernatural) {
-            filteredShows = filteredShows.filter(show => 
-                show.tags.includes('supernatural'));
-        }
+            // Function to extract the starting year for sorting
+            function getStartYear(yearString) {
+                const match = yearString.match(/^(\d{4})/);
+                return match ? parseInt(match[1]) : -Infinity;
+            }
 
-        if (isPeriod) {
-            filteredShows = filteredShows.filter(show => 
-                show.tags.includes('period'));
-        }
+            // Sort the filtered shows chronologically (descending)
+            filteredShows.sort((a, b) => getStartYear(b.year) - getStartYear(a.year));
 
-        if (isScandi) {
-            filteredShows = filteredShows.filter(show => 
-                show.tags.includes('scandi'));
+            if (filteredShows.length > 0) {
+                const showsGrid = document.createElement('div');
+                showsGrid.className = 'shows-grid';
+                filteredShows.forEach(show => {
+                    // Removed the extra fetch here
+                    showsGrid.appendChild(createShowCard(show, selectedRegion));
+                });
+                showsContainer.appendChild(showsGrid);
+            } else {
+                const noResults = document.createElement('div');
+                noResults.className = 'no-results';
+                noResults.textContent = 'No shows found matching your filters.';
+                showsContainer.appendChild(noResults);
+            }
+        }, 100);
+    }
+
+    function createShowCard(show, region) { // Added region parameter
+        const showCard = document.createElement('div');
+        showCard.classList.add('show-card');
+
+        const showImageContainer = document.createElement('div');
+        showImageContainer.classList.add('show-image-container');
+
+        const img = document.createElement('img');
+        img.classList.add('show-image');
+        img.src = `https://image.tmdb.org/t/p/w500/${show.poster_path}`;
+        img.alt = show.title;
+        img.onerror = () => {
+            showImageContainer.innerHTML = `<div class="poster-error">${show.title}</div>`;
+        };
+
+        showImageContainer.appendChild(img);
+        showCard.appendChild(showImageContainer);
+
+        const showInfo = document.createElement('div');
+        showInfo.classList.add('show-info');
+
+        const showTitle = document.createElement('h3');
+        showTitle.classList.add('show-title');
+        showTitle.textContent = show.title;
+        if (show.tags.includes('book')) {
+            showTitle.classList.add('book-based');
         }
-        
-        // Apply search filter
-        if (searchQuery) {
-            filteredShows = filteredShows.filter(show => 
-                show.title.toLowerCase().includes(searchQuery));
-        }
-        
-        // Display filtered shows
-        if (filteredShows.length > 0) {
-            const showsGrid = document.createElement('div');
-            showsGrid.className = 'shows-grid';
-            
-            filteredShows.forEach(show => {
-                const showCard = createShowCard(show);
-                showsGrid.appendChild(showCard);
+        showInfo.appendChild(showTitle);
+
+        // Add the year display here
+        const showYear = document.createElement('p');
+        showYear.classList.add('show-year');
+        showYear.textContent = show.year;
+        showInfo.appendChild(showYear);
+
+        const showRegion = document.createElement('p');
+        showRegion.classList.add('show-region');
+        showRegion.textContent = region; // Use the region parameter
+        showInfo.appendChild(showRegion);
+
+        if (show.tags && show.tags.length > 0) {
+            const tagsContainer = document.createElement('div');
+            tagsContainer.classList.add('tags-container');
+            show.tags.forEach(tag => {
+                const tagSpan = document.createElement('span');
+                tagSpan.classList.add('tag', `tag-${tag}`);
+                tagSpan.textContent = tag;
+                tagsContainer.appendChild(tagSpan);
             });
-            
-            showsContainer.appendChild(showsGrid);
-        } else {
-            const noResults = document.createElement('div');
-            noResults.className = 'no-results';
-            noResults.textContent = 'No shows found matching your filters.';
-            showsContainer.appendChild(noResults);
+            showInfo.appendChild(tagsContainer);
         }
+
+        showCard.appendChild(showInfo);
+        return showCard;
     }
-    
-   function createShowCard(show, region) {
-    const showCard = document.createElement('div');
-    showCard.classList.add('show-card');
-
-    const showImageContainer = document.createElement('div');
-    showImageContainer.classList.add('show-image-container');
-
-    const img = document.createElement('img');
-    img.classList.add('show-image');
-    img.src = `https://image.tmdb.org/t/p/w500/${show.poster_path}`; // Assuming you fetched poster_path
-    img.alt = show.title;
-    img.onerror = () => {
-        showImageContainer.innerHTML = `<div class="poster-error">${show.title}</div>`;
-    };
-
-    showImageContainer.appendChild(img);
-    showCard.appendChild(showImageContainer);
-
-    const showInfo = document.createElement('div');
-    showInfo.classList.add('show-info');
-
-    const showTitle = document.createElement('h3');
-    showTitle.classList.add('show-title');
-    showTitle.textContent = show.title;
-    if (show.tags.includes('book')) {
-        showTitle.classList.add('book-based');
-    }
-    showInfo.appendChild(showTitle);
-
-    // --- ADDED THIS SECTION ---
-    const showYear = document.createElement('p');
-    showYear.classList.add('show-year');
-    showYear.textContent = show.year;
-    showInfo.appendChild(showYear);
-    // --- END ADDED SECTION ---
-
-    const showRegion = document.createElement('p');
-    showRegion.classList.add('show-region');
-    showRegion.textContent = region;
-    showInfo.appendChild(showRegion);
-
-    if (show.tags && show.tags.length > 0) {
-        const tagsContainer = document.createElement('div');
-        tagsContainer.classList.add('tags-container');
-        show.tags.forEach(tag => {
-            const tagSpan = document.createElement('span');
-            tagSpan.classList.add('tag', `tag-${tag}`);
-            tagSpan.textContent = tag;
-            tagsContainer.appendChild(tagSpan);
-        });
-        showInfo.appendChild(tagsContainer);
-    }
-
-    showCard.appendChild(showInfo);
-    return showCard;
-}
-
     
     // Utility function to generate colors based on string input
     function stringToColor(str) {
