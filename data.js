@@ -2,9 +2,9 @@
 const tvShowsData = {
     "United Kingdom": [
         { title: "Fleabag", tags: [] },
-        { title: "The Crown", tags: [] },
-        { title: "Black Mirror", tags: [] },
-        { title: "Humans", tags: [] },
+        { title: "The Crown", tags: ["period"] },
+        { title: "Black Mirror", tags: ["supernatural"] },
+        { title: "Humans", tags: ["supernatural"] },
         { title: "Orphan Black", tags: [] },
         { title: "Lovesick", tags: [] },
         { title: "You're the Worst", tags: ["therapist"] },
@@ -12,7 +12,7 @@ const tvShowsData = {
         { title: "Killing Eve", tags: [] },
         { title: "Sherlock", tags: [] },
         { title: "Catastrophe", tags: ["gem"] },
-        { title: "Derry Girls", tags: [] },
+        { title: "Derry Girls", tags: ["gem"] },
         { title: "Sick Note", tags: [] },
         { title: "Sex Education", tags: ["therapist"] },
         { title: "Years and Years", tags: ["gem"] },
@@ -37,7 +37,7 @@ const tvShowsData = {
         { title: "Starstruck", tags: [] },
         { title: "Bridgerton", tags: ["book"] },
         { title: "The Outlaws", tags: [] },
-        { title: "Man Like Mobeen", tags: [] },
+        { title: "Man Like Mobeen", tags: ["comedian"] },
         { title: "Flowers", tags: [] },
         { title: "Mammals", tags: [] },
         { title: "Shantaram", tags: ["book"] },
@@ -48,9 +48,10 @@ const tvShowsData = {
         { title: "The Buccaneers", tags: ["book"] },
         { title: "Death and other Details", tags: ["gem"] },
         { title: "One Day", tags: ["book"] },
-        { title: "Bodies", tags: [] },
-        { title: "KAOS", tags: ["gem"] },
-        { title: "Black Doves", tags: [] }
+        { title: "Bodies", tags: ["supernatural"] },
+        { title: "KAOS", tags: ["gem", "supernatural"] },
+        { title: "Black Doves", tags: [] },
+        { title: "Adolescence", tags: [] }
     ],
     "America - East": [
         { title: "Brooklyn Nine Nine", tags: [] },
@@ -120,7 +121,7 @@ const tvShowsData = {
         { title: "Life & Beth", tags: ["gem"] },
         { title: "Mo", tags: [] },
         { title: "The Patient", tags: ["therapist"] },
-        { title: "Blackbird", tags: [] },
+ 
         { title: "Shrinking", tags: ["therapist"] },
         { title: "Last of Us", tags: [] },
         { title: "Fleishman is in trouble", tags: ["book"] },
@@ -191,7 +192,7 @@ const tvShowsData = {
         { title: "Euphoria", tags: ["therapist"] },
         { title: "Curb your enthusiasm", tags: [] }
     ],
-    "America - One Season": [
+    "Single Season/Mini Series": [
         { title: "Enlightened", tags: ["gem"] },
         { title: "Little Fires Everywhere", tags: ["book"] },
         { title: "Strangers", tags: [] },
@@ -215,7 +216,8 @@ const tvShowsData = {
         { title: "I Love Dick", tags: ["gem", "book"] },
         { title: "The Undoing", tags: ["therapist", "book"] },
         { title: "United States of Tara", tags: [] },
-        { title: "Olive Kitteridge", tags: ["book"] }
+        { title: "Olive Kitteridge", tags: ["book"] },
+        { title: "Blackbird", tags: [] }
     ],
     "America - pre 2010": [
         { title: "Breaking Bad", tags: [] },
