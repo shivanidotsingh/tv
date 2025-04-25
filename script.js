@@ -11,11 +11,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search');
     const resetButton = document.getElementById('reset-filters');
     const sortSelect = document.getElementById('sort-select');
-
-    // Populate region filter
+    
+    // Populate region filter first
     populateRegionFilter();
-
-    // Initial render
+    
+    // Then initial render
     renderShows();
 
     // Event listeners
@@ -49,6 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
         therapistFilter.checked = false;
         gemFilter.checked = false;
         bookFilter.checked = false;
+        supernaturalFilter.checked = false;
+        periodFilter.checked = false;
+        scandiFilter.checked = false;
         searchInput.value = '';
         sortSelect.value = 'year';
         renderShows();
@@ -72,24 +75,44 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             showsContainer.innerHTML = '';
 
-            let filteredShows = selectedRegion === 'all' ? Object.values(tvShowsData).flat() : tvShowsData[selectedRegion] || [];
+            // Create filtered shows array with region information
+            let filteredShows = [];
+            if (selectedRegion === 'all') {
+                for (const region in tvShowsData) {
+                    tvShowsData[region].forEach(show => {
+                        filteredShows.push({ ...show, region });
+                    });
+                }
+            } else if (tvShowsData[selectedRegion]) {
+                tvShowsData[selectedRegion].forEach(show => {
+                    filteredShows.push({ ...show, region: selectedRegion });
+                });
+            }
 
-            filteredShows = filteredShows.filter(show => {
-                const matchesRegion = selectedRegion === 'all' || selectedRegion === undefined || (tvShowsData[selectedRegion] && tvShowsData[selectedRegion].some(regionalShow => regionalShow.title === show.title));
-                const matchesTags = [
-                    hasTherapist && show.tags.includes('therapist'),
-                    isGem && show.tags.includes('gem'),
-                    isBook && show.tags.includes('book'),
-                    isSupernatural && show.tags.includes('supernatural'),
-                    isPeriod && show.tags.includes('period'),
-                    isScandi && show.tags.includes('scandi')
-                ].every(Boolean);
-                const matchesSearch = !searchQuery || show.title.toLowerCase().includes(searchQuery);
-                return matchesRegion && matchesTags && matchesSearch;
-            });
+            // Apply search filter
+            if (searchQuery) {
+                filteredShows = filteredShows.filter(show => 
+                    show.title.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            // Apply tag filters - only apply if any tags are selected
+            const anyTagSelected = hasTherapist || isGem || isBook || isSupernatural || isPeriod || isScandi;
+            if (anyTagSelected) {
+                filteredShows = filteredShows.filter(show => {
+                    const tags = show.tags || [];
+                    return (hasTherapist && tags.includes('therapist')) ||
+                           (isGem && tags.includes('gem')) ||
+                           (isBook && tags.includes('book')) ||
+                           (isSupernatural && tags.includes('supernatural')) ||
+                           (isPeriod && tags.includes('period')) ||
+                           (isScandi && tags.includes('scandi'));
+                });
+            }
 
             // Function to extract the starting year for sorting
             function getStartYear(yearString) {
+                if (!yearString) return -Infinity; // Handle missing year data
                 const match = yearString.match(/^(\d{4})/);
                 return match ? parseInt(match[1]) : -Infinity;
             }
@@ -101,40 +124,45 @@ document.addEventListener('DOMContentLoaded', function() {
                 filteredShows.sort((a, b) => a.title.localeCompare(b.title));
             }
 
-            console.log("filteredShows:", filteredShows);
+            console.log("filteredShows count:", filteredShows.length);
 
             if (filteredShows.length > 0) {
                 const showsGrid = document.createElement('div');
                 showsGrid.className = 'shows-grid';
                 filteredShows.forEach(show => {
-                    const showCard = createShowCard(show, selectedRegion);
+                    const showCard = createShowCard(show);
                     showsGrid.appendChild(showCard);
                 });
                 showsContainer.appendChild(showsGrid);
             } else {
-                showsContainer.innerHTML = 'No shows found matching your filters.';
+                showsContainer.innerHTML = '<div class="loading">No shows found matching your filters.</div>';
             }
             console.log("renderShows() finished");
         }, 100);
     }
 
-    function createShowCard(show, region) {
-        console.log("createShowCard() called with show:", show, "and region:", region);
+    function createShowCard(show) {
+        console.log("Creating card for:", show.title);
         const showCard = document.createElement('div');
         showCard.classList.add('show-card');
 
         const showImageContainer = document.createElement('div');
         showImageContainer.classList.add('show-image-container');
 
-        const img = document.createElement('img');
-        img.classList.add('show-image');
-        img.src = `https://image.tmdb.org/t/p/w500/${show.poster_path}`;
-        img.alt = show.title;
-        img.onerror = () => {
+        // Handle poster image or show placeholder with title
+        if (show.poster_path) {
+            const img = document.createElement('img');
+            img.classList.add('show-image');
+            img.src = `https://image.tmdb.org/t/p/w500/${show.poster_path}`;
+            img.alt = show.title;
+            img.onerror = () => {
+                showImageContainer.innerHTML = `<div class="poster-error">${show.title}</div>`;
+            };
+            showImageContainer.appendChild(img);
+        } else {
             showImageContainer.innerHTML = `<div class="poster-error">${show.title}</div>`;
-        };
+        }
 
-        showImageContainer.appendChild(img);
         showCard.appendChild(showImageContainer);
 
         const showInfo = document.createElement('div');
@@ -143,22 +171,26 @@ document.addEventListener('DOMContentLoaded', function() {
         const showTitle = document.createElement('h3');
         showTitle.classList.add('show-title');
         showTitle.textContent = show.title;
-        if (show.tags.includes('book')) {
+        if (show.tags && show.tags.includes('book')) {
             showTitle.classList.add('book-based');
         }
         showInfo.appendChild(showTitle);
 
-        // Add the year display here
-        const showYear = document.createElement('p');
-        showYear.classList.add('show-year');
-        showYear.textContent = show.year;
-        showInfo.appendChild(showYear);
+        // Add year info if available
+        if (show.year) {
+            const showYear = document.createElement('p');
+            showYear.classList.add('show-year');
+            showYear.textContent = show.year;
+            showInfo.appendChild(showYear);
+        }
 
+        // Add region info
         const showRegion = document.createElement('p');
         showRegion.classList.add('show-region');
-        showRegion.textContent = region;
+        showRegion.textContent = show.region || 'Unknown Region';
         showInfo.appendChild(showRegion);
 
+        // Add tags if available
         if (show.tags && show.tags.length > 0) {
             const tagsContainer = document.createElement('div');
             tagsContainer.classList.add('tags-container');
@@ -172,7 +204,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         showCard.appendChild(showInfo);
-        console.log("createShowCard() returning:", showCard);
         return showCard;
     }
 });
