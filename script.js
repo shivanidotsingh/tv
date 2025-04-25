@@ -140,118 +140,63 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    function createShowCard(show) {
-        const card = document.createElement('div');
-        card.className = 'show-card';
-        
-        // Image container with handling for loading errors
-        const imageContainer = document.createElement('div');
-        imageContainer.className = 'show-image-container';
-        
-        const image = document.createElement('img');
-        image.className = 'show-image';
-        image.alt = `${show.title} Poster`;
-        
-        // Try to fetch real poster using the OMDB API (no API key needed for images)
-        const encodedTitle = encodeURIComponent(show.title);
-        image.src = `https://img.omdbapi.com/?t=${encodedTitle}&apikey=poster`;
-        
-        // Handle image loading error - fall back to a colored placeholder with text
-        image.onerror = function() {
-            // Create a color based on the show title
-            const color = stringToColor(show.title);
-            
-            // Create a fallback placeholder
-            const placeholder = document.createElement('div');
-            placeholder.className = 'poster-error';
-            placeholder.style.backgroundColor = color;
-            placeholder.textContent = show.title;
-            
-            // Replace the image with our placeholder
-            imageContainer.appendChild(placeholder);
-            
-            // Remove the image
-            image.remove();
-        };
-        
-        imageContainer.appendChild(image);
-        card.appendChild(imageContainer);
-        
-        // Show info section
-        const infoDiv = document.createElement('div');
-        infoDiv.className = 'show-info';
-        
-        // Title element with "book-based" class if it's based on a book
-        const titleEl = document.createElement('h3');
-        titleEl.className = show.tags.includes('book') ? 'show-title book-based' : 'show-title';
-        titleEl.textContent = show.title;
-        
-        // The year display
-        const showYear = document.createElement('p');
-        showYear.classList.add('show-year');
-        showYear.textContent = show.year; // Assuming 'year' is the property name
-        showInfo.appendChild(showYear);
+   function createShowCard(show, region) {
+    const showCard = document.createElement('div');
+    showCard.classList.add('show-card');
 
-        const regionEl = document.createElement('div');
-        regionEl.className = 'show-region';
-        regionEl.textContent = show.region;
-        
-        const tagsDiv = document.createElement('div');
-        tagsDiv.className = 'show-tags';
-        
-        // Add tags
-        if (show.tags.includes('therapist')) {
-            const therapistTag = document.createElement('span');
-            therapistTag.className = 'tag tag-therapist';
-            therapistTag.textContent = 'Therapist 💊';
-            tagsDiv.appendChild(therapistTag);
-        }
-        
-        if (show.tags.includes('gem')) {
-            const gemTag = document.createElement('span');
-            gemTag.className = 'tag tag-gem';
-            gemTag.textContent = 'Hidden Gem 💎';
-            tagsDiv.appendChild(gemTag);
-        }
-        
-        if (show.tags.includes('book')) {
-            const bookTag = document.createElement('span');
-            bookTag.className = 'tag tag-book';
-            bookTag.textContent = 'Book 📚';
-            tagsDiv.appendChild(bookTag);
-        }
+    const showImageContainer = document.createElement('div');
+    showImageContainer.classList.add('show-image-container');
 
-        if (show.tags.includes('scandi')) {
-            const scandiTag = document.createElement('span');
-            scandiTag.className = 'tag tag-scandi';
-            scandiTag.textContent = 'Scandinavian ❄️';
-            tagsDiv.appendChild(scandiTag);
-        }
+    const img = document.createElement('img');
+    img.classList.add('show-image');
+    img.src = `https://image.tmdb.org/t/p/w500/${show.poster_path}`; // Assuming you fetched poster_path
+    img.alt = show.title;
+    img.onerror = () => {
+        showImageContainer.innerHTML = `<div class="poster-error">${show.title}</div>`;
+    };
 
-        if (show.tags.includes('supernatural')) {
-            const supernaturalTag = document.createElement('span');
-            supernaturalTag.className = 'tag tag-supernatural';
-            supernaturalTag.textContent = 'supernatural 🧙🏽';
-            tagsDiv.appendChild(supernaturalTag);
-        }
+    showImageContainer.appendChild(img);
+    showCard.appendChild(showImageContainer);
 
-        if (show.tags.includes('period')) {
-            const periodTag = document.createElement('span');
-            periodTag.className = 'tag tag-period';
-            periodTag.textContent = 'period 📼';
-            tagsDiv.appendChild(periodTag);
-        }
-        
-        // Append elements to info div
-        infoDiv.appendChild(titleEl);
-        infoDiv.appendChild(regionEl);
-        infoDiv.appendChild(tagsDiv);
-        
-        // Append info div to card
-        card.appendChild(infoDiv);
-        
-        return card;
+    const showInfo = document.createElement('div');
+    showInfo.classList.add('show-info');
+
+    const showTitle = document.createElement('h3');
+    showTitle.classList.add('show-title');
+    showTitle.textContent = show.title;
+    if (show.tags.includes('book')) {
+        showTitle.classList.add('book-based');
     }
+    showInfo.appendChild(showTitle);
+
+    // --- ADDED THIS SECTION ---
+    const showYear = document.createElement('p');
+    showYear.classList.add('show-year');
+    showYear.textContent = show.year;
+    showInfo.appendChild(showYear);
+    // --- END ADDED SECTION ---
+
+    const showRegion = document.createElement('p');
+    showRegion.classList.add('show-region');
+    showRegion.textContent = region;
+    showInfo.appendChild(showRegion);
+
+    if (show.tags && show.tags.length > 0) {
+        const tagsContainer = document.createElement('div');
+        tagsContainer.classList.add('tags-container');
+        show.tags.forEach(tag => {
+            const tagSpan = document.createElement('span');
+            tagSpan.classList.add('tag', `tag-${tag}`);
+            tagSpan.textContent = tag;
+            tagsContainer.appendChild(tagSpan);
+        });
+        showInfo.appendChild(tagsContainer);
+    }
+
+    showCard.appendChild(showInfo);
+    return showCard;
+}
+
     
     // Utility function to generate colors based on string input
     function stringToColor(str) {
