@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("resetFilters() finished");
     }
 
-   function renderShows() {
+function renderShows() {
     console.log("renderShows() called");
     const selectedRegion = regionFilter.value;
     const hasTherapist = therapistFilter.checked;
@@ -67,15 +67,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchQuery = searchInput.value.toLowerCase().trim();
     const sortBy = sortSelect.value;
 
-    showsContainer.innerHTML = '<div class="loading">Loading shows...</div>'; // Initial loading message
+    showsContainer.innerHTML = '<div class="loading">Loading shows...</div>';
 
     setTimeout(() => {
-        showsContainer.innerHTML = ''; // Clear the loading message *before* rendering
+        showsContainer.innerHTML = '';
 
-        let filteredShows = selectedRegion && selectedRegion !== 'all' ? tvShowsData[selectedRegion] : Object.values(tvShowsData).flat();
+        let filteredShows = selectedRegion === 'all' ? Object.values(tvShowsData).flat() : tvShowsData[selectedRegion] || [];
 
         filteredShows = filteredShows.filter(show => {
-            const matchesRegion = selectedRegion === 'all' || (tvShowsData[selectedRegion] && tvShowsData[selectedRegion].includes(show));
+            const matchesRegion = selectedRegion === 'all' || selectedRegion === undefined || tvShowsData[selectedRegion]?.includes(show);
             const matchesTags = [
                 hasTherapist && show.tags.includes('therapist'),
                 isGem && show.tags.includes('gem'),
@@ -112,11 +112,12 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             showsContainer.appendChild(showsGrid);
         } else {
-            showsContainer.innerHTML = 'No shows found matching your filters.'; // *Now* it's inside the setTimeout
+            showsContainer.innerHTML = 'No shows found matching your filters.';
         }
         console.log("renderShows() finished");
     }, 100);
 }
+
 
 
     function createShowCard(show, region) {
