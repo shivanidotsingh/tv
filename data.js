@@ -91,9 +91,9 @@ const tvShowsData = {
         { title: "Poker Face", tags: ["gem"], year: "2023–present" },
         { title: "The Curse", tags: [], year: "2023" },
         { title: "Mr and Mrs Smith", tags: [], year: "2024" },
-        { title: "The Brothers Sun", tags: [], year: "2024" },
+        { title: "The Brothers Sun", tags: ["gem"], year: "2024" },
         { title: "The Diplomat", tags: [], year: "2023–present" },
-        { title: "The Americans", tags: [], year: "2013–2018" },
+        { title: "The Americans", tags: ["gem"], year: "2013–2018" },
         { title: "No Good Deed", tags: [], year: "2024" },
         { title: "Deli Boys", tags: [], year: "2025"},
         { title: "Sex and the City", tags: ["book"], year: "1998–2004" },
@@ -109,11 +109,11 @@ const tvShowsData = {
         { title: "The Good Wife", tags: [], year: "2009–2016" },
         { title: "The Good Fight", tags: [], year: "2017–2022" },
         { title: "Happy Endings", tags: [], year: "2011–2013" },
-        { title: "The Chair", tags: [], year: "2021" },
+        { title: "The Chair", tags: ["gem"], year: "2021" },
         { title: "Dash & Lily", tags: ["book"], year: "2020" },
         { title: "Horace and Pete", tags: [], year: "2016" },
         { title: "Maid", tags: ["book"], year: "2021" },
-        { title: "Severance", tags: [], year: "2022–present" },
+        { title: "Severance", tags: ["superntural"], year: "2022–present" },
         { title: "Peacemaker", tags: [], year: "2022–present" },
         { title: "Life & Beth", tags: ["gem"], year: "2022–present" },
         { title: "Mo", tags: [], year: "2022" },
@@ -174,8 +174,9 @@ const tvShowsData = {
         { title: "Friends", tags: [], year: "1994–2004"},
         { title: "One Tree Hill", tags: [], year: "2003–2012"  },
         { title: "Don't Trust the B in Apt 23", tags: [], year: "2012–2014" },
-       { title: "American Crime Story", tags: [], year: "2016–present" },
-       { title: "Feud", tags: [], year: "2017–present" }
+        { title: "American Crime Story", tags: [], year: "2016–present" },
+        { title: "Feud", tags: [], year: "2017–present" },
+        { title: "The Residence", tags: ["book"], year: "2025" }
     ],
 
  "America - West": [
@@ -213,7 +214,8 @@ const tvShowsData = {
     { title: "On the Verge (LA)", tags: [], year: "2021" },
     { title: "Home Economics", tags: [], year: "2021–2023" },
     { title: "Euphoria", tags: ["therapist"], year: "2019–present" },
-    { title: "Curb your enthusiasm", tags: [], year: "2000–present" },
+    { title: "Curb your enthusiasm", tags: [], year: "2000–2024" },
+    { title: "The Recruit", tags: [], year: "2022–present" },
     { title: "Special", tags: ["pwd"], year: "2019–2021" },
     { title: "Enlightened", tags: ["gem", "mini"], year: "2011–2013" },
     { title: "Togetherness", tags: ["gem", "mini"], year: "2015–2016" },
@@ -253,7 +255,8 @@ const tvShowsData = {
     { title: "Fallet", tags: ["scandi"], year: "2017" },
     { title: "The Åre Murders", tags: ["scandi"], year: "2021" },
     { title: "A Nearly Normal Family", tags: ["scandi"], year: "2023" },
-    { title: "Murder mindfully", tags: [], year: "2024" }
+    { title: "Murder mindfully", tags: [], year: "2024" },
+    { title: "The Agency", tags: [], year: "2024" }
    
 ],
   
@@ -359,6 +362,7 @@ const tvShowsData = {
    
   "Elsewhere": [
     { title: "Tyrant", tags: [], year: "2014–2016" },
+    { title: "Blue Eye Samurai", tags: ["animated", "gem"], year: "2023" },
     { title: "Four Weddings & a Funeral", tags: [], year: "2019" },
     { title: "The Great", tags: ["period"], year: "2020–present" },
     { title: "Ethos", tags: ["gem"], year: "2020" },
