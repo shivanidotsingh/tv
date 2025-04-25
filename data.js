@@ -52,7 +52,7 @@ const tvShowsData = {
         { title: "KAOS", tags: ["gem"] },
         { title: "Black Doves", tags: [] }
     ],
-    "America": [
+    "America - East": [
         { title: "Brooklyn Nine Nine", tags: [] },
         { title: "Broad City", tags: [] },
         { title: "High Maintainance", tags: [] },
@@ -172,7 +172,7 @@ const tvShowsData = {
         { title: "Euphoria", tags: ["therapist"] },
         { title: "Curb your enthusiasm", tags: [] }
     ],
-    "America - Mini Series": [
+    "America - One Season": [
         { title: "Enlightened", tags: ["gem"] },
         { title: "Little Fires Everywhere", tags: ["book"] },
         { title: "Strangers", tags: [] },
@@ -252,31 +252,28 @@ const tvShowsData = {
         { title: "Sweet Tooth", tags: [] }
     ],
     "Located elsewhere": [
-        { title: "Tyrant", tags: [] },
-        { title: "Emily in Paris", tags: [] },
+        { title: "Tyrant", tags: [] },        
         { title: "Four Weddings & a Funeral", tags: [] },
-        { title: "The Great (hulu)", tags: [] }
+        { title: "The Great (hulu)", tags: [] },
+        { title: "Ethos", tags: ["gem"] }
     ],
-    "French/German/Spanish": [
+    "Europe": [
         { title: "Hook up Plan", tags: [] },
+        { title: "Emily in Paris", tags: [] },
         { title: "Elite", tags: [] },
         { title: "Valeria", tags: [] },
         { title: "The Time it Takes", tags: ["gem"] },
         { title: "Call my Agent", tags: [] },
         { title: "Two Summers", tags: [] },
-        { title: "Off the Hook (Détox)", tags: [] }
-    ],
-    "Scandinavian": [
+        { title: "Off the Hook (Détox)", tags: [] },
         { title: "Rita", tags: [] },
         { title: "Bonus Family", tags: ["gem"] },
         { title: "Love and Anarchy", tags: [] },
         { title: "Home for Christmas", tags: [] },
         { title: "Fallet", tags: [] }
     ],
-    "Middle Eastern": [
-        { title: "Ethos", tags: ["gem"] }
-    ],
-    "Australian/Canadian": [
+  
+    "Australia/Canada": [
         { title: "Please Like Me", tags: ["gem"] },
         { title: "Everything's gonna be okay", tags: ["gem"] },
         { title: "Working Moms", tags: ["therapist"] },
@@ -330,9 +327,7 @@ const tvShowsData = {
         { title: "Life hill Gayi", tags: [] },
         { title: "Shekhar Home", tags: [] },
         { title: "Gyarah Gyarah", tags: [] },
-        { title: "Black warrant", tags: [] }
-    ],
-    "Indian Contd.": [
+        { title: "Black warrant", tags: [] },
         { title: "Dahaad", tags: [] },
         { title: "A Simple Murder", tags: [] },
         { title: "Taaza Khabar", tags: [] },
