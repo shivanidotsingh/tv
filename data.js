@@ -265,7 +265,7 @@ const tvShowsData = {
 "Australia/Canada": [
     { title: "Please Like Me", tags: ["gem", "comedian"], year: "2013–2016" },
     { title: "Everything's gonna be okay", tags: ["gem"], year: "2020–2021" },
-    { title: "Working Moms", tags: ["therapist"], year: "2017–present" },
+    { title: "Workin' Moms", tags: ["therapist"], year: "2017–present" },
     { title: "Why are you like this?", tags: [], year: "2021" },
     { title: "the Letdown", tags: [], year: "2016–2019" },
     { title: "Michael: Tuesdays & Thursdays", tags: ["therapist"], year: "2011" },
