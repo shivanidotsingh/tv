@@ -34,7 +34,7 @@ const tvShowsData = {
         { title: "The Pursuit of Love", tags: ["gem", "book"], year: "2021" },
         { title: "Landscapers", tags: [], year: "2021" },
         { title: "Starstruck", tags: [], year: "2021–present" },
-        { title: "Bridgerton", tags: ["book"], year: "2020–present" },
+        { title: "Bridgerton", tags: ["book", "period"], year: "2020–present" },
         { title: "The Outlaws", tags: [], year: "2021–present" },
         { title: "Man Like Mobeen", tags: ["comedian"], year: "2017–present" },
         { title: "Flowers", tags: [], year: "2016–2017" },
@@ -44,7 +44,7 @@ const tvShowsData = {
         { title: "Bad Sisters", tags: [], year: "2022–present" },
         { title: "Ted Lasso", tags: ["therapist"], year: "2020–2023" },
         { title: "Baby Reindeer", tags: [], year: "2024" },
-        { title: "The Buccaneers", tags: ["book"], year: "2023" },
+        { title: "The Buccaneers", tags: ["book", "period"], year: "2023" },
         { title: "Death and other Details", tags: ["gem"], year: "2024" },
         { title: "One Day", tags: ["book"], year: "2024"},
         { title: "Bodies", tags: ["supernatural"], year: "2023" },
@@ -176,7 +176,8 @@ const tvShowsData = {
         { title: "Don't Trust the B in Apt 23", tags: [], year: "2012–2014" },
         { title: "American Crime Story", tags: [], year: "2016–present" },
         { title: "Feud", tags: [], year: "2017–present" },
-        { title: "The Residence", tags: ["book"], year: "2025" }
+        { title: "The Residence", tags: ["book"], year: "2025" },
+        { title: "The Gilded age", tags: ["period", "gem"], year: "2022–present" }
     ],
 
  "America - West": [
