@@ -1,4 +1,3 @@
-// TV show data parsed from your CSV
 const tvShowsData = {
    "United Kingdom": [
         { title: "Fleabag", tags: [], year: "2016–2019"},
@@ -152,7 +151,6 @@ const tvShowsData = {
         { title: "Big Mouth", tags: ["animated"], year: "2016–present" },
         { title: "Atypical", tags: ["therapist", "pwd"], year: "2017–2021" },
         { title: "Speechless", tags: ["pwd"], year: "2016–2019" },
-       
         { title: "Dying for sex", tags: ["gem", "mini"], year: "2025" },
         { title: "Little Fires Everywhere", tags: ["book", "mini"], year: "2020" },
         { title: "Strangers", tags: ["gem", "mini"], year: "2018" },
@@ -166,7 +164,6 @@ const tvShowsData = {
         { title: "Unorthodox", tags: ["gem", "book", "mini"], year: "2020" },
         { title: "Olive Kitteridge", tags: ["book", "mini", "period"], year: "2014" }, 
         { title: "Happyish", tags: ["mini"], year: "2015" },
-       
         { title: "Gilmore Girls", tags: ["pre2010"], year: "2000–2007"  },
         { title: "In Treatment", tags: ["therapist", "gem"], year: "2008–2010" },
         { title: "Mad Men", tags: [], year: "2007–2015"},
@@ -177,7 +174,6 @@ const tvShowsData = {
         { title: "Friends", tags: [], year: "1994–2004"},
         { title: "One Tree Hill", tags: [], year: "2003–2012"  },
         { title: "Don't Trust the B in Apt 23", tags: [], year: "2012–2014" },
-
        { title: "American Crime Story", tags: [], year: "2016–present" },
        { title: "Feud", tags: [], year: "2017–present" }
     ],
@@ -219,7 +215,6 @@ const tvShowsData = {
     { title: "Euphoria", tags: ["therapist"], year: "2019–present" },
     { title: "Curb your enthusiasm", tags: [], year: "2000–present" },
     { title: "Special", tags: ["pwd"], year: "2019–2021" },
-    
     { title: "Enlightened", tags: ["gem", "mini"], year: "2011–2013" },
     { title: "Togetherness", tags: ["gem", "mini"], year: "2015–2016" },
     { title: "Sharp Objects", tags: ["book", "mini"], year: "2018" },
@@ -227,7 +222,6 @@ const tvShowsData = {
     { title: "Enlisted", tags: ["mini"], year: "2014" },
     { title: "I Love Dick", tags: ["gem", "book" "mini"], year: "2016–2017" },
     { title: "Girlboss", tags: ["book", "mini"], year: "2017" },
-    
     { title: "United States of Tara", tags: ["mini"], year: "2009–2011" },
     { title: "Black Bird", tags: ["mini", "book"], year: "2022" },
     { title: "Breaking Bad", tags: [], year: "2008–2013" },
@@ -239,7 +233,7 @@ const tvShowsData = {
     { title: "Scrubs", tags: [], year: "2001–2010" },
     { title: "The OC", tags: [], year: "2003–2007" },
     { title: "The Big Bang Theory", tags: [], year: "2007–2019" },
-    { title: "Modern Family", tags: [], year: "2009–2020"  }
+    { title: "Modern Family", tags: [], year: "2009–2020" }
 
 ],
 
