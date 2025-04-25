@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let filteredShows = selectedRegion && selectedRegion !== 'all' ? tvShowsData[selectedRegion] : Object.values(tvShowsData).flat();
 
         filteredShows = filteredShows.filter(show => {
-            const matchesRegion = !selectedRegion || (tvShowsData[selectedRegion] && tvShowsData[selectedRegion].includes(show));
+            const matchesRegion = selectedRegion === 'all' || (tvShowsData[selectedRegion] && tvShowsData[selectedRegion].includes(show));
             const matchesTags = [
                 hasTherapist && show.tags.includes('therapist'),
                 isGem && show.tags.includes('gem'),
