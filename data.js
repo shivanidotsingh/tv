@@ -95,7 +95,7 @@ const tvShowsData = {
         { title: "The Brothers Sun", tags: [], year: "2024" },
         { title: "The Diplomat", tags: [], year: "2023–present" },
         { title: "The Americans", tags: [], year: "2013–2018" },
-        { title: "Good Deed", tags: [], year: "2024" },
+        { title: "No Good Deed", tags: [], year: "2024" },
         { title: "Dying for sex", tags: [], year: "2024" },
         { title: "Deli Boys", tags: [], year: "2024" },
         { title: "Sex and the City", tags: ["book"], year: "1998–2004" },
