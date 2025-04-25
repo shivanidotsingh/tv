@@ -63,7 +63,7 @@ const tvShowsData = {
         { title: "Search Party", tags: [], year: "2016–2022" },
         { title: "Seinfeld", tags: [], year: "1989–1998" },
         { title: "Unbreakable Kimmy Schmidt", tags: [], year: "2015–2020" },
-        { title: "The Politician", tags: [], year: "2019–2020" },
+        { title: "The Politician", tags: [], year: "2019–2020", poster_path: "/5Bm3rMQAoXSFKAVYMxPYQRyM07U.jpg" },
         { title: "What we do in the Shadows", tags: [], year: "2019–present" },
         { title: "Barry", tags: ["gem"], year: "2018–2023" },
         { title: "Corporate", tags: ["gem"], year: "2018–2020" },
@@ -96,8 +96,7 @@ const tvShowsData = {
         { title: "The Diplomat", tags: [], year: "2023–present" },
         { title: "The Americans", tags: [], year: "2013–2018" },
         { title: "No Good Deed", tags: [], year: "2024" },
-        { title: "Dying for sex", tags: [], year: "2024" },
-        { title: "Deli Boys", tags: [], year: "2024" },
+        { title: "Deli Boys", tags: [], year: "2024", poster_path: "/qtQMokxZekVMLNgtSdltU2OCbke.jpg" },
         { title: "Sex and the City", tags: ["book"], year: "1998–2004" },
         { title: "The Affair", tags: [], year: "2014–2019" },
         { title: "Mozart in the Jungle", tags: ["book"], year: "2014–2018" },
@@ -219,7 +218,9 @@ const tvShowsData = {
     { title: "The Undoing", tags: ["therapist", "book"], year: "2020" },
     { title: "United States of Tara", tags: [], year: "2009–2011" },
     { title: "Olive Kitteridge", tags: ["book"], year: "2014" },
-    { title: "Black Bird", tags: [], year: "2022" }
+    { title: "Black Bird", tags: [], year: "2022" },
+    { title: "Dying for sex", tags: ["gem"], year: "2024", poster_path:"/xaKb3cTh8mT6fgLSXuqo4JoS0dU.jpg" },
+
 ],
 
   "Elsewhere": [
