@@ -186,6 +186,20 @@ document.addEventListener('DOMContentLoaded', function() {
             bookTag.textContent = 'Book 📚';
             tagsDiv.appendChild(bookTag);
         }
+
+        if (show.tags.includes('scandi')) {
+            const bookTag = document.createElement('span');
+            scandiTag.className = 'tag tag-scandi';
+            scandiTag.textContent = 'Scandinavian ❄️';
+            tagsDiv.appendChild(scandiTag);
+        }
+
+        if (show.tags.includes('supernatural')) {
+            const bookTag = document.createElement('span');
+            supernaturalTag.className = 'tag tag-supernatural';
+            supernaturalTag.textContent = 'supernatural 🧙🏽';
+            tagsDiv.appendChild(supernaturalTag);
+        }
         
         // Append elements to info div
         infoDiv.appendChild(titleEl);
