@@ -47,7 +47,7 @@ const tvShowsData = {
         { title: "Baby Reindeer", tags: [], year: "2024" },
         { title: "The Buccaneers", tags: ["book"], year: "2023" },
         { title: "Death and other Details", tags: ["gem"], year: "2024" },
-        { title: "One Day", tags: ["book"], year: "2024" },
+        { title: "One Day", tags: ["book"], year: "2024", poster_path: "/smBWt8rHCCavV88C5gQVjh0NUFa.jpg"  },
         { title: "Bodies", tags: ["supernatural"], year: "2023" },
         { title: "KAOS", tags: ["gem", "supernatural"], year: "2024" },
         { title: "Black Doves", tags: [], year: "2024" },
