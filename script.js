@@ -167,14 +167,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
      // Function to fetch TMDB poster URL
-     async function fetchTmdbPosterUrl(showTitle) {
+     async function fetchTmdbPosterUrl(showTitle, showYear) {
         if (!tmdbImageBaseUrl) {
             console.warn("TMDB image base URL not available yet.");
             // Return a placeholder or indicate that fetching is in progress
              return null;
         }
+
+        // Construct the search query, including the year if available
+        let searchQuery = `${TMDB_BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(showTitle)}`;
+        if (showYear) {
+             // Extract the starting year if the format is like "YYYY–YYYY"
+             const yearMatch = showYear.match(/^(\d{4})/);
+             if (yearMatch && yearMatch[1]) {
+                 searchQuery += `&first_air_date_year=${yearMatch[1]}`;
+             }
+        }
+
+
         try {
-            const searchResponse = await fetch(`${TMDB_BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(showTitle)}`);
+            const searchResponse = await fetch(searchQuery);
             const searchData = await searchResponse.json();
 
             if (searchData.results && searchData.results.length > 0) {
@@ -240,7 +252,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Append showInfo first, then handle image asynchronously
 
         // --- TMDB Fetching Logic ---
-        fetchTmdbPosterUrl(show.title).then(tmdbPosterUrl => {
+        // Pass the show.year to the fetchTmdbPosterUrl function
+        fetchTmdbPosterUrl(show.title, show.year).then(tmdbPosterUrl => {
             // Clear loading indicator
              showImageContainer.innerHTML = '';
 
