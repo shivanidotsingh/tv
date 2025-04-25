@@ -15,7 +15,7 @@ header {
     background: black;
     color: white;
     padding: 2rem;
-    text-align: center;
+    text-align: left;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -74,12 +74,7 @@ button#reset-filters {
     border-radius: 6px;
     cursor: pointer;
     font-weight: 600;
-    transition: background-color 0.2s;
-    align-self: flex-end;
-}
-
-button#reset-filters:hover {
-    background-color: #ff5252;
+    align-self: flex-start;
 }
 
 main {
