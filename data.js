@@ -153,7 +153,15 @@ const tvShowsData = {
 
         { title: "The Mindy Project", tags: ["comedian"] },
         { title: "Master of None", tags: ["comedian"] },
-        { title: "Ramy", tags: ["comedian"] }
+        { title: "Ramy", tags: ["comedian"] },
+
+        { title: "Bojack Horseman", tags: ["animated"] },
+        { title: "Tuca and Bertie", tags: ["animated"] },
+        { title: "Big Mouth", tags: ["animated"] },
+
+        { title: "Atypical", tags: ["therapist", "pwd"] },
+        { title: "Speechless", tags: ["pwd"] },
+        
     ],
     "America - West": [
         { title: "I'm Sorry", tags: ["gem", "comedian"] },
@@ -167,11 +175,12 @@ const tvShowsData = {
         { title: "Better things", tags: [] },
         { title: "Casual", tags: ["therapist"] },
         { title: "Alone Together", tags: [] },
+        
         { title: "Hacks", tags: [] },
         { title: "Big Little Lies", tags: ["therapist", "book"] },
         { title: "Dead to Me", tags: [] },
         { title: "One Day at a Time", tags: [] },
-        { title: "The Kominsky Method", tags: [] },
+        { title: "The Kominsky Method", tags: ["gem"] },
         { title: "Sorry for your Loss", tags: ["gem"] },
         { title: "The Last man on Earth", tags: [] },
         { title: "Love", tags: [] },
@@ -190,7 +199,9 @@ const tvShowsData = {
         { title: "On the Verge (LA)", tags: [] },
         { title: "Home Economics", tags: [] },
         { title: "Euphoria", tags: ["therapist"] },
-        { title: "Curb your enthusiasm", tags: [] }
+        { title: "Curb your enthusiasm", tags: [] },
+
+        { title: "Special", tags: ["pwd"] }
     ],
     "Single Season/Mini Series": [
         { title: "Enlightened", tags: ["gem"] },
@@ -219,42 +230,8 @@ const tvShowsData = {
         { title: "Olive Kitteridge", tags: ["book"] },
         { title: "Blackbird", tags: [] }
     ],
-    "America - pre 2010": [
-        { title: "Breaking Bad", tags: [] },
-        { title: "Arrested development", tags: [] },
-        { title: "Gilmore Girls", tags: [] },
-        { title: "How I met your Mother", tags: [] },
-        { title: "Scrubs", tags: [] },
-        { title: "Gossip Girl", tags: [] },
-        { title: "One Tree Hill", tags: [] },
-        { title: "The OC", tags: [] },
-        { title: "Psych", tags: [] },
-        { title: "Lie to Me", tags: [] },
-        { title: "Newsroom", tags: [] },
-        { title: "Dexter", tags: [] },
-        { title: "Friends", tags: [] },
-        { title: "Grey's anatomy", tags: [] },
-        { title: "Freaks and Geeks", tags: [] },
-        { title: "Theat 70's Show", tags: [] },
-        { title: "Modern Family", tags: [] },
-        { title: "Big Bang Theory", tags: [] },
-        { title: "Bones/Castle", tags: [] },
-        { title: "Mad Men", tags: [] },
-        { title: "In Treatment", tags: ["therapist"] }
-    ],
-    "Animated": [
-        { title: "Bojack Horseman", tags: [] },
-        { title: "Tuca and Bertie", tags: [] },
-        { title: "Big Mouth", tags: [] }
-    ],
-    
-    "Disability focused": [
-        { title: "Atypical", tags: ["therapist"] },
-        { title: "Speechless", tags: [] },
-        { title: "Special", tags: [] }
-    ],
-   
-    "Located elsewhere": [
+
+    "Elsewhere": [
         { title: "Tyrant", tags: [] },        
         { title: "Four Weddings & a Funeral", tags: [] },
         { title: "The Great (hulu)", tags: ["period"] },
@@ -376,5 +353,29 @@ const tvShowsData = {
         { title: "Tribhuvan Mishra CA Topper", tags: [] },
         { title: "Dupahiya", tags: [] },
         { title: "Dabba Cartel", tags: [] }
+    ],
+       "~Pre 2010~": [
+        { title: "Breaking Bad", tags: ["pre2010"] },
+        { title: "Arrested development", tags: ["pre2010"] },
+        { title: "Gilmore Girls", tags: ["pre2010"] },
+        { title: "How I met your Mother", tags: ["pre2010"] },
+        { title: "Scrubs", tags: ["pre2010"] },
+        { title: "Gossip Girl", tags: ["pre2010"] },
+        { title: "One Tree Hill", tags: ["pre2010"] },
+        { title: "The OC", tags: ["pre2010"] },
+        { title: "Psych", tags: ["pre2010"] },
+        { title: "Lie to Me", tags: ["pre2010"] },
+        { title: "Newsroom", tags: ["pre2010"] },
+        { title: "Dexter", tags: ["pre2010"] },
+        { title: "Friends", tags: ["pre2010"] },
+        { title: "Grey's anatomy", tags: ["pre2010"] },
+        { title: "Freaks and Geeks", tags: ["pre2010"] },
+        { title: "Theat 70's Show", tags: ["pre2010"] },
+        { title: "Modern Family", tags: ["pre2010"] },
+        { title: "Big Bang Theory", tags: ["pre2010"] },
+        { title: "Bones/Castle", tags: ["pre2010"] },
+        { title: "Mad Men", tags: ["pre2010"] },
+        { title: "In Treatment", tags: ["therapist", "pre2010", "gem"] }
     ]
+   
 }
