@@ -203,21 +203,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (show.tags.includes('scandi')) {
-            const bookTag = document.createElement('span');
+            const scandiTag = document.createElement('span');
             scandiTag.className = 'tag tag-scandi';
             scandiTag.textContent = 'Scandinavian ❄️';
             tagsDiv.appendChild(scandiTag);
         }
 
         if (show.tags.includes('supernatural')) {
-            const bookTag = document.createElement('span');
+            const supernaturalTag = document.createElement('span');
             supernaturalTag.className = 'tag tag-supernatural';
             supernaturalTag.textContent = 'supernatural 🧙🏽';
             tagsDiv.appendChild(supernaturalTag);
         }
 
         if (show.tags.includes('period')) {
-            const bookTag = document.createElement('span');
+            const periodTag = document.createElement('span');
             periodTag.className = 'tag tag-supernatural';
             periodTag.textContent = 'period 📼';
             tagsDiv.appendChild(periodTag);
