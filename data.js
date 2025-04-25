@@ -153,7 +153,7 @@ const tvShowsData = {
         { title: "Speechless", tags: ["pwd"], year: "2016–2019" },
         { title: "Dying for sex", tags: ["gem", "mini"], year: "2025" },
         { title: "Little Fires Everywhere", tags: ["book", "mini"], year: "2020" },
-        { title: "Strangers", tags: ["gem", "mini"], year: "2018" },
+        { title: "Strangers", tags: ["gem", "mini"], year: "2017" },
         { title: "Maniac", tags: ["mini"], year: "2018" },
         { title: "Unbelievable", tags: ["book", "mini"], year: "2019" },
         { title: "SMILF", tags: ["mini"], year: "2017–2019" },
