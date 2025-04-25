@@ -1,8 +1,8 @@
 // TV show data parsed from your CSV
 const tvShowsData = {
    "United Kingdom": [
-        { title: "Fleabag", tags: [], year: "2016–2019" },
-        { title: "The Crown", tags: ["period"], year: "2016–present" },
+        { title: "Fleabag", tags: [], year: "2016–2019", poster_path: "/coJVIUEOToAEGViuhHPQg1prXHf.jpg"},
+        { title: "The Crown", tags: ["period"], year: "2016–present", poster_path: "/7Q8RCLcCGd4hY23JzkD6aXU6QQ5.jpg" },
         { title: "Black Mirror", tags: ["supernatural"], year: "2011–present" },
         { title: "Humans", tags: ["supernatural"], year: "2015–2018" },
         { title: "Orphan Black", tags: [], year: "2013–2017" },
