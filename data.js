@@ -220,7 +220,7 @@ const tvShowsData = {
     { title: "Sharp Objects", tags: ["book", "mini"], year: "2018" },
     { title: "Terriers", tags: ["mini"], year: "2010" },
     { title: "Enlisted", tags: ["mini"], year: "2014" },
-    { title: "I Love Dick", tags: ["gem", "book" "mini"], year: "2016–2017" },
+    { title: "I Love Dick", tags: ["gem", "book", "mini"], year: "2016–2017" },
     { title: "Girlboss", tags: ["book", "mini"], year: "2017" },
     { title: "United States of Tara", tags: ["mini"], year: "2009–2011" },
     { title: "Black Bird", tags: ["mini", "book"], year: "2022" },
