@@ -1,8 +1,8 @@
 // TV show data parsed from your CSV
 const tvShowsData = {
    "United Kingdom": [
-        { title: "Fleabag", tags: [], year: "2016–2019", poster_path: "/27vEYsRKa3eAniwmoccOoluEXQ1.jpg"},
-        { title: "The Crown", tags: ["period"], year: "2016–present", poster_path: "/1M876KPjulVwppEpldhdc8V4o68.jpg" },
+        { title: "Fleabag", tags: [], year: "2016–2019"},
+        { title: "The Crown", tags: ["period"], year: "2016–present"},
         { title: "Black Mirror", tags: ["supernatural"], year: "2011–present" },
         { title: "Humans", tags: ["supernatural"], year: "2015–2018" },
         { title: "Orphan Black", tags: [], year: "2013–2017" },
@@ -47,11 +47,11 @@ const tvShowsData = {
         { title: "Baby Reindeer", tags: [], year: "2024" },
         { title: "The Buccaneers", tags: ["book"], year: "2023" },
         { title: "Death and other Details", tags: ["gem"], year: "2024" },
-        { title: "One Day", tags: ["book"], year: "2024", poster_path: "/smBWt8rHCCavV88C5gQVjh0NUFa.jpg"  },
+        { title: "One Day", tags: ["book"], year: "2024"},
         { title: "Bodies", tags: ["supernatural"], year: "2023" },
         { title: "KAOS", tags: ["gem", "supernatural"], year: "2024" },
         { title: "Black Doves", tags: [], year: "2024" },
-        { title: "Adolescence", tags: [], year: "2024" }
+        { title: "Adolescence", tags: [], year: "2025" }
     ],
     "America - East": [
         { title: "Brooklyn Nine Nine", tags: [], year: "2013–2021" },
@@ -63,7 +63,7 @@ const tvShowsData = {
         { title: "Search Party", tags: [], year: "2016–2022" },
         { title: "Seinfeld", tags: [], year: "1989–1998" },
         { title: "Unbreakable Kimmy Schmidt", tags: [], year: "2015–2020" },
-        { title: "The Politician", tags: [], year: "2019–2020", poster_path: "/5Bm3rMQAoXSFKAVYMxPYQRyM07U.jpg" },
+        { title: "The Politician", tags: [], year: "2019–2020", poster_path: "https://image.tmdb.org/t/p/w1280/5Bm3rMQAoXSFKAVYMxPYQRyM07U.jpg" },
         { title: "What we do in the Shadows", tags: [], year: "2019–present" },
         { title: "Barry", tags: ["gem"], year: "2018–2023" },
         { title: "Corporate", tags: ["gem"], year: "2018–2020" },
@@ -219,7 +219,7 @@ const tvShowsData = {
     { title: "United States of Tara", tags: [], year: "2009–2011" },
     { title: "Olive Kitteridge", tags: ["book"], year: "2014" },
     { title: "Black Bird", tags: [], year: "2022" },
-    { title: "Dying for sex", tags: ["gem"], year: "2024", poster_path:"/xaKb3cTh8mT6fgLSXuqo4JoS0dU.jpg" },
+    { title: "Dying for sex", tags: ["gem"], year: "2025" },
 
 ],
 
