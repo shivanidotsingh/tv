@@ -225,7 +225,7 @@ const tvShowsData = {
     { title: "Sharp Objects", tags: ["book", "mini"], year: "2018" },
     { title: "Terriers", tags: ["mini"], year: "2010" },
     { title: "Enlisted", tags: ["mini"], year: "2014" },
-    { title: "I Love Dick", tags: ["gem", "book"m "mini"], year: "2016–2017" },
+    { title: "I Love Dick", tags: ["gem", "book" "mini"], year: "2016–2017" },
     { title: "Girlboss", tags: ["book", "mini"], year: "2017" },
     
     { title: "United States of Tara", tags: ["mini"], year: "2009–2011" },
@@ -239,7 +239,7 @@ const tvShowsData = {
     { title: "Scrubs", tags: [], year: "2001–2010" },
     { title: "The OC", tags: [], year: "2003–2007" },
     { title: "The Big Bang Theory", tags: [], year: "2007–2019" },
-    { title: "Modern Family", tags: [], year: "2009–2020"  },
+    { title: "Modern Family", tags: [], year: "2009–2020"  }
 
 ],
 
@@ -259,7 +259,7 @@ const tvShowsData = {
     { title: "Fallet", tags: ["scandi"], year: "2017" },
     { title: "The Åre Murders", tags: ["scandi"], year: "2021" },
     { title: "A Nearly Normal Family", tags: ["scandi"], year: "2023" },
-    { title: "Murder mindfully", tags: [], year: "2024" },
+    { title: "Murder mindfully", tags: [], year: "2024" }
    
 ],
   
@@ -276,7 +276,7 @@ const tvShowsData = {
     { title: "Deadloch", tags: [], year: "2023" },
     { title: "Heartbreak High (2022)", tags: [], year: "2022–present" },
     { title: "Upload", tags: ["supernatural"], year: "2020–present" },
-    { title: "Apple Cider Vinegar", tags: [ "mini"], year: "2025"},
+    { title: "Apple Cider Vinegar", tags: [ "mini"], year: "2025"}
 ],
     
 "India": [
@@ -368,7 +368,7 @@ const tvShowsData = {
     { title: "Four Weddings & a Funeral", tags: [], year: "2019" },
     { title: "The Great", tags: ["period"], year: "2020–present" },
     { title: "Ethos", tags: ["gem"], year: "2020" },
-    { title: "Expats", tags: ["book"], year: "2024" },
+    { title: "Expats", tags: ["book"], year: "2024" }
 ]
 
 }
