@@ -11,12 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search');
     const resetButton = document.getElementById('reset-filters');
     const sortSelect = document.getElementById('sort-select');
-
-    // Populate region filter
-    populateRegionFilter();
-
+    
     // Initial render
     renderShows();
+    
+    // Populate region filter
+    populateRegionFilter();
 
     // Event listeners
     regionFilter.addEventListener('change', renderShows);
