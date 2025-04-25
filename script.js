@@ -11,12 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search');
     const resetButton = document.getElementById('reset-filters');
     const sortSelect = document.getElementById('sort-select');
-    
-    // Initial render
-    renderShows();
-    
+
     // Populate region filter
     populateRegionFilter();
+
+    // Initial render
+    renderShows();
 
     // Event listeners
     regionFilter.addEventListener('change', renderShows);
@@ -55,70 +55,68 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("resetFilters() finished");
     }
 
-function renderShows() {
-    console.log("renderShows() called");
-    const selectedRegion = regionFilter.value;
-    const hasTherapist = therapistFilter.checked;
-    const isGem = gemFilter.checked;
-    const isBook = bookFilter.checked;
-    const isSupernatural = supernaturalFilter.checked;
-    const isPeriod = periodFilter.checked;
-    const isScandi = scandiFilter.checked;
-    const searchQuery = searchInput.value.toLowerCase().trim();
-    const sortBy = sortSelect.value;
+    function renderShows() {
+        console.log("renderShows() called");
+        const selectedRegion = regionFilter.value;
+        const hasTherapist = therapistFilter.checked;
+        const isGem = gemFilter.checked;
+        const isBook = bookFilter.checked;
+        const isSupernatural = supernaturalFilter.checked;
+        const isPeriod = periodFilter.checked;
+        const isScandi = scandiFilter.checked;
+        const searchQuery = searchInput.value.toLowerCase().trim();
+        const sortBy = sortSelect.value;
 
-    showsContainer.innerHTML = '<div class="loading">Loading shows...</div>';
+        showsContainer.innerHTML = '<div class="loading">Loading shows...</div>';
 
-    setTimeout(() => {
-        showsContainer.innerHTML = '';
+        setTimeout(() => {
+            showsContainer.innerHTML = '';
 
-        let filteredShows = selectedRegion === 'all' ? Object.values(tvShowsData).flat() : tvShowsData[selectedRegion] || [];
+            let filteredShows = selectedRegion === 'all' ? Object.values(tvShowsData).flat() : tvShowsData[selectedRegion] || [];
 
-        filteredShows = filteredShows.filter(show => {
-            const matchesRegion = selectedRegion === 'all' || selectedRegion === undefined || tvShowsData[selectedRegion]?.includes(show);
-            const matchesTags = [
-                hasTherapist && show.tags.includes('therapist'),
-                isGem && show.tags.includes('gem'),
-                isBook && show.tags.includes('book'),
-                isSupernatural && show.tags.includes('supernatural'),
-                isPeriod && show.tags.includes('period'),
-                isScandi && show.tags.includes('scandi')
-            ].every(Boolean);
-            const matchesSearch = !searchQuery || show.title.toLowerCase().includes(searchQuery);
-            return matchesRegion && matchesTags && matchesSearch;
-        });
-
-        // Function to extract the starting year for sorting
-        function getStartYear(yearString) {
-            const match = yearString.match(/^(\d{4})/);
-            return match ? parseInt(match[1]) : -Infinity;
-        }
-
-        // Sort the filtered shows
-        if (sortBy === 'year') {
-            filteredShows.sort((a, b) => getStartYear(b.year) - getStartYear(a.year));
-        } else if (sortBy === 'title') {
-            filteredShows.sort((a, b) => a.title.localeCompare(b.title));
-        }
-
-        console.log("filteredShows:", filteredShows);
-
-        if (filteredShows.length > 0) {
-            const showsGrid = document.createElement('div');
-            showsGrid.className = 'shows-grid';
-            filteredShows.forEach(show => {
-                const showCard = createShowCard(show, selectedRegion);
-                showsGrid.appendChild(showCard);
+            filteredShows = filteredShows.filter(show => {
+                const matchesRegion = selectedRegion === 'all' || selectedRegion === undefined || (tvShowsData[selectedRegion] && tvShowsData[selectedRegion].some(regionalShow => regionalShow.title === show.title));
+                const matchesTags = [
+                    hasTherapist && show.tags.includes('therapist'),
+                    isGem && show.tags.includes('gem'),
+                    isBook && show.tags.includes('book'),
+                    isSupernatural && show.tags.includes('supernatural'),
+                    isPeriod && show.tags.includes('period'),
+                    isScandi && show.tags.includes('scandi')
+                ].every(Boolean);
+                const matchesSearch = !searchQuery || show.title.toLowerCase().includes(searchQuery);
+                return matchesRegion && matchesTags && matchesSearch;
             });
-            showsContainer.appendChild(showsGrid);
-        } else {
-            showsContainer.innerHTML = 'No shows found matching your filters.';
-        }
-        console.log("renderShows() finished");
-    }, 100);
-}
 
+            // Function to extract the starting year for sorting
+            function getStartYear(yearString) {
+                const match = yearString.match(/^(\d{4})/);
+                return match ? parseInt(match[1]) : -Infinity;
+            }
 
+            // Sort the filtered shows
+            if (sortBy === 'year') {
+                filteredShows.sort((a, b) => getStartYear(b.year) - getStartYear(a.year));
+            } else if (sortBy === 'title') {
+                filteredShows.sort((a, b) => a.title.localeCompare(b.title));
+            }
+
+            console.log("filteredShows:", filteredShows);
+
+            if (filteredShows.length > 0) {
+                const showsGrid = document.createElement('div');
+                showsGrid.className = 'shows-grid';
+                filteredShows.forEach(show => {
+                    const showCard = createShowCard(show, selectedRegion);
+                    showsGrid.appendChild(showCard);
+                });
+                showsContainer.appendChild(showsGrid);
+            } else {
+                showsContainer.innerHTML = 'No shows found matching your filters.';
+            }
+            console.log("renderShows() finished");
+        }, 100);
+    }
 
     function createShowCard(show, region) {
         console.log("createShowCard() called with show:", show, "and region:", region);
