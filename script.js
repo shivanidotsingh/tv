@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     supernaturalFilter.addEventListener('change', renderShows);
     periodFilter.addEventListener('change', renderShows);
     scandiFilter.addEventListener('change', renderShows);
+    
     searchInput.addEventListener('input', renderShows);
     resetButton.addEventListener('click', resetFilters);
     sortSelect.addEventListener('change', renderShows); // Listen for changes in the sort dropdown
