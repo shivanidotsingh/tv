@@ -12,19 +12,20 @@
         <h1>Shivani's Television Show Database</h1>
         <div class="filter-container">
             <div class="filter-group">
+                <label>Look for:</label>
+                <div class="checkbox-filters">
+                    <label><input type="checkbox" id="therapist-filter"> Shows featuring a Therapist 💊</label>
+                    <label><input type="checkbox" id="gem-filter"> Hidden Gems 💎</label>
+                    <label><input type="checkbox" id="book-filter"> Shows based on Books 📚</label>
+                </div>
+            </div>
+            <div class="filter-group">
                 <label for="region-filter">Region:</label>
                 <select id="region-filter">
                     <option value="all">All Regions</option>
                 </select>
             </div>
-            <div class="filter-group">
-                <label>Special Features:</label>
-                <div class="checkbox-filters">
-                    <label><input type="checkbox" id="therapist-filter"> Features a Therapist 💊</label>
-                    <label><input type="checkbox" id="gem-filter"> Hidden Gem 💎</label>
-                    <label><input type="checkbox" id="book-filter"> Based on Book 📚</label>
-                </div>
-            </div>
+            
             <div class="filter-group">
                 <label for="search">Search:</label>
                 <input type="text" id="search" placeholder="Search shows...">
