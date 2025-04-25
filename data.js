@@ -96,7 +96,7 @@ const tvShowsData = {
         { title: "The Diplomat", tags: [], year: "2023–present" },
         { title: "The Americans", tags: [], year: "2013–2018" },
         { title: "No Good Deed", tags: [], year: "2024" },
-        { title: "Deli Boys", tags: [], year: "2024", poster_path: "/qtQMokxZekVMLNgtSdltU2OCbke.jpg" },
+        { title: "Deli Boys", tags: [], year: "2025"},
         { title: "Sex and the City", tags: ["book"], year: "1998–2004" },
         { title: "The Affair", tags: [], year: "2014–2019" },
         { title: "Mozart in the Jungle", tags: ["book"], year: "2014–2018" },
