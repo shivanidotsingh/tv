@@ -120,6 +120,12 @@ main {
     object-fit: cover;
 }
 
+.show-year {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 5px;
+}
+
 .poster-error {
     position: absolute;
     top: 0;
