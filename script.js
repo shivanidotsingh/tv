@@ -5,8 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const therapistFilter = document.getElementById('therapist-filter');
     const gemFilter = document.getElementById('gem-filter');
     const bookFilter = document.getElementById('book-filter');
+    const supernaturalFilter = document.getElementById('supernatural-filter');
+    const periodFilter = document.getElementById('period-filter');
+    const scandiFilter = document.getElementById('scandi-filter');
+    
     const searchInput = document.getElementById('search');
     const resetButton = document.getElementById('reset-filters');
+    
 
     // Populate region filter
     populateRegionFilter();
@@ -19,6 +24,10 @@ document.addEventListener('DOMContentLoaded', function() {
     therapistFilter.addEventListener('change', renderShows);
     gemFilter.addEventListener('change', renderShows);
     bookFilter.addEventListener('change', renderShows);
+    supernaturalFilter.addEventListener('change', renderShows);
+    periodFilter.addEventListener('change', renderShows);
+    scandiFilter.addEventListener('change', renderShows);
+    
     searchInput.addEventListener('input', renderShows);
     resetButton.addEventListener('click', resetFilters);
 
@@ -47,6 +56,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const hasTherapist = therapistFilter.checked;
         const isGem = gemFilter.checked;
         const isBook = bookFilter.checked;
+        const isSupernatural = supernaturalFilter.checked;
+        const isPeriod = periodFilter.checked;
+        const isScandi = scandiFilter.checked;
+        
         const searchQuery = searchInput.value.toLowerCase().trim();
         
         // Clear container
@@ -218,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (show.tags.includes('period')) {
             const periodTag = document.createElement('span');
-            periodTag.className = 'tag tag-supernatural';
+            periodTag.className = 'tag tag-period';
             periodTag.textContent = 'period 📼';
             tagsDiv.appendChild(periodTag);
         }
