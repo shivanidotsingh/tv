@@ -87,6 +87,7 @@ const tvShowsData = {
         { title: "You", tags: ["book"] },
         { title: "Younger", tags: [] },
         { title: "Sweet Magnolias", tags: ["book"] },
+        { title: "Glow", tags: ["period"] },
         { title: "Poker Face", tags: ["gem"] },
         { title: "The Curse", tags: [] },
         { title: "Mr and Mrs Smith", tags: [] },
@@ -96,6 +97,7 @@ const tvShowsData = {
         { title: "Good Deed", tags: [] },
         { title: "Dying for sex", tags: [] },
         { title: "Deli Boys", tags: [] },
+        
         { title: "Sex and the City", tags: ["book"] },
         { title: "The Affair", tags: [] },
         { title: "Mozart in the Jungle", tags: ["book"] },
@@ -125,23 +127,40 @@ const tvShowsData = {
         { title: "Love & Death", tags: [] },
         { title: "The Last Thing he told me", tags: ["book"] },
         { title: "Who is Erin Carter", tags: [] },
+        
         { title: "Beef", tags: ["gem"] },
-        { title: "Expats", tags: ["book"] },
         { title: "The Bear", tags: [] },
-        { title: "Lessons in Chemistry", tags: ["book"] },
         { title: "English Teacher", tags: [] },
         { title: "Nobody wants this", tags: [] },
         { title: "Only murders in the building", tags: [] },
         { title: "The Lincoln Lawyer", tags: ["book"] },
         { title: "Succession", tags: [] },
-        { title: "The Perfect Couple", tags: ["book"] }
+        { title: "The Perfect Couple", tags: ["book"] },
+        
+        { title: "Lessons in Chemistry", tags: ["book", "period"] },
+        { title: "Masters of Sex", tags: ["book", "period"] },
+        { title: "Marvelous Mrs Maisel", tags: ["period"] },
+        { title: "Handmaid's Tale", tags: ["period"] },
+
+        { title: "The Good Place", tags: ["supernatural"] },
+        { title: "The Leftovers", tags: ["supernatural"] },
+        { title: "Russian Doll", tags: ["supernatural"] },
+        { title: "I am not Okay with this", tags: ["supernatural"] },
+        { title: "Stranger Things", tags: ["supernatural"] },        
+        { title: "Dickinson", tags: ["period"] },
+        { title: "Sweet Tooth", tags: ["supernatural"] },
+
+        { title: "The Mindy Project", tags: ["comedian"] },
+        { title: "Master of None", tags: ["comedian"] },
+        { title: "Ramy", tags: ["comedian"] }
     ],
     "America - West": [
+        { title: "I'm Sorry", tags: ["gem", "comedian"] },
         { title: "Insecure", tags: [] },
         { title: "New Girl", tags: [] },
         { title: "Silicon Valley", tags: [] },
         { title: "Grace and Frankie", tags: [] },
-        { title: "Crazy ex girlfriend", tags: ["therapist"] },
+        { title: "Crazy ex girlfriend", tags: ["therapist", "comedian"] },
         { title: "Transparent", tags: [] },
         { title: "Jane the Virgin", tags: [] },
         { title: "Better things", tags: [] },
@@ -157,7 +176,7 @@ const tvShowsData = {
         { title: "Love", tags: [] },
         { title: "Portlandia", tags: [] },
         { title: "Shrill", tags: ["book"] },
-        { title: "Dave", tags: ["gem"] },
+        { title: "Dave", tags: ["gem", "comedian"] },
         { title: "Never have I ever", tags: [] },
         { title: "Awkward.", tags: [] },
         { title: "Dollface", tags: [] },
@@ -226,36 +245,19 @@ const tvShowsData = {
         { title: "Tuca and Bertie", tags: [] },
         { title: "Big Mouth", tags: [] }
     ],
-    "Comedian Run": [
-        { title: "The Mindy Project", tags: [] },
-        { title: "Master of None", tags: [] },
-        { title: "I'm Sorry", tags: ["gem"] },
-        { title: "Ramy", tags: [] }
-    ],
+    
     "Disability focused": [
         { title: "Atypical", tags: ["therapist"] },
         { title: "Speechless", tags: [] },
         { title: "Special", tags: [] }
     ],
-    "Supernatural / Period": [
-        { title: "The Good Place", tags: [] },
-        { title: "The Leftovers", tags: [] },
-        { title: "Russian Doll", tags: [] },
-        { title: "I am not Okay with this", tags: [] },
-        { title: "Upload", tags: [] },
-        { title: "Stranger Things", tags: [] },
-        { title: "Marvelous Mrs Maisel", tags: [] },
-        { title: "Handmaid's Tale", tags: [] },
-        { title: "Glow", tags: [] },
-        { title: "Masters of Sex", tags: ["book"] },
-        { title: "Dickinson", tags: [] },
-        { title: "Sweet Tooth", tags: [] }
-    ],
+   
     "Located elsewhere": [
         { title: "Tyrant", tags: [] },        
         { title: "Four Weddings & a Funeral", tags: [] },
-        { title: "The Great (hulu)", tags: [] },
-        { title: "Ethos", tags: ["gem"] }
+        { title: "The Great (hulu)", tags: ["period"] },
+        { title: "Ethos", tags: ["gem"] },
+        { title: "Expats", tags: ["book"] },
     ],
     "Europe": [
         { title: "Hook up Plan", tags: [] },
@@ -267,12 +269,12 @@ const tvShowsData = {
         { title: "Two Summers", tags: [] },
         { title: "Off the Hook (Détox)", tags: [] },
         { title: "Rita", tags: ["Scandi"] },
-        { title: "Bonus Family", tags: ["gem", "Scandi"] },
-        { title: "Love and Anarchy", tags: ["Scandi"] },
-        { title: "Home for Christmas", tags: ["Scandi"] },
-        { title: "Fallet", tags: ["Scandi"] },
-        { title: "The Åre Murders", tags: ["Scandi"] },
-        { title: "A Nearly Normal Family", tags: ["Scandi"] }
+        { title: "Bonus Family", tags: ["gem", "scandi"] },
+        { title: "Love and Anarchy", tags: ["scandi"] },
+        { title: "Home for Christmas", tags: ["scandi"] },
+        { title: "Fallet", tags: ["scandi"] },
+        { title: "The Åre Murders", tags: ["scandi"] },
+        { title: "A Nearly Normal Family", tags: ["scandi"] }
     ],
   
     "Australia/Canada": [
@@ -287,9 +289,10 @@ const tvShowsData = {
         { title: "Fisk", tags: [] },
         { title: "Deadloch", tags: [] },
         { title: "Heartbreak High (2022)", tags: [] },
-        { title: "Murder mindfully (german)", tags: [] }
+        { title: "Murder mindfully (german)", tags: [] },
+        { title: "Upload", tags: ["supernatural"] },
     ],
-    "Indian": [
+    "India": [
         { title: "Made in Heaven", tags: [] },
         { title: "Yeh Meri Family", tags: [] },
         { title: "Family Man", tags: [] },
