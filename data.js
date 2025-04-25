@@ -1,345 +1,379 @@
-// Sample data structure with TV shows
-// In production, you would replace this with data from your spreadsheet
-const tvShows = [
-    // United Kingdom
-    { title: "Fleabag", region: "United Kingdom", creator: "Phoebe Waller-Bridge", 
-      tags: [], posterColor: "#2d3436", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "The Crown", region: "United Kingdom", creator: "Peter Morgan", 
-      tags: [], posterColor: "#7f8c8d", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "Black Mirror", region: "United Kingdom", creator: "Charlie Brooker", 
-      tags: [], posterColor: "#2c3e50", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "Humans", region: "United Kingdom", creator: "Sam Vincent, Jonathan Brackley", 
-      tags: [], posterColor: "#34495e", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "Orphan Black", region: "United Kingdom", creator: "Graeme Manson, John Fawcett", 
-      tags: [], posterColor: "#2d3436", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    
-    // America
-    { title: "Brooklyn Nine Nine", region: "America", creator: "Dan Goor, Michael Schur", 
-      tags: [], posterColor: "#e67e22", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "Broad City", region: "America", creator: "Ilana Glazer, Abbi Jacobson", 
-      tags: [], posterColor: "#e84393", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "High Maintenance", region: "America", creator: "Ben Sinclair, Katja Blichfeld", 
-      tags: [], posterColor: "#27ae60", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "Girls", region: "America", creator: "Lena Dunham", 
-      tags: [], posterColor: "#bdc3c7", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "Community", region: "America", creator: "Dan Harmon", 
-      tags: [], posterColor: "#3498db", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    
-    // World
-    { title: "Call my Agent", region: "World", creator: "Fanny Herrero", 
-      tags: ["French"], posterColor: "#2980b9", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "Elite", region: "World", creator: "Carlos Montero, Darío Madrona", 
-      tags: ["Spanish"], posterColor: "#c0392b", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "Rita", region: "World", creator: "Christian Torpe", 
-      tags: ["Scandinavian"], posterColor: "#f39c12", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    
-    // Indian
-    { title: "Made in Heaven", region: "Indian", creator: "Zoya Akhtar, Reema Kagti", 
-      tags: [], posterColor: "#8e44ad", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "Family Man", region: "Indian", creator: "Raj & DK", 
-      tags: [], posterColor: "#16a085", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "Panchayat", region: "Indian", creator: "TVF", 
-      tags: ["Hidden Gem"], posterColor: "#27ae60", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "Sacred Games", region: "Indian", creator: "Vikramaditya Motwane, Anurag Kashyap", 
-      tags: [], posterColor: "#d35400", posterPath: "/api/placeholder/400/320", 
-      description: "" },
-    { title: "Scam 1992", region: "Indian", creator: "Hansal Mehta", 
-      tags: [], posterColor: "#f1c40f", posterPath: "/api/placeholder/400/320", 
-      description: "" }
-];
-
-// Parse the CSV data
-function parseCSVShowData(rawCSVData) {
-    // This function would parse your CSV data and convert it to the above format
-    // For now, we'll use the sample data above
-    return tvShows;
-}
-
-// Group shows by region
-function groupShowsByRegion(shows) {
-    const regions = {};
-    
-    shows.forEach(show => {
-        if (!regions[show.region]) {
-            regions[show.region] = [];
-        }
-        regions[show.region].push(show);
-    });
-    
-    return regions;
-}
-
-// Display shows grouped by region
-function displayShowsByRegion(shows) {
-    const mainContent = document.getElementById('main-content');
-    mainContent.innerHTML = '';
-    
-    const regions = groupShowsByRegion(shows);
-    
-    // Sort regions alphabetically
-    const sortedRegions = Object.keys(regions).sort();
-    
-    sortedRegions.forEach(region => {
-        const regionSection = document.createElement('section');
-        const regionTitle = document.createElement('h2');
-        regionTitle.className = 'region-title';
-        regionTitle.textContent = region;
-        regionSection.appendChild(regionTitle);
-        
-        const showGrid = document.createElement('div');
-        showGrid.className = 'show-grid';
-        
-        // Sort shows alphabetically within each region
-        regions[region].sort((a, b) => a.title.localeCompare(b.title)).forEach(show => {
-            const showCard = createShowCard(show);
-            showGrid.appendChild(showCard);
-        });
-        
-        regionSection.appendChild(showGrid);
-        mainContent.appendChild(regionSection);
-    });
-}
-
-// Display shows alphabetically
-function displayShowsAlphabetically(shows) {
-    const mainContent = document.getElementById('main-content');
-    mainContent.innerHTML = '';
-    
-    const section = document.createElement('section');
-    const showGrid = document.createElement('div');
-    showGrid.className = 'show-grid';
-    
-    // Sort all shows alphabetically
-    shows.sort((a, b) => a.title.localeCompare(b.title)).forEach(show => {
-        const showCard = createShowCard(show);
-        showGrid.appendChild(showCard);
-    });
-    
-    section.appendChild(showGrid);
-    mainContent.appendChild(section);
-}
-
-// Display shows by color
-function displayShowsByColor(shows) {
-    const mainContent = document.getElementById('main-content');
-    mainContent.innerHTML = '';
-    
-    const section = document.createElement('section');
-    const showGrid = document.createElement('div');
-    showGrid.className = 'show-grid';
-    
-    // Sort by color (using the posterColor property)
-    shows.sort((a, b) => {
-        // This is a simple sorting by hex code - in a real app you might use HSL values
-        return a.posterColor.localeCompare(b.posterColor);
-    }).forEach(show => {
-        const showCard = createShowCard(show);
-        showGrid.appendChild(showCard);
-    });
-    
-    section.appendChild(showGrid);
-    mainContent.appendChild(section);
-}
-
-// Create a show card element
-function createShowCard(show) {
-    const card = document.createElement('div');
-    card.className = 'show-card';
-    card.dataset.title = show.title;
-    card.dataset.region = show.region;
-    card.style.backgroundColor = show.posterColor;
-    
-    const img = document.createElement('img');
-    img.src = show.posterPath;
-    img.alt = show.title;
-    card.appendChild(img);
-    
-    const info = document.createElement('div');
-    info.className = 'show-info';
-    
-    const title = document.createElement('div');
-    title.className = 'show-title';
-    title.textContent = show.title;
-    info.appendChild(title);
-    
-    const details = document.createElement('div');
-    details.className = 'show-details';
-    details.textContent = show.region;
-    info.appendChild(details);
-    
-    if (show.tags && show.tags.length > 0) {
-        const tags = document.createElement('div');
-        tags.className = 'show-tags';
-        
-        show.tags.forEach(tag => {
-            const tagEl = document.createElement('span');
-            tagEl.className = 'show-tag';
-            tagEl.textContent = tag;
-            tags.appendChild(tagEl);
-        });
-        
-        info.appendChild(tags);
-    }
-    
-    card.appendChild(info);
-    
-    // Add click event to open modal
-    card.addEventListener('click', () => openShowModal(show));
-    
-    return card;
-}
-
-// Open show details modal
-function openShowModal(show) {
-    const modal = document.getElementById('show-modal');
-    const modalPoster = document.getElementById('modal-poster');
-    const modalTitle = document.getElementById('modal-title');
-    const modalCreator = document.getElementById('modal-creator');
-    const modalRegion = document.getElementById('modal-region');
-    const modalTags = document.getElementById('modal-tags');
-    
-    modalPoster.src = show.posterPath;
-    modalTitle.textContent = show.title;
-    modalCreator.textContent = show.creator || 'Unknown';
-    modalRegion.textContent = show.region;
-    
-    modalTags.innerHTML = '';
-    if (show.tags && show.tags.length > 0) {
-        show.tags.forEach(tag => {
-            const tagEl = document.createElement('span');
-            tagEl.className = 'modal-tag';
-            tagEl.textContent = tag;
-            modalTags.appendChild(tagEl);
-        });
-    }
-    
-    modal.style.display = 'block';
-}
-
-// Close show details modal
-function closeShowModal() {
-    const modal = document.getElementById('show-modal');
-    modal.style.display = 'none';
-}
-
-// Filter shows by search term
-function filterShowsBySearch(shows, searchTerm) {
-    if (!searchTerm) return shows;
-    
-    searchTerm = searchTerm.toLowerCase();
-    return shows.filter(show => {
-        return show.title.toLowerCase().includes(searchTerm) || 
-               show.region.toLowerCase().includes(searchTerm) ||
-               (show.creator && show.creator.toLowerCase().includes(searchTerm)) ||
-               (show.tags && show.tags.some(tag => tag.toLowerCase().includes(searchTerm)));
-    });
-}
-
-// Filter shows by region
-function filterShowsByRegion(shows, region) {
-    if (region === 'all') return shows;
-    return shows.filter(show => show.region === region);
-}
-
-// Initialize the application
-function initApp() {
-    const shows = parseCSVShowData();
-    displayShowsByRegion(shows);
-    
-    // Hide loader
-    document.getElementById('loader').style.display = 'none';
-    
-    // Set up event listeners
-    document.getElementById('view-region').addEventListener('click', () => {
-        setActiveButton('view-region');
-        const searchTerm = document.getElementById('search-input').value;
-        const region = document.getElementById('region-filter').value;
-        const filteredShows = filterShowsByRegion(filterShowsBySearch(shows, searchTerm), region);
-        displayShowsByRegion(filteredShows);
-    });
-    
-    document.getElementById('view-alphabetical').addEventListener('click', () => {
-        setActiveButton('view-alphabetical');
-        const searchTerm = document.getElementById('search-input').value;
-        const region = document.getElementById('region-filter').value;
-        const filteredShows = filterShowsByRegion(filterShowsBySearch(shows, searchTerm), region);
-        displayShowsAlphabetically(filteredShows);
-    });
-    
-    document.getElementById('view-color').addEventListener('click', () => {
-        setActiveButton('view-color');
-        const searchTerm = document.getElementById('search-input').value;
-        const region = document.getElementById('region-filter').value;
-        const filteredShows = filterShowsByRegion(filterShowsBySearch(shows, searchTerm), region);
-        displayShowsByColor(filteredShows);
-    });
-    
-    document.getElementById('search-input').addEventListener('input', (e) => {
-        const searchTerm = e.target.value;
-        const region = document.getElementById('region-filter').value;
-        const filteredShows = filterShowsByRegion(filterShowsBySearch(shows, searchTerm), region);
-        
-        // Determine which view to use based on active button
-        const activeViewButton = document.querySelector('.view-options button.active').id;
-        if (activeViewButton === 'view-region') {
-            displayShowsByRegion(filteredShows);
-        } else if (activeViewButton === 'view-alphabetical') {
-            displayShowsAlphabetically(filteredShows);
-        } else if (activeViewButton === 'view-color') {
-            displayShowsByColor(filteredShows);
-        }
-    });
-    
-    document.getElementById('region-filter').addEventListener('change', (e) => {
-        const region = e.target.value;
-        const searchTerm = document.getElementById('search-input').value;
-        const filteredShows = filterShowsByRegion(filterShowsBySearch(shows, searchTerm), region);
-        
-        // Determine which view to use based on active button
-        const activeViewButton = document.querySelector('.view-options button.active').id;
-        if (activeViewButton === 'view-region') {
-            displayShowsByRegion(filteredShows);
-        } else if (activeViewButton === 'view-alphabetical') {
-            displayShowsAlphabetically(filteredShows);
-        } else if (activeViewButton === 'view-color') {
-            displayShowsByColor(filteredShows);
-        }
-    });
-    
-    document.getElementById('close-modal').addEventListener('click', closeShowModal);
-    
-    // Close modal when clicking outside of modal content
-    window.addEventListener('click', (e) => {
-        const modal = document.getElementById('show-modal');
-        if (e.target === modal) {
-            closeShowModal();
-        }
-    });
-}
-
-// Set active button state
-function setActiveButton(buttonId) {
-    document.querySelectorAll('.view-options button').forEach(button => {
-        button.classList.remove('active');
-    });
-    document.getElementById(buttonId).classList.add('active');
-}
-
-// Start the app when DOM is loaded
-document.addEventListener('DOMContentLoaded', initApp);
+// TV show data parsed from your CSV
+const tvShowsData = {
+    "United Kingdom": [
+        { title: "Fleabag", tags: [] },
+        { title: "The Crown", tags: [] },
+        { title: "Black Mirror", tags: [] },
+        { title: "Humans", tags: [] },
+        { title: "Orphan Black", tags: [] },
+        { title: "Lovesick", tags: [] },
+        { title: "You're the Worst", tags: ["therapist"] },
+        { title: "Happy Valley", tags: [] },
+        { title: "Killing Eve", tags: [] },
+        { title: "Sherlock", tags: [] },
+        { title: "Catastrophe", tags: ["gem"] },
+        { title: "Derry Girls", tags: [] },
+        { title: "Sick Note", tags: [] },
+        { title: "Sex Education", tags: ["therapist"] },
+        { title: "Years and Years", tags: ["gem"] },
+        { title: "State of the Union", tags: ["therapist"] },
+        { title: "After Life", tags: ["gem"] },
+        { title: "Normal People", tags: ["gem"] },
+        { title: "I May Destroy You", tags: [] },
+        { title: "The Duchess", tags: [] },
+        { title: "This Way Up", tags: ["gem"] },
+        { title: "Wanderlust", tags: ["therapist", "gem"] },
+        { title: "Crashing", tags: ["gem"] },
+        { title: "End of the Fucking World", tags: [] },
+        { title: "Chewing Gum", tags: [] },
+        { title: "Safe", tags: [] },
+        { title: "My Mad Fat Diary", tags: [] },
+        { title: "Downton Abbey", tags: [] },
+        { title: "Broadchurch", tags: [] },
+        { title: "Doctor Foster", tags: [] },
+        { title: "We Are Lady Parts", tags: [] },
+        { title: "The Pursuit of Love", tags: ["gem"] },
+        { title: "Landscapers", tags: [] },
+        { title: "Starstruck", tags: [] },
+        { title: "Bridgerton", tags: [] },
+        { title: "The Outlaws", tags: [] },
+        { title: "Man Like Mobeen", tags: [] },
+        { title: "Flowers", tags: [] },
+        { title: "Mammals", tags: [] },
+        { title: "Shantaram", tags: [] },
+        { title: "I hate Suzie", tags: ["gem"] },
+        { title: "Bad Sisters", tags: [] },
+        { title: "Ted Lasso", tags: ["therapist"] },
+        { title: "Baby Reindeer", tags: [] },
+        { title: "The Buccaneers", tags: [] },
+        { title: "Death and other Details", tags: ["gem"] },
+        { title: "One Day", tags: [] },
+        { title: "Bodies", tags: [] },
+        { title: "KAOS", tags: ["gem"] },
+        { title: "Black Doves", tags: [] }
+    ],
+    "America": [
+        { title: "Brooklyn Nine Nine", tags: [] },
+        { title: "Broad City", tags: [] },
+        { title: "High Maintainance", tags: [] },
+        { title: "Girls", tags: [] },
+        { title: "Community", tags: [] },
+        { title: "Schitt's Creek", tags: [] },
+        { title: "Search Party", tags: [] },
+        { title: "Seinfeld", tags: [] },
+        { title: "Unbreakable Kimmy Schmidt", tags: [] },
+        { title: "The Politician", tags: [] },
+        { title: "What we do in the Shadows", tags: [] },
+        { title: "Barry", tags: ["gem"] },
+        { title: "Corporate", tags: ["gem"] },
+        { title: "Difficult People", tags: [] },
+        { title: "This is Us", tags: [] },
+        { title: "Orange is the New Black", tags: [] },
+        { title: "Friends from College", tags: [] },
+        { title: "Suits", tags: [] },
+        { title: "Easy", tags: ["gem"] },
+        { title: "Recitfy", tags: [] },
+        { title: "Life in Pieces", tags: ["gem"] },
+        { title: "The Unicorn", tags: [] },
+        { title: "The Other Two", tags: [] },
+        { title: "Great News", tags: [] },
+        { title: "Champions", tags: [] },
+        { title: "Homecoming", tags: ["therapist"] },
+        { title: "About a boy", tags: [] },
+        { title: "Good Girls", tags: [] },
+        { title: "How to get away with murder", tags: [] },
+        { title: "13 Reasons Why", tags: ["therapist"] },
+        { title: "Gypsy", tags: ["therapist"] },
+        { title: "You", tags: [] },
+        { title: "Younger", tags: [] },
+        { title: "Sweet Magnolias", tags: [] },
+        { title: "Poker Face", tags: ["gem"] },
+        { title: "The Curse", tags: [] },
+        { title: "Mr and Mrs Smith", tags: [] },
+        { title: "The Brothers Sun", tags: [] },
+        { title: "The Diplomat", tags: [] },
+        { title: "The Americans", tags: [] },
+        { title: "Good Deed", tags: [] },
+        { title: "Dying for sex", tags: [] },
+        { title: "Deli Boys", tags: [] },
+        { title: "Sex and the City", tags: [] },
+        { title: "The Affair", tags: [] },
+        { title: "Mozart in the Jungle", tags: [] },
+        { title: "Mr Robot", tags: [] },
+        { title: "Unreal", tags: [] },
+        { title: "Top of the Lake", tags: [] },
+        { title: "The Sinner", tags: [] },
+        { title: "The Flight Attendent", tags: [] },
+        { title: "The Morning Show", tags: [] },
+        { title: "Firefly Lane", tags: [] },
+        { title: "The Good Wife", tags: [] },
+        { title: "The Good Fight", tags: [] },
+        { title: "Happy Endings", tags: [] },
+        { title: "The Chair", tags: [] },
+        { title: "Dash & Lily", tags: [] },
+        { title: "Horace and Pete", tags: [] },
+        { title: "Maid", tags: [] },
+        { title: "Severance", tags: [] },
+        { title: "Peacemaker", tags: [] },
+        { title: "Life & Beth", tags: ["gem"] },
+        { title: "Mo", tags: [] },
+        { title: "The Patient", tags: ["therapist"] },
+        { title: "Blackbird", tags: [] },
+        { title: "Shrinking", tags: ["therapist"] },
+        { title: "Last of Us", tags: [] },
+        { title: "Fleishman is in trouble", tags: [] },
+        { title: "Love & Death", tags: [] },
+        { title: "The Last Thing he told me", tags: [] },
+        { title: "Who is Erin Carter", tags: [] },
+        { title: "Beef", tags: ["gem"] },
+        { title: "Expats", tags: [] },
+        { title: "The Bear", tags: [] },
+        { title: "Lessons in Chemistry", tags: [] },
+        { title: "English Teacher", tags: [] },
+        { title: "Nobody wants this", tags: [] },
+        { title: "Only murders in the building", tags: [] },
+        { title: "The Lincoln Lawyer", tags: [] },
+        { title: "Succession", tags: [] },
+        { title: "The Perfect Couple", tags: [] }
+    ],
+    "America - West": [
+        { title: "Insecure", tags: [] },
+        { title: "New Girl", tags: [] },
+        { title: "Silicon Valley", tags: [] },
+        { title: "Grace and Frankie", tags: [] },
+        { title: "Crazy ex girlfriend", tags: ["therapist"] },
+        { title: "Transparent", tags: [] },
+        { title: "Jane the Virgin", tags: [] },
+        { title: "Better things", tags: [] },
+        { title: "Casual", tags: ["therapist"] },
+        { title: "Alone Together", tags: [] },
+        { title: "Hacks", tags: [] },
+        { title: "Big Little Lies", tags: ["therapist"] },
+        { title: "Dead to Me", tags: [] },
+        { title: "One Day at a Time", tags: [] },
+        { title: "The Kominsky Method", tags: [] },
+        { title: "Sorry for your Loss", tags: ["gem"] },
+        { title: "The Last man on Earth", tags: [] },
+        { title: "Love", tags: [] },
+        { title: "Portlandia", tags: [] },
+        { title: "Shrill", tags: [] },
+        { title: "Dave", tags: ["gem"] },
+        { title: "Never have I ever", tags: [] },
+        { title: "Awkward.", tags: [] },
+        { title: "Dollface", tags: [] },
+        { title: "Made for Love (2021)", tags: [] },
+        { title: "Nine Perfect Strangers", tags: [] },
+        { title: "White Lotus", tags: [] },
+        { title: "Girlfriends' Guide to Divorce", tags: [] },
+        { title: "Afterparty", tags: ["gem"] },
+        { title: "Pieces of her", tags: [] },
+        { title: "On the Verge (LA)", tags: [] },
+        { title: "Home Economics", tags: [] },
+        { title: "Euphoria", tags: ["therapist"] },
+        { title: "Curb your enthusiasm", tags: [] }
+    ],
+    "America - Mini Series": [
+        { title: "Enlightened", tags: ["gem"] },
+        { title: "Little Fires Everywhere", tags: [] },
+        { title: "Strangers", tags: [] },
+        { title: "Maniac", tags: [] },
+        { title: "Modern Love", tags: [] },
+        { title: "No Tomorrow", tags: [] },
+        { title: "Unbelievable", tags: [] },
+        { title: "Sharp Objects", tags: [] },
+        { title: "Mrs Fletcher", tags: [] },
+        { title: "Happyish", tags: [] },
+        { title: "Unorthodox", tags: ["gem"] },
+        { title: "Don't Trust the B in Apt 23", tags: [] },
+        { title: "SMILF", tags: [] },
+        { title: "Togetherness", tags: [] },
+        { title: "Terriers", tags: [] },
+        { title: "Enlisted", tags: [] },
+        { title: "Girlboss", tags: [] },
+        { title: "American Crime Story", tags: [] },
+        { title: "Feud", tags: [] },
+        { title: "Mindhunter", tags: [] },
+        { title: "I Love Dick", tags: ["gem"] },
+        { title: "The Undoing", tags: ["therapist"] },
+        { title: "United States of Tara", tags: [] },
+        { title: "Olive Kitteridge", tags: [] }
+    ],
+    "America - pre 2010": [
+        { title: "Breaking Bad", tags: [] },
+        { title: "Arrested development", tags: [] },
+        { title: "Gilmore Girls", tags: [] },
+        { title: "How I met your Mother", tags: [] },
+        { title: "Scrubs", tags: [] },
+        { title: "Gossip Girl", tags: [] },
+        { title: "One Tree Hill", tags: [] },
+        { title: "The OC", tags: [] },
+        { title: "Psych", tags: [] },
+        { title: "Lie to Me", tags: [] },
+        { title: "Newsroom", tags: [] },
+        { title: "Dexter", tags: [] },
+        { title: "Friends", tags: [] },
+        { title: "Grey's anatomy", tags: [] },
+        { title: "Freaks and Geeks", tags: [] },
+        { title: "Theat 70's Show", tags: [] },
+        { title: "Modern Family", tags: [] },
+        { title: "Big Bang Theory", tags: [] },
+        { title: "Bones/Castle", tags: [] },
+        { title: "Mad Men", tags: [] },
+        { title: "In Treatment", tags: ["therapist"] }
+    ],
+    "Animated": [
+        { title: "Bojack Horseman", tags: [] },
+        { title: "Tuca and Bertie", tags: [] },
+        { title: "Big Mouth", tags: [] }
+    ],
+    "Comedian Run": [
+        { title: "The Mindy Project", tags: [] },
+        { title: "Master of None", tags: [] },
+        { title: "I'm Sorry", tags: ["gem"] },
+        { title: "Ramy", tags: [] }
+    ],
+    "Disability focused": [
+        { title: "Atypical", tags: ["therapist"] },
+        { title: "Speechless", tags: [] },
+        { title: "Special", tags: [] }
+    ],
+    "Supernatural / Period": [
+        { title: "The Good Place", tags: [] },
+        { title: "The Leftovers", tags: [] },
+        { title: "Russian Doll", tags: [] },
+        { title: "I am not Okay with this", tags: [] },
+        { title: "Upload", tags: [] },
+        { title: "Stranger Things", tags: [] },
+        { title: "Marvelous Mrs Maisel", tags: [] },
+        { title: "Handmaid's Tale", tags: [] },
+        { title: "Glow", tags: [] },
+        { title: "Masters of Sex", tags: [] },
+        { title: "Dickinson", tags: [] },
+        { title: "Sweet Tooth", tags: [] }
+    ],
+    "Located elsewhere": [
+        { title: "Tyrant", tags: [] },
+        { title: "Emily in Paris", tags: [] },
+        { title: "Four Weddings & a Funeral", tags: [] },
+        { title: "The Great (hulu)", tags: [] }
+    ],
+    "French/German/Spanish": [
+        { title: "Hook up Plan", tags: [] },
+        { title: "Elite", tags: [] },
+        { title: "Valeria", tags: [] },
+        { title: "The Time it Takes", tags: ["gem"] },
+        { title: "Call my Agent", tags: [] },
+        { title: "Two Summers", tags: [] },
+        { title: "Off the Hook (Détox)", tags: [] }
+    ],
+    "Scandinavian": [
+        { title: "Rita", tags: [] },
+        { title: "Bonus Family", tags: ["gem"] },
+        { title: "Love and Anarchy", tags: [] },
+        { title: "Home for Christmas", tags: [] },
+        { title: "Fallet", tags: [] }
+    ],
+    "Middle Eastern": [
+        { title: "Ethos", tags: ["gem"] }
+    ],
+    "Australian/Canadian": [
+        { title: "Please Like Me", tags: ["gem"] },
+        { title: "Everything's gonna be okay", tags: ["gem"] },
+        { title: "Working Moms", tags: ["therapist"] },
+        { title: "Why are you like this?", tags: [] },
+        { title: "the Letdown", tags: [] },
+        { title: "Michael: Tuesdays & Thursdays", tags: [] },
+        { title: "Wellmania", tags: [] },
+        { title: "Aftertaste", tags: [] },
+        { title: "Fisk", tags: [] },
+        { title: "Deadloch", tags: [] },
+        { title: "Heartbreak High (2022)", tags: [] },
+        { title: "Murder mindfully (german)", tags: [] }
+    ],
+    "Indian": [
+        { title: "Made in Heaven", tags: [] },
+        { title: "Yeh Meri Family", tags: [] },
+        { title: "Family Man", tags: [] },
+        { title: "Panchayat", tags: ["gem"] },
+        { title: "Mirzapur", tags: [] },
+        { title: "Sacred Games", tags: [] },
+        { title: "Pushpavalli", tags: [] },
+        { title: "Breathe", tags: [] },
+        { title: "Leila", tags: [] },
+        { title: "Afsos", tags: [] },
+        { title: "Patal Lok", tags: [] },
+        { title: "Bandish Bandits", tags: [] },
+        { title: "Masaba Masaba", tags: [] },
+        { title: "Kota Factory", tags: [] },
+        { title: "Taj Mahal 1989", tags: [] },
+        { title: "Humorously Yours", tags: [] },
+        { title: "Mismatched", tags: [] },
+        { title: "A Suitable Boy", tags: [] },
+        { title: "Pitchers", tags: [] },
+        { title: "Little Things", tags: [] },
+        { title: "Bhaag Beanie Bhaag", tags: [] },
+        { title: "Scam 1992", tags: [] },
+        { title: "Better Life Foundation", tags: [] },
+        { title: "Bombay Begums", tags: [] },
+        { title: "Aspirants", tags: [] },
+        { title: "Zindagi Gulzar Hai", tags: [] },
+        { title: "Aranyak", tags: [] },
+        { title: "Yeh Kaali Kaali Aankhen", tags: [] },
+        { title: "Four More shots please", tags: [] },
+        { title: "Tabbar", tags: [] },
+        { title: "Mai", tags: [] },
+        { title: "Fame Game", tags: [] },
+        { title: "Hush hush", tags: [] },
+        { title: "FLAMES", tags: [] },
+        { title: "JL50", tags: [] },
+        { title: "IC814", tags: [] },
+        { title: "Life hill Gayi", tags: [] },
+        { title: "Shekhar Home", tags: [] },
+        { title: "Gyarah Gyarah", tags: [] },
+        { title: "Black warrant", tags: [] }
+    ],
+    "Indian Contd.": [
+        { title: "Dahaad", tags: [] },
+        { title: "A Simple Murder", tags: [] },
+        { title: "Taaza Khabar", tags: [] },
+        { title: "Trial by Fire", tags: [] },
+        { title: "Jehanabad", tags: [] },
+        { title: "Farzi", tags: ["gem"] },
+        { title: "School of Lies", tags: [] },
+        { title: "Adhura", tags: [] },
+        { title: "Jee Karda", tags: [] },
+        { title: "Humans", tags: [] },
+        { title: "Criminal Justice", tags: [] },
+        { title: "Masoom", tags: [] },
+        { title: "Kohraa", tags: [] },
+        { title: "The Trial", tags: [] },
+        { title: "Kaalkoot", tags: [] },
+        { title: "Taali", tags: [] },
+        { title: "Aakhri Sach", tags: [] },
+        { title: "Charlie Chopra", tags: [] },
+        { title: "Killer Soup", tags: [] },
+        { title: "Shehar Lakhot", tags: [] },
+        { title: "Guns & Gulaabs", tags: [] },
+        { title: "Kaala Paani", tags: [] },
+        { title: "Class", tags: [] },
+        { title: "Karmma Calling", tags: [] },
+        { title: "Kumari Srimati", tags: [] },
+        { title: "The Night Manager", tags: [] },
+        { title: "Guilty Minds", tags: ["gem"] },
+        { title: "Scoop", tags: [] },
+        { title: "Saas Bahu aur flamingo", tags: [] },
+        { title: "Broken News", tags: [] },
+        { title: "Murder in Mahim", tags: [] },
+        { title: "Jubilee", tags: [] },
+        { title: "The Railyway Men", tags: [] },
+        { title: "Mamla Legal Hai", tags: [] },
+        { title: "Maharani", tags: [] },
+        { title: "Mithya", tags: [] },
+        { title: "Call me Bae", tags: [] },
+        { title: "Raat Jawaan Hai", tags: ["gem"] },
+        { title: "Tribhuvan Mishra CA Topper", tags: [] },
+        { title: "Dupahiya", tags: [] },
+        { title: "Dabba Cartel", tags: [] }
+    ],
+   
+};
