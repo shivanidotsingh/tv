@@ -1,6 +1,10 @@
 body {
     font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9fafb;
 }
+
 header {
     background-color: #f9fafb;
     color: #6b7280;
@@ -150,45 +154,6 @@ header h1 {
     box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.5);
 }
 
-.filter-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
-}
-
-.filter-group {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 0;
-    width: 100%;
-}
-
-.filter-group label {
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: #6b7280;
-    font-size: 0.875rem;
-}
-
-.checkbox-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    margin-bottom: 0;
-}
-
-.checkbox-filters label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-right: 0;
-    margin-bottom: 0;
-    color: #6b7280;
-    font-size: 0.875rem;
-}
-
 #filter-by-group {
     order: 3;
     width: 100%;
@@ -212,4 +177,129 @@ header h1 {
     align-items: flex-start;
     flex: 1;
     min-width: 200px;
+}
+
+/* Show grid and cards styling */
+.shows-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.show-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: #ffffff;
+}
+
+.show-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.show-image-container {
+    height: 250px;
+    overflow: hidden;
+    background-color: #f3f4f6;
+    position: relative;
+}
+
+.show-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.poster-error {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+    color: #6b7280;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.show-info {
+    padding: 1rem;
+}
+
+.show-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.book-based {
+    color: #a855f7;
+}
+
+.show-year {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.show-region {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.tag {
+    padding: 0.125rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    background-color: #f3f4f6;
+    color: #6b7280;
+}
+
+.tag-therapist {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.tag-gem {
+    background-color: #dbeafe;
+    color: #2563eb;
+}
+
+.tag-book {
+    background-color: #e0e7ff;
+    color: #4f46e5;
+}
+
+.tag-supernatural {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.tag-period {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+.tag-scandi {
+    background-color: #fce7f3;
+    color: #db2777;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #6b7280;
+    font-weight: 500;
 }
