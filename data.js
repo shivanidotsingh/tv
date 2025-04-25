@@ -247,7 +247,7 @@ const tvShowsData = {
         { title: "Marvelous Mrs Maisel", tags: [] },
         { title: "Handmaid's Tale", tags: [] },
         { title: "Glow", tags: [] },
-        { title: "Masters of Sex", tags: [] },
+        { title: "Masters of Sex", tags: ["book"] },
         { title: "Dickinson", tags: [] },
         { title: "Sweet Tooth", tags: [] }
     ],
@@ -266,11 +266,13 @@ const tvShowsData = {
         { title: "Call my Agent", tags: [] },
         { title: "Two Summers", tags: [] },
         { title: "Off the Hook (Détox)", tags: [] },
-        { title: "Rita", tags: [] },
-        { title: "Bonus Family", tags: ["gem"] },
-        { title: "Love and Anarchy", tags: [] },
-        { title: "Home for Christmas", tags: [] },
-        { title: "Fallet", tags: [] }
+        { title: "Rita", tags: ["Scandi"] },
+        { title: "Bonus Family", tags: ["gem", "Scandi"] },
+        { title: "Love and Anarchy", tags: ["Scandi"] },
+        { title: "Home for Christmas", tags: ["Scandi"] },
+        { title: "Fallet", tags: ["Scandi"] },
+        { title: "The Åre Murders", tags: ["Scandi"] },
+        { title: "A Nearly Normal Family", tags: ["Scandi"] }
     ],
   
     "Australia/Canada": [
