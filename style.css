@@ -5,14 +5,14 @@
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Helvetica', sans-serif;
     background-color: #f5f5f5;
     color: #333;
     line-height: 1.6;
 }
 
 header {
-    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    background: black;
     color: white;
     padding: 2rem;
     text-align: center;
@@ -68,7 +68,7 @@ select, input[type="text"] {
 
 button#reset-filters {
     padding: 0.75rem 1.5rem;
-    background-color: #ff6b6b;
+    background-color: #A9A9A9;
     color: white;
     border: none;
     border-radius: 6px;
@@ -98,7 +98,6 @@ main {
     background: white;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
     display: flex;
     flex-direction: column;
@@ -107,7 +106,7 @@ main {
 
 .show-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .show-image-container {
