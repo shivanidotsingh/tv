@@ -151,7 +151,35 @@ const tvShowsData = {
         { title: "Tuca and Bertie", tags: ["animated"], year: "2019–present" },
         { title: "Big Mouth", tags: ["animated"], year: "2016–present" },
         { title: "Atypical", tags: ["therapist", "pwd"], year: "2017–2021" },
-        { title: "Speechless", tags: ["pwd"], year: "2016–2019" }
+        { title: "Speechless", tags: ["pwd"], year: "2016–2019" },
+       
+        { title: "Dying for sex", tags: ["gem", "mini"], year: "2025" },
+        { title: "Little Fires Everywhere", tags: ["book", "mini"], year: "2020" },
+        { title: "Strangers", tags: ["gem", "mini"], year: "2018" },
+        { title: "Maniac", tags: ["mini"], year: "2018" },
+        { title: "Unbelievable", tags: ["book", "mini"], year: "2019" },
+        { title: "SMILF", tags: ["mini"], year: "2017–2019" },
+        { title: "Mrs Fletcher", tags: ["book", "mini"], year: "2019" },
+        { title: "Modern Love", tags: ["book", "mini"], year: "2019–2021" },
+        { title: "Mindhunter", tags: ["book", "mini"], year: "2017–2019" },
+        { title: "The Undoing", tags: ["therapist", "book", "mini"], year: "2020" },
+        { title: "Unorthodox", tags: ["gem", "book", "mini"], year: "2020" },
+        { title: "Olive Kitteridge", tags: ["book", "mini", "period"], year: "2014" }, 
+        { title: "Happyish", tags: ["mini"], year: "2015" },
+       
+        { title: "Gilmore Girls", tags: ["pre2010"], year: "2000–2007"  },
+        { title: "In Treatment", tags: ["therapist", "gem"], year: "2008–2010" },
+        { title: "Mad Men", tags: [], year: "2007–2015"},
+        { title: "Gossip Girl", tags: [], year: "2007–2012"},
+        { title: "Freaks and Geeks", tags: ["mini"], year: "1999"},
+        { title: "Newsroom", tags: [], year: "2012–2014" },
+        { title: "How I met your Mother", tags: [], year: "2005–2014"  },
+        { title: "Friends", tags: [], year: "1994–2004"},
+        { title: "One Tree Hill", tags: [], year: "2003–2012"  },
+        { title: "Don't Trust the B in Apt 23", tags: [], year: "2012–2014" },
+
+       { title: "American Crime Story", tags: [], year: "2016–present" },
+       { title: "Feud", tags: [], year: "2017–present" }
     ],
 
  "America - West": [
@@ -190,46 +218,31 @@ const tvShowsData = {
     { title: "Home Economics", tags: [], year: "2021–2023" },
     { title: "Euphoria", tags: ["therapist"], year: "2019–present" },
     { title: "Curb your enthusiasm", tags: [], year: "2000–present" },
-    { title: "Special", tags: ["pwd"], year: "2019–2021" }
-],
+    { title: "Special", tags: ["pwd"], year: "2019–2021" },
     
-"Single Season/Mini Series": [
-    { title: "Enlightened", tags: ["gem"], year: "2011–2013" },
-    { title: "Little Fires Everywhere", tags: ["book"], year: "2020" },
-    { title: "Strangers", tags: [], year: "2018" },
-    { title: "Maniac", tags: [], year: "2018" },
-    { title: "Modern Love", tags: ["book"], year: "2019–2021" },
-    { title: "No Tomorrow", tags: [], year: "2016–2017" },
-    { title: "Unbelievable", tags: ["book"], year: "2019" },
-    { title: "Sharp Objects", tags: ["book"], year: "2018" },
-    { title: "Mrs Fletcher", tags: ["book"], year: "2019" },
-    { title: "Happyish", tags: [], year: "2015" },
-    { title: "Unorthodox", tags: ["gem", "book"], year: "2020" },
-    { title: "Don't Trust the B in Apt 23", tags: [], year: "2012–2013" },
-    { title: "SMILF", tags: [], year: "2017–2019" },
-    { title: "Togetherness", tags: [], year: "2015–2016" },
-    { title: "Terriers", tags: [], year: "2010" },
-    { title: "Enlisted", tags: [], year: "2014" },
-    { title: "Girlboss", tags: ["book"], year: "2017" },
-    { title: "American Crime Story", tags: [], year: "2016–present" },
-    { title: "Feud", tags: [], year: "2017–present" },
-    { title: "Mindhunter", tags: ["book"], year: "2017–2019" },
-    { title: "I Love Dick", tags: ["gem", "book"], year: "2016–2017" },
-    { title: "The Undoing", tags: ["therapist", "book"], year: "2020" },
-    { title: "United States of Tara", tags: [], year: "2009–2011" },
-    { title: "Olive Kitteridge", tags: ["book"], year: "2014" },
-    { title: "Black Bird", tags: [], year: "2022" },
-    { title: "Dying for sex", tags: ["gem"], year: "2025" },
+    { title: "Enlightened", tags: ["gem", "mini"], year: "2011–2013" },
+    { title: "Togetherness", tags: ["gem", "mini"], year: "2015–2016" },
+    { title: "Sharp Objects", tags: ["book", "mini"], year: "2018" },
+    { title: "Terriers", tags: ["mini"], year: "2010" },
+    { title: "Enlisted", tags: ["mini"], year: "2014" },
+    { title: "I Love Dick", tags: ["gem", "book"m "mini"], year: "2016–2017" },
+    { title: "Girlboss", tags: ["book", "mini"], year: "2017" },
+    
+    { title: "United States of Tara", tags: ["mini"], year: "2009–2011" },
+    { title: "Black Bird", tags: ["mini", "book"], year: "2022" },
+    { title: "Breaking Bad", tags: [], year: "2008–2013" },
+    { title: "Arrested development", tags: [], year: "2003–2019" },
+    { title: "Lie to Me", tags: [], year: "2009–2011" },
+    { title: "Dexter", tags: [], year: "2006–2013" },
+    { title: "Grey's anatomy", tags: [], year: "2005–present" },
+    { title: "Psych", tags: [], year: "2006–2014" },
+    { title: "Scrubs", tags: [], year: "2001–2010" },
+    { title: "The OC", tags: [], year: "2003–2007" },
+    { title: "The Big Bang Theory", tags: [], year: "2007–2019" },
+    { title: "Modern Family", tags: [], year: "2009–2020"  },
 
 ],
 
-  "Elsewhere": [
-    { title: "Tyrant", tags: [], year: "2014–2016" },
-    { title: "Four Weddings & a Funeral", tags: [], year: "2019" },
-    { title: "The Great", tags: ["period"], year: "2020–present" },
-    { title: "Ethos", tags: ["gem"], year: "2020" },
-    { title: "Expats", tags: ["book"], year: "2024" },
-],
 "Europe": [
     { title: "Hook up Plan", tags: [], year: "2018–2020" },
     { title: "Emily in Paris", tags: [], year: "2020–present" },
@@ -263,6 +276,7 @@ const tvShowsData = {
     { title: "Deadloch", tags: [], year: "2023" },
     { title: "Heartbreak High (2022)", tags: [], year: "2022–present" },
     { title: "Upload", tags: ["supernatural"], year: "2020–present" },
+    { title: "Apple Cider Vinegar", tags: [ "mini"], year: "2025"},
 ],
     
 "India": [
@@ -280,7 +294,7 @@ const tvShowsData = {
     { title: "Bandish Bandits", tags: [], year: "2020" },
     { title: "Masaba Masaba", tags: [], year: "2020–present" },
     { title: "Kota Factory", tags: [], year: "2019–present" },
-    { title: "Taj Mahal 1989", tags: [], year: "2019" },
+    { title: "Taj Mahal 1989", tags: [], year: "2020" },
     { title: "Humorously Yours", tags: [], year: "2014–2016" },
     { title: "Mismatched", tags: [], year: "2020–present" },
     { title: "A Suitable Boy", tags: [], year: "2020" },
@@ -348,28 +362,13 @@ const tvShowsData = {
         { title: "Dupahiya", tags: [] },
         { title: "Dabba Cartel", tags: [] }
     ],
-       "~Pre 2010~": [
-        { title: "Breaking Bad", tags: ["pre2010"] },
-        { title: "Arrested development", tags: ["pre2010"] },
-        { title: "Gilmore Girls", tags: ["pre2010"] },
-        { title: "How I met your Mother", tags: ["pre2010"] },
-        { title: "Scrubs", tags: ["pre2010"] },
-        { title: "Gossip Girl", tags: ["pre2010"] },
-        { title: "One Tree Hill", tags: ["pre2010"] },
-        { title: "The OC", tags: ["pre2010"] },
-        { title: "Psych", tags: ["pre2010"] },
-        { title: "Lie to Me", tags: ["pre2010"] },
-        { title: "Newsroom", tags: ["pre2010"] },
-        { title: "Dexter", tags: ["pre2010"] },
-        { title: "Friends", tags: ["pre2010"] },
-        { title: "Grey's anatomy", tags: ["pre2010"] },
-        { title: "Freaks and Geeks", tags: ["pre2010"] },
-        { title: "Theat 70's Show", tags: ["pre2010"] },
-        { title: "Modern Family", tags: ["pre2010"] },
-        { title: "Big Bang Theory", tags: ["pre2010"] },
-        { title: "Bones/Castle", tags: ["pre2010"] },
-        { title: "Mad Men", tags: ["pre2010"] },
-        { title: "In Treatment", tags: ["therapist", "pre2010", "gem"] }
-    ]
    
+  "Elsewhere": [
+    { title: "Tyrant", tags: [], year: "2014–2016" },
+    { title: "Four Weddings & a Funeral", tags: [], year: "2019" },
+    { title: "The Great", tags: ["period"], year: "2020–present" },
+    { title: "Ethos", tags: ["gem"], year: "2020" },
+    { title: "Expats", tags: ["book"], year: "2024" },
+]
+
 }
