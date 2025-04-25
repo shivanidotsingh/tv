@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const supernaturalFilter = document.getElementById('supernatural-filter');
     const periodFilter = document.getElementById('period-filter');
     const scandiFilter = document.getElementById('scandi-filter');
+    // New Filter DOM elements
+    const miniFilter = document.getElementById('mini-filter');
+    const animatedFilter = document.getElementById('animated-filter');
+    const pwdFilter = document.getElementById('pwd-filter');
+
+
     const searchInput = document.getElementById('search');
     const resetButton = document.getElementById('reset-filters');
     const sortSelect = document.getElementById('sort-select');
@@ -50,6 +56,12 @@ document.addEventListener('DOMContentLoaded', function() {
     supernaturalFilter.addEventListener('change', renderShows);
     periodFilter.addEventListener('change', renderShows);
     scandiFilter.addEventListener('change', renderShows);
+    // New Filter Event listeners
+    miniFilter.addEventListener('change', renderShows);
+    animatedFilter.addEventListener('change', renderShows);
+    pwdFilter.addEventListener('change', renderShows);
+
+
     searchInput.addEventListener('input', renderShows);
     resetButton.addEventListener('click', resetFilters);
     sortSelect.addEventListener('change', renderShows);
@@ -76,6 +88,12 @@ document.addEventListener('DOMContentLoaded', function() {
         supernaturalFilter.checked = false;
         periodFilter.checked = false;
         scandiFilter.checked = false;
+        // Reset New Filters
+        miniFilter.checked = false;
+        animatedFilter.checked = false;
+        pwdFilter.checked = false;
+
+
         searchInput.value = '';
         sortSelect.value = 'year';
         renderShows();
@@ -91,6 +109,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const isSupernatural = supernaturalFilter.checked;
         const isPeriod = periodFilter.checked;
         const isScandi = scandiFilter.checked;
+        // Get New Filter states
+        const isMini = miniFilter.checked;
+        const isAnimated = animatedFilter.checked;
+        const isPwd = pwdFilter.checked;
+
         const searchQuery = searchInput.value.toLowerCase().trim();
         const sortBy = sortSelect.value;
 
@@ -120,7 +143,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                    (!isBook || (show.tags && show.tags.includes('book'))) &&
                                    (!isSupernatural || (show.tags && show.tags.includes('supernatural'))) &&
                                    (!isPeriod || (show.tags && show.tags.includes('period'))) &&
-                                   (!isScandi || (show.tags && show.tags.includes('scandi')));
+                                   (!isScandi || (show.tags && show.tags.includes('scandi'))) &&
+                                   // New Filter Tag Checks
+                                   (!isMini || (show.tags && show.tags.includes('mini'))) &&
+                                   (!isAnimated || (show.tags && show.tags.includes('animated'))) &&
+                                   (!isPwd || (show.tags && show.tags.includes('pwd')));
 
 
                 const matchesSearch = !searchQuery || show.title.toLowerCase().includes(searchQuery);
@@ -220,9 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const showTitle = document.createElement('h3');
         showTitle.classList.add('show-title');
         showTitle.textContent = show.title;
-        if (show.tags && show.tags.includes('book')) {
-            showTitle.classList.add('book-based');
-        }
+  
         showInfo.appendChild(showTitle);
 
         // Add the year display here
@@ -262,18 +287,32 @@ document.addEventListener('DOMContentLoaded', function() {
             img.alt = `${show.title} poster`;
 
             if (tmdbPosterUrl) {
+                // Use TMDB poster if found
                 img.src = tmdbPosterUrl;
-            } else if (show.poster_path && show.poster_path !== '/coJVIUEOToAEGViuhHPQg1prXHf.jpg' && show.poster_path !== '/7Q8RCLcCGd4hY23JzkD6aXU6QQ5.jpg' && !show.poster_path.startsWith('http')) {
-                 // Fallback to existing relative path in data.js (assuming a 'posters' directory)
-                 img.src = './posters/' + show.poster_path; // Adjust path if necessary
-            } else if (show.poster_path && show.poster_path.startsWith('http')) {
-                 // Fallback to existing absolute URL in data.js
-                 img.src = show.poster_path;
+            } else if (show.poster_path) {
+                 // Fallback to existing poster_path from data.js
+                 // Exclude the initial placeholder values
+                 if (show.poster_path === '/coJVIUEOToAEGViuhHPQg1prXHf.jpg' || show.poster_path === '/7Q8RCLcCGd4hY23JzkD6aXU6QQ5.jpg') {
+                     showImageContainer.innerHTML = '<div class="poster-error">Poster not available</div>';
+                     console.warn(`Placeholder poster_path found for ${show.title}.`);
+                     return; // Stop here if it's a placeholder
+                 } else if (show.poster_path.startsWith('http')) {
+                     // If it's an absolute URL starting with http
+                     img.src = show.poster_path;
+                 } else if (show.poster_path.startsWith('/')) {
+                     // If it's an absolute path relative to the domain root (starts with /)
+                     img.src = show.poster_path;
+                 }
+                 else {
+                    // If it's a relative path (doesn't start with http or /)
+                    // Assuming it might be in a local 'posters' directory
+                    img.src = './posters/' + show.poster_path; // Adjust path if necessary
+                 }
             }
             else {
-                // If no TMDB poster and no valid poster_path in data.js
+                // If no TMDB poster and no poster_path in data.js
                 showImageContainer.innerHTML = '<div class="poster-error">Poster not available</div>';
-                console.warn(`No poster found for ${show.title}`);
+                console.warn(`No poster found for ${show.title}.`);
                 return; // Stop here if no image source is found
             }
 
