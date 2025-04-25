@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const scandiFilter = document.getElementById('scandi-filter');
     const searchInput = document.getElementById('search');
     const resetButton = document.getElementById('reset-filters');
+    const sortSelect = document.getElementById('sort-select'); // Get the new sort dropdown
 
     // Populate region filter
     populateRegionFilter();
@@ -27,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     scandiFilter.addEventListener('change', renderShows);
     searchInput.addEventListener('input', renderShows);
     resetButton.addEventListener('click', resetFilters);
+    sortSelect.addEventListener('change', renderShows); // Listen for changes in the sort dropdown
 
     // Functions
     function populateRegionFilter() {
@@ -45,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         gemFilter.checked = false;
         bookFilter.checked = false;
         searchInput.value = '';
+        sortSelect.value = 'year'; // Reset the sort dropdown to default
         renderShows();
     }
 
@@ -57,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const isPeriod = periodFilter.checked;
         const isScandi = scandiFilter.checked;
         const searchQuery = searchInput.value.toLowerCase().trim();
+        const sortBy = sortSelect.value; // Get the selected sort option
 
         showsContainer.innerHTML = '<div class="loading">Loading shows...</div>';
 
@@ -73,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     isSupernatural && show.tags.includes('supernatural'),
                     isPeriod && show.tags.includes('period'),
                     isScandi && show.tags.includes('scandi')
-                ].every(Boolean);  // Check that ALL conditions in the array are true
+                ].every(Boolean);
                 const matchesSearch = !searchQuery || show.title.toLowerCase().includes(searchQuery);
                 return matchesRegion && matchesTags && matchesSearch;
             });
@@ -84,14 +88,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 return match ? parseInt(match[1]) : -Infinity;
             }
 
-            // Sort the filtered shows chronologically (descending)
-            filteredShows.sort((a, b) => getStartYear(b.year) - getStartYear(a.year));
+            // Sort the filtered shows
+            if (sortBy === 'year') {
+                filteredShows.sort((a, b) => getStartYear(b.year) - getStartYear(a.year)); // Sort by year, descending
+            } else if (sortBy === 'title') {
+                filteredShows.sort((a, b) => a.title.localeCompare(b.title)); // Sort by title, ascending
+            }
 
             if (filteredShows.length > 0) {
                 const showsGrid = document.createElement('div');
                 showsGrid.className = 'shows-grid';
                 filteredShows.forEach(show => {
-                    // Removed the extra fetch here
                     showsGrid.appendChild(createShowCard(show, selectedRegion));
                 });
                 showsContainer.appendChild(showsGrid);
@@ -104,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100);
     }
 
-    function createShowCard(show, region) { // Added region parameter
+    function createShowCard(show, region) {
         const showCard = document.createElement('div');
         showCard.classList.add('show-card');
 
@@ -141,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const showRegion = document.createElement('p');
         showRegion.classList.add('show-region');
-        showRegion.textContent = region; // Use the region parameter
+        showRegion.textContent = region;
         showInfo.appendChild(showRegion);
 
         if (show.tags && show.tags.length > 0) {
