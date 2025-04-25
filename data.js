@@ -244,7 +244,9 @@ const tvShowsData = {
     { title: "Home for Christmas", tags: ["scandi"], year: "2019–2020" },
     { title: "Fallet", tags: ["scandi"], year: "2017" },
     { title: "The Åre Murders", tags: ["scandi"], year: "2021" },
-    { title: "A Nearly Normal Family", tags: ["scandi"], year: "2023" }
+    { title: "A Nearly Normal Family", tags: ["scandi"], year: "2023" },
+    { title: "Murder mindfully", tags: [], year: "2024" },
+   
 ],
   
 "Australia/Canada": [
@@ -259,7 +261,6 @@ const tvShowsData = {
     { title: "Fisk", tags: [], year: "2021–present" },
     { title: "Deadloch", tags: [], year: "2023" },
     { title: "Heartbreak High (2022)", tags: [], year: "2022–present" },
-    { title: "Murder mindfully (german)", tags: [], year: "2024" },
     { title: "Upload", tags: ["supernatural"], year: "2020–present" },
 ],
     
