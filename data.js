@@ -219,13 +219,13 @@ const tvShowsData = {
     { title: "The Undoing", tags: ["therapist", "book"], year: "2020" },
     { title: "United States of Tara", tags: [], year: "2009–2011" },
     { title: "Olive Kitteridge", tags: ["book"], year: "2014" },
-    { title: "Blackbird", tags: [], year: "2022" }
+    { title: "Black Bird", tags: [], year: "2022" }
 ],
 
   "Elsewhere": [
     { title: "Tyrant", tags: [], year: "2014–2016" },
     { title: "Four Weddings & a Funeral", tags: [], year: "2019" },
-    { title: "The Great (hulu)", tags: ["period"], year: "2020–present" },
+    { title: "The Great", tags: ["period"], year: "2020–present" },
     { title: "Ethos", tags: ["gem"], year: "2020" },
     { title: "Expats", tags: ["book"], year: "2024" },
 ],
