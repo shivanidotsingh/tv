@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const scandiFilter = document.getElementById('scandi-filter');
     const searchInput = document.getElementById('search');
     const resetButton = document.getElementById('reset-filters');
-    const sortSelect = document.getElementById('sort-select'); // Get the new sort dropdown
+    const sortSelect = document.getElementById('sort-select');
 
     // Populate region filter
     populateRegionFilter();
@@ -26,13 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
     supernaturalFilter.addEventListener('change', renderShows);
     periodFilter.addEventListener('change', renderShows);
     scandiFilter.addEventListener('change', renderShows);
-    
     searchInput.addEventListener('input', renderShows);
     resetButton.addEventListener('click', resetFilters);
-    sortSelect.addEventListener('change', renderShows); // Listen for changes in the sort dropdown
+    sortSelect.addEventListener('change', renderShows);
 
     // Functions
     function populateRegionFilter() {
+        console.log("populateRegionFilter() called");
         const regions = Object.keys(tvShowsData);
         regions.forEach(region => {
             const option = document.createElement('option');
@@ -40,19 +40,23 @@ document.addEventListener('DOMContentLoaded', function() {
             option.textContent = region;
             regionFilter.appendChild(option);
         });
+        console.log("populateRegionFilter() finished");
     }
 
     function resetFilters() {
+        console.log("resetFilters() called");
         regionFilter.value = 'all';
         therapistFilter.checked = false;
         gemFilter.checked = false;
         bookFilter.checked = false;
         searchInput.value = '';
-        sortSelect.value = 'year'; // Reset the sort dropdown to default
+        sortSelect.value = 'year';
         renderShows();
+        console.log("resetFilters() finished");
     }
 
     function renderShows() {
+        console.log("renderShows() called");
         const selectedRegion = regionFilter.value;
         const hasTherapist = therapistFilter.checked;
         const isGem = gemFilter.checked;
@@ -61,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const isPeriod = periodFilter.checked;
         const isScandi = scandiFilter.checked;
         const searchQuery = searchInput.value.toLowerCase().trim();
-        const sortBy = sortSelect.value; // Get the selected sort option
+        const sortBy = sortSelect.value;
 
         showsContainer.innerHTML = '<div class="loading">Loading shows...</div>';
 
@@ -91,16 +95,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Sort the filtered shows
             if (sortBy === 'year') {
-                filteredShows.sort((a, b) => getStartYear(b.year) - getStartYear(a.year)); // Sort by year, descending
+                filteredShows.sort((a, b) => getStartYear(b.year) - getStartYear(a.year));
             } else if (sortBy === 'title') {
-                filteredShows.sort((a, b) => a.title.localeCompare(b.title)); // Sort by title, ascending
+                filteredShows.sort((a, b) => a.title.localeCompare(b.title));
             }
+
+            console.log("filteredShows:", filteredShows);
 
             if (filteredShows.length > 0) {
                 const showsGrid = document.createElement('div');
                 showsGrid.className = 'shows-grid';
                 filteredShows.forEach(show => {
-                    showsGrid.appendChild(createShowCard(show, selectedRegion));
+                    const showCard = createShowCard(show, selectedRegion);
+                    showsGrid.appendChild(showCard);
                 });
                 showsContainer.appendChild(showsGrid);
             } else {
@@ -109,10 +116,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 noResults.textContent = 'No shows found matching your filters.';
                 showsContainer.appendChild(noResults);
             }
+            console.log("renderShows() finished");
         }, 100);
     }
 
     function createShowCard(show, region) {
+        console.log("createShowCard() called with show:", show, "and region:", region);
         const showCard = document.createElement('div');
         showCard.classList.add('show-card');
 
@@ -165,20 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         showCard.appendChild(showInfo);
+        console.log("createShowCard() returning:", showCard);
         return showCard;
-    }
-    
-    // Utility function to generate colors based on string input
-    function stringToColor(str) {
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            hash = str.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        
-        // Generate hue between 0 and 360
-        const hue = hash % 360;
-        
-        // Use HSL to ensure good contrast with white text
-        return `hsl(${hue}, 70%, 40%)`;
     }
 });
