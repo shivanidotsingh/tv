@@ -64,7 +64,7 @@ const tvShowsData = {
         { title: "Seinfeld", tags: ["comedian"], year: "1989–1998" },
         { title: "Unbreakable Kimmy Schmidt", tags: [], year: "2015–2020" },
         { title: "The Politician", tags: [], year: "2019–2020", poster_path: "https://image.tmdb.org/t/p/w1280/5Bm3rMQAoXSFKAVYMxPYQRyM07U.jpg" },
-        { title: "What we do in the Shadows", tags: [], year: "2019–present" },
+        { title: "What we do in the Shadows", tags: ["supernatural"], year: "2019–present" },
         { title: "Barry", tags: ["gem"], year: "2018–2023" },
         { title: "Corporate", tags: ["gem"], year: "2018–2020" },
         { title: "Difficult People", tags: [], year: "2015–2017" },
