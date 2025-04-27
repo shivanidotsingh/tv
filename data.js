@@ -7,9 +7,10 @@ const tvShowsData = {
         { title: "Lovesick", tags: [], year: "2014–2018" },
         { title: "You're the Worst", tags: ["therapist"], year: "2014–2019" },
         { title: "Happy Valley", tags: [], year: "2014–2023" },
-        { title: "Killing Eve", tags: ["spy"], year: "2018–2022" },
+        { title: "Killing Eve", tags: ["spy", "gem"], year: "2018–2022" },
         { title: "Sherlock", tags: ["book"], year: "2010–2017" },
         { title: "Catastrophe", tags: ["gem"], year: "2015–2019" },
+        { title: "Criminal", tags: ["gem"], year: "2019–2020" },
         { title: "Derry Girls", tags: ["gem"], year: "2018–2022" },
         { title: "Sick Note", tags: [], year: "2017–2018" },
         { title: "Sex Education", tags: ["therapist", "pwd"], year: "2019–present" },
@@ -29,6 +30,7 @@ const tvShowsData = {
         { title: "My Mad Fat Diary", tags: [], year: "2013–2015" },
         { title: "Downton Abbey", tags: ["period"], year: "2010–2015" },
         { title: "Broadchurch", tags: [], year: "2013–2017" },
+        { title: "Inside Man", tags: [], year: "2022" },
         { title: "Doctor Foster", tags: [], year: "2015–2017" },
         { title: "We Are Lady Parts", tags: ["gem"], year: "2021–present" },
         { title: "The Pursuit of Love", tags: ["gem", "book", "period"], year: "2021" },
@@ -51,7 +53,8 @@ const tvShowsData = {
         { title: "KAOS", tags: ["gem", "supernatural"], year: "2024" },
         { title: "Black Doves", tags: ["spy"], year: "2024" },
         { title: "Adolescence", tags: [], year: "2025" },
-        { title: "Four Weddings & a Funeral", tags: ["mini"], year: "2019" }
+        { title: "Four Weddings & a Funeral", tags: ["mini"], year: "2019" },
+        { title: "The Agency", tags: ["spy"], year: "2024" }
 
     ],
     "America - East": [
@@ -181,13 +184,14 @@ const tvShowsData = {
         { title: "Feud", tags: [], year: "2017–present" },
         { title: "The Sopranos", tags: ["classic", "therapist"], year: "1999—2007" },
         { title: "The Residence", tags: ["book"], year: "2025" },
-        { title: "The Gilded age", tags: ["period", "gem"], year: "2022–present" }
+        { title: "The Gilded age", tags: ["period", "gem"], year: "2022–present" },
+        { title: "Couples Therapy", tags: ["docu", "gem"], year: "2019–present" }
     ],
 
  "America - West": [
-    { title: "I'm Sorry", tags: ["gem", "comedian"], year: "2017–2019" },
+    { title: "I'm Sorry", tags: ["comedian"], year: "2017–2019" },
     { title: "Insecure", tags: [], year: "2016–2021" },
-    { title: "New Girl", tags: [], year: "2011–2018" },
+    { title: "New Girl", tags: ["classic"], year: "2011–2018" },
     { title: "Silicon Valley", tags: [], year: "2014–2019" },
     { title: "Grace and Frankie", tags: [], year: "2015–2022" },
     { title: "Crazy ex girlfriend", tags: ["therapist", "comedian"], year: "2015–2019" },
@@ -245,14 +249,14 @@ const tvShowsData = {
 ],
 
 "Europe": [
-    { title: "Hook up Plan", tags: [], year: "2018–2020" },
+    { title: "The Hook Up Plan", tags: [], year: "2018–2020" },
     { title: "Emily in Paris", tags: [], year: "2020–present" },
     { title: "Elite", tags: [], year: "2018–present" },
     { title: "Valeria", tags: [], year: "2020–present" },
     { title: "The Time it Takes", tags: ["gem"], year: "2021" },
     { title: "Call my Agent", tags: [], year: "2015–2020" },
     { title: "Two Summers", tags: [], year: "2022" },
-    { title: "Off the Hook (Détox)", tags: [], year: "2022" },
+    { title: "Off the Hook(Detox)", tags: [], year: "2022" },
     { title: "Rita", tags: ["Scandi"], year: "2012–2020" },
     { title: "Bonus Family", tags: ["gem", "scandi"], year: "2017–2020" },
     { title: "Tore", tags: ["gem", "scandi"], year: "2023–present" },
@@ -262,7 +266,7 @@ const tvShowsData = {
     { title: "The Åre Murders", tags: ["scandi"], year: "2021" },
     { title: "A Nearly Normal Family", tags: ["scandi"], year: "2023" },
     { title: "Murder mindfully", tags: [], year: "2024" },
-    { title: "The Agency", tags: ["spy"], year: "2024" }
+    
    
 ],
   
