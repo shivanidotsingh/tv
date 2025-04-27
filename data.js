@@ -263,7 +263,7 @@ const tvShowsData = {
     { title: "Love & Anarchy", tags: ["scandi"], year: "2020–present" },
     { title: "Home for Christmas", tags: ["scandi"], year: "2019–2020" },
     { title: "Fallet", tags: ["scandi"], year: "2017" },
-    { title: "The Åre Murders", tags: ["scandi"], year: "2021" },
+    { title: "The Åre Murders", tags: ["scandi"], year: "2025" },
     { title: "A Nearly Normal Family", tags: ["scandi"], year: "2023" },
     { title: "Murder mindfully", tags: [], year: "2024" },
     
