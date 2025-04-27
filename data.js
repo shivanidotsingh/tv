@@ -314,12 +314,11 @@ const tvShowsData = {
         { title: "Better Life Foundation", tags: [] },
         { title: "Bombay Begums", tags: [], year: "2021—present" },
         { title: "Aspirants", tags: [] },
-        { title: "Zindagi Gulzar Hai", tags: [] },
         { title: "Aranyak", tags: [] },
         { title: "Yeh Kaali Kaali Ankhein", tags: [] },
         { title: "Four More shots please", tags: [] },
         { title: "Tabbar", tags: [], year: "2021" },
-        { title: "Mai", tags: [] },
+        { title: "Mai: A Mother's Rage", tags: [], year: "2022" },
         { title: "Fame Game", tags: [] },
         { title: "Hush hush", tags: [] },
         { title: "FLAMES", tags: [] },
@@ -378,11 +377,12 @@ const tvShowsData = {
    
   "Elsewhere": [
     { title: "Tyrant", tags: [], year: "2014–2016" },
-    { title: "White Lotus", tags: [], year: "2021–present" },
+    { title: "White Lotus", tags: ["classic"], year: "2021–present" },
     { title: "Blue Eye Samurai", tags: ["animated", "gem"], year: "2023" },
     { title: "The Great", tags: ["period"], year: "2020–present" },
     { title: "Ethos", tags: ["gem"], year: "2020" },
-    { title: "Expats", tags: ["book"], year: "2024" }
+    { title: "Expats", tags: ["book"], year: "2024" },
+    { title: "Zindagi Gulzar Hai", tags: [] }
 ]
 
 }
