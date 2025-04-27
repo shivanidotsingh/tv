@@ -120,7 +120,7 @@ const tvShowsData = {
         { title: "Maid", tags: ["book"], year: "2021" },
         { title: "Severance", tags: ["superntural"], year: "2022–present" },
         { title: "Peacemaker", tags: ["supernatural"], year: "2022–present" },
-        { title: "Wanda Vision", tags: ["supernatural", "mini", "gem"], year: "2021" },
+        { title: "WandaVision", tags: ["supernatural", "mini", "gem"], year: "2021" },
         { title: "Life & Beth", tags: ["gem"], year: "2022–present" },
         { title: "Mo", tags: [], year: "2022" },
         { title: "The Patient", tags: ["therapist"], year: "2022" },
