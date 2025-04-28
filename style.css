@@ -97,9 +97,25 @@ header h1 {
     margin-bottom: 0.1rem;
 }
 
-/* Make all inputs consistent width */
 #region-filter,
-#sort-select,
+#sort-select {
+    padding: 0.5rem;
+    border-radius: 0.125rem;
+    border: 1px solid #d1d5db;
+    background-color: #f9fafb;
+    color: #6b7280;
+    width: 100%;
+    max-width:20rem;
+    font-size: 0.875rem;
+    transition: border-color 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5.5 7l4.5 5 4.5-5' stroke='%23a855f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1rem;
+}
+
 #search {
     padding: 0.5rem;
     border-radius: 0.125rem;
@@ -107,21 +123,11 @@ header h1 {
     background-color: #f9fafb;
     color: #6b7280;
     font-size: 0.875rem;
-    width: 100%; /* Full width */
-    max-width: 20rem; /* Consistent max-width for all */
-    box-sizing: border-box; /* Include padding in width calculation */
     transition: border-color 0.2s ease;
     appearance: none;
     -webkit-appearance: none;
-}
-
-/* Keep the dropdown arrow for select elements only */
-#region-filter,
-#sort-select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5.5 7l4.5 5 4.5-5' stroke='%23a855f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.5rem center;
-    background-size: 1rem;
+    width: 100%;
+    max-width:20rem;
 }
 
 #region-filter:focus,
