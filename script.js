@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     // DOM elements
     const showsContainer = document.getElementById('shows-container');
     const regionFilter = document.getElementById('region-filter');
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Call this function when the script loads
-    fetchTmdbConfig();
+    await fetchTmdbConfig();
 
 
     // Populate region filter
