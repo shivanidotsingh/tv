@@ -106,8 +106,6 @@ header h1 {
     background-color: #f9fafb;
     color: #6b7280;
     font-size: 0.875rem;
-    width: 100%;
-    max-width: 20rem;
     transition: border-color 0.2s ease;
     appearance: none;
     -webkit-appearance: none;
@@ -124,8 +122,6 @@ header h1 {
     background-color: #f9fafb;
     color: #6b7280;
     font-size: 0.875rem;
-    width: 100%;
-    max-width: 10rem;
     transition: border-color 0.2s ease;
     appearance: none;
     -webkit-appearance: none;
