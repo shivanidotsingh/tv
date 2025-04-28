@@ -118,7 +118,7 @@ const tvShowsData = {
         { title: "Dash & Lily", tags: ["book"], year: "2020" },
         { title: "Horace and Pete", tags: [], year: "2016" },
         { title: "Maid", tags: ["book"], year: "2021" },
-        { title: "Severance", tags: ["superntural"], year: "2022–present" },
+        { title: "Severance", tags: ["supernatural"], year: "2022–present" },
         { title: "Peacemaker", tags: ["supernatural"], year: "2022–present" },
         { title: "WandaVision", tags: ["supernatural", "mini", "gem"], year: "2021" },
         { title: "Life & Beth", tags: ["gem"], year: "2022–present" },
