@@ -125,12 +125,10 @@ header h1 {
     color: #6b7280;
     font-size: 0.875rem;
     width: 100%;
-    max-width: 20rem;
+    max-width: 10rem;
     transition: border-color 0.2s ease;
     appearance: none;
     -webkit-appearance: none;
-
-    background-size: 1rem;
 }
 
 #region-filter:focus,
