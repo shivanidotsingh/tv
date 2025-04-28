@@ -181,39 +181,33 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createShowCard(show, region) {
-    console.log("createShowCard() called with show:", show, "and region:", region);
-    const showCard = document.createElement('div');
-    showCard.classList.add('show-card');
+        const showCard = document.createElement('div');
+        showCard.classList.add('show-card');
 
-    // Create and add the image container first (for poster)
-    const showImageContainer = document.createElement('div');
-    showImageContainer.classList.add('show-image-container');
-    showImageContainer.innerHTML = '<div class="loading-poster">Loading poster...</div>'; // Initial loading state
+        const showImageContainer = document.createElement('div');
+        showImageContainer.classList.add('show-image-container');
+        showImageContainer.innerHTML = '<div class="loading-poster">Loading poster...</div>';
 
-    // Add the show info container after the image (which will contain the title, year, region, tags)
-    const showInfo = document.createElement('div');
-    showInfo.classList.add('show-info');
+        const showInfo = document.createElement('div');
+        showInfo.classList.add('show-info');
+        
+        const showTitle = document.createElement('h3');
+        showTitle.classList.add('show-title');
+        showTitle.textContent = show.title;
+        showInfo.appendChild(showTitle);
 
-    // Create and add the title
-    const showTitle = document.createElement('h3');
-    showTitle.classList.add('show-title');
-    showTitle.textContent = show.title;
-    showInfo.appendChild(showTitle);
+        const showYear = document.createElement('p');
+        showYear.classList.add('show-year');
+        showYear.textContent = show.year || 'Year Unknown';
+        showInfo.appendChild(showYear);
 
-    // Create and add the year
-    const showYear = document.createElement('p');
-    showYear.classList.add('show-year');
-    showYear.textContent = show.year || 'Year Unknown';
-    showInfo.appendChild(showYear);
-
-    // Create and add the region
-    const showRegion = document.createElement('p');
-    showRegion.classList.add('show-region');
-    showRegion.textContent = region || 'Unknown Region'; // Use the passed region
-    showInfo.appendChild(showRegion);
-
-    // Create and add the tags section (if tags exist)
-    if (show.tags && show.tags.length > 0) {
+        const showRegion = document.createElement('p');
+        showRegion.classList.add('show-region');
+        showRegion.textContent = region || 'Unknown Region';
+        showInfo.appendChild(showRegion);
+        
+        //Show Tags if any
+        if (show.tags && show.tags.length > 0) {
         const tagsContainer = document.createElement('div');
         tagsContainer.classList.add('tags-container');
         show.tags.forEach(tag => {
@@ -224,32 +218,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         showInfo.appendChild(tagsContainer);
     }
+        
+        showCard.appendChild(showImageContainer);
+        showCard.appendChild(showInfo);
 
-    // Now append the image container first (this will be the first item in the card)
-    showCard.appendChild(showImageContainer);
+        fetchTmdbPosterUrl(show.title, show.year).then(tmdbPosterUrl => {
+            showImageContainer.innerHTML = ''; // Clear loading state
+            if (tmdbPosterUrl) {
+                const img = document.createElement('img');
+                img.classList.add('show-image');
+                img.alt = `${show.title} poster`;
+                img.src = tmdbPosterUrl;
+                showImageContainer.appendChild(img);
+            } else {
+                showImageContainer.innerHTML = '<div class="poster-error">Poster not available</div>';
+            }
+        });
 
-    // Then append the show info (which contains the title, year, region, and tags)
-    showCard.appendChild(showInfo);
-
-    // Fetch the TMDB poster (or fall back to the existing poster)
-    fetchTmdbPosterUrl(show.title, show.year).then(tmdbPosterUrl => {
-        showImageContainer.innerHTML = ''; // Clear the loading state
-
-        const img = document.createElement('img');
-        img.classList.add('show-image');
-        img.alt = `${show.title} poster`;
-
-        if (tmdbPosterUrl) {
-            img.src = tmdbPosterUrl;
-        } else {
-            showImageContainer.innerHTML = '<div class="poster-error">Poster not available</div>';
-        }
-
-        showImageContainer.appendChild(img); // Append the fetched poster image here
-    });
-
-    console.log("createShowCard() returning:", showCard);
-    return showCard;
-}
-
+        return showCard;
+    }
 });
