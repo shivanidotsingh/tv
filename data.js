@@ -340,13 +340,13 @@ const tvShowsData = {
     { title: "School of Lies", tags: [], year: "2023–present" },
     { title: "Adhura", tags: [], year: "2023–present" },
     { title: "Jee Karda", tags: [], year: "2023–present" },
-    { title: "Human", tags: [], year: "2022–present" },
+    { title: "Human", tags: [], year: "" },
     { title: "Criminal Justice", tags: [], year: "2019–present" },
     { title: "Masoom", tags: [], year: "2022–present" },
     { title: "Kohrra", tags: [], year: "2023–present" },
     { title: "The Trial", tags: [], year: "" },
     { title: "Kaalkoot", tags: [], year: "" },
-    { title: "Taali", tags: [], year: "" },
+    { title: "Taali (ताली)", tags: [], year: "" },
     { title: "Aakhri Sach", tags: [], year: "" },
     { title: "Charlie Chopra", tags: ["mini"], year: "2023–present" },
     { title: "Killer Soup", tags: ["gem"], year: "2024" },
@@ -361,7 +361,7 @@ const tvShowsData = {
     { title: "Guilty Minds", tags: ["gem"], year: "2022–present" },
     { title: "Scoop", tags: ["mini"], year: "2023" },
     { title: "Tooth Pari", tags: ["supernatural"], year: "2023–present" },
-    { title: "Loot Kaand", tags: [], year: "2025" },
+    { title: "Loot Kaand", tags: [], year: "2025–present" },
     { title: "Half Love Half Arranged", tags: [], year: "2023" },
     { title: "Half CA", tags: [], year: "2023" },
     { title: "Heeramandi", tags: ["period", "mini"], year: "2024" },
@@ -377,10 +377,10 @@ const tvShowsData = {
     { title: "Raat Jawaan Hai", tags: ["gem"], year: "2024–present" },
     { title: "Tribhuvan Mishra CA Topper", tags: [], year: "2024–present" },
     { title: "Big Girls Don't Cry", tags: [], year: "2024–present" },
-    { title: "Dupahiya", tags: [],  year: "2025" },
+    { title: "Dupahiya", tags: [],  year: "2025–present" },
     { title: "Citadel Honey Bunny", tags: ["spy"],  year: "2024" },
     { title: "Waack Girls", tags: ["gem"],  year: "2024" },
-    { title: "Dabba Cartel", tags: [],  year: "2025" }
+    { title: "Dabba Cartel", tags: [],  year: "2025–present" }
     ],
    
   "Elsewhere": [
