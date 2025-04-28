@@ -124,26 +124,6 @@ header h1 {
     background-size: 1rem;
 }
 
-/* Add responsive adjustments for the filter container */
-@media (max-width: 768px) {
-    #region-search-sort-group {
-        flex-direction: column;
-    }
-    
-    #region-filter-group,
-    #search-filter-group,
-    #sort-filter-group {
-        width: 100%;
-        margin-bottom: 1rem;
-    }
-    
-    #region-filter,
-    #sort-select,
-    #search {
-        max-width: 100%; /* Full width on mobile */
-    }
-}
-
 #region-filter:focus,
 #search:focus,
 #sort-select:focus {
