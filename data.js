@@ -185,6 +185,7 @@ const tvShowsData = {
         { title: "The Sopranos", tags: ["classic", "therapist"], year: "1999–2007" },
         { title: "The Residence", tags: ["book"], year: "2025" },
         { title: "The Gilded age", tags: ["period", "gem"], year: "2022–present" },
+        { title: "That 70's Show", tags: ["mini"], year: "1998" },
         { title: "Couples Therapy", tags: ["docu", "gem"], year: "2019–present" }
     ],
 
@@ -275,8 +276,9 @@ const tvShowsData = {
     { title: "Everything's gonna be okay", tags: ["gem"], year: "2020–2021" },
     { title: "Workin' Moms", tags: ["therapist"], year: "2017–present" },
     { title: "Why are you like this?", tags: [], year: "2021" },
-    { title: "the Letdown", tags: [], year: "2016–2019" },
+    { title: "The Letdown", tags: [], year: "2016–2019" },
     { title: "Michael: Tuesdays & Thursdays", tags: ["therapist"], year: "2011" },
+    { title: "No Tomorrow", tags: ["mini"], year: "2016" },
     { title: "Wellmania", tags: [], year: "2023" },
     { title: "Aftertaste", tags: [], year: "2021" },
     { title: "Fisk", tags: [], year: "2021–present" },
