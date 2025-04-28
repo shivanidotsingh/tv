@@ -19,17 +19,20 @@ document.addEventListener('DOMContentLoaded', function () {
     let tmdbImageBaseUrl = null;
     let tmdbImageSize = 'w500';
 
+    // Fetch TMDB configuration
     async function fetchTmdbConfig() {
         try {
             const response = await fetch(`${TMDB_BASE_URL}/configuration?api_key=${TMDB_API_KEY}`);
             const config = await response.json();
             tmdbImageBaseUrl = config.images.secure_base_url;
+            console.log('TMDB Image Base URL:', tmdbImageBaseUrl);
         } catch (error) {
             console.error('Error fetching TMDB configuration:', error);
         }
     }
 
     fetchTmdbConfig();
+
     populateRegionFilter();
     renderShows();
 
@@ -43,11 +46,13 @@ document.addEventListener('DOMContentLoaded', function () {
     miniFilter.addEventListener('change', renderShows);
     animatedFilter.addEventListener('change', renderShows);
     pwdFilter.addEventListener('change', renderShows);
+
     searchInput.addEventListener('input', renderShows);
     resetButton.addEventListener('click', resetFilters);
     sortSelect.addEventListener('change', renderShows);
 
     function populateRegionFilter() {
+        console.log("populateRegionFilter() called");
         const regions = Object.keys(tvShowsData);
         regions.forEach(region => {
             const option = document.createElement('option');
@@ -55,9 +60,11 @@ document.addEventListener('DOMContentLoaded', function () {
             option.textContent = region;
             regionFilter.appendChild(option);
         });
+        console.log("populateRegionFilter() finished");
     }
 
     function resetFilters() {
+        console.log("resetFilters() called");
         regionFilter.value = 'all';
         therapistFilter.checked = false;
         gemFilter.checked = false;
@@ -71,9 +78,11 @@ document.addEventListener('DOMContentLoaded', function () {
         searchInput.value = '';
         sortSelect.value = 'year';
         renderShows();
+        console.log("resetFilters() finished");
     }
 
-    function renderShows() {
+    async function renderShows() {
+        console.log("renderShows() called");
         const selectedRegion = regionFilter.value;
         const hasTherapist = therapistFilter.checked;
         const isGem = gemFilter.checked;
@@ -84,93 +93,86 @@ document.addEventListener('DOMContentLoaded', function () {
         const isMini = miniFilter.checked;
         const isAnimated = animatedFilter.checked;
         const isPwd = pwdFilter.checked;
+
         const searchQuery = searchInput.value.toLowerCase().trim();
         const sortBy = sortSelect.value;
 
-        showsContainer.innerHTML = '';
+        showsContainer.innerHTML = '<div class="loading">Loading shows...</div>';
 
-        const showsGrid = document.createElement('div');
-        showsGrid.className = 'shows-grid';
-        showsContainer.appendChild(showsGrid);
+        setTimeout(() => {
+            showsContainer.innerHTML = '';
+            let filteredShows = selectedRegion === 'all' ? Object.values(tvShowsData).flat() : tvShowsData[selectedRegion] || [];
 
-        let filteredShows = selectedRegion === 'all'
-            ? Object.values(tvShowsData).flat()
-            : tvShowsData[selectedRegion] || [];
-
-        filteredShows = filteredShows.filter(show => {
-            let showActualRegion = null;
-            for (const region in tvShowsData) {
-                if (tvShowsData[region].some(s => s.title === show.title)) {
-                    showActualRegion = region;
-                    break;
+            filteredShows = filteredShows.filter(show => {
+                let showActualRegion = null;
+                for (const region in tvShowsData) {
+                    if (tvShowsData[region].some(regionalShow => regionalShow.title === show.title)) {
+                        showActualRegion = region;
+                        break;
+                    }
                 }
-            }
-            const matchesRegion = selectedRegion === 'all' || selectedRegion === showActualRegion;
-            const matchesTags = (!hasTherapist || show.tags?.includes('therapist')) &&
-                                (!isGem || show.tags?.includes('gem')) &&
-                                (!isBook || show.tags?.includes('book')) &&
-                                (!isSupernatural || show.tags?.includes('supernatural')) &&
-                                (!isPeriod || show.tags?.includes('period')) &&
-                                (!isScandi || show.tags?.includes('scandi')) &&
-                                (!isMini || show.tags?.includes('mini')) &&
-                                (!isAnimated || show.tags?.includes('animated')) &&
-                                (!isPwd || show.tags?.includes('pwd'));
-            const matchesSearch = !searchQuery || show.title.toLowerCase().includes(searchQuery);
-            return matchesRegion && matchesTags && matchesSearch;
-        });
 
-        function getStartYear(yearString) {
-            if (!yearString) return -Infinity;
-            const match = yearString.match(/^(\d{4})/);
-            return match ? parseInt(match[1]) : -Infinity;
-        }
+                const matchesRegion = selectedRegion === 'all' || selectedRegion === showActualRegion;
 
-        if (sortBy === 'year') {
-            filteredShows.sort((a, b) => getStartYear(b.year) - getStartYear(a.year));
-        } else if (sortBy === 'title') {
-            filteredShows.sort((a, b) => a.title.localeCompare(b.title));
-        }
+                const matchesTags = (!hasTherapist || (show.tags && show.tags.includes('therapist'))) &&
+                                    (!isGem || (show.tags && show.tags.includes('gem'))) &&
+                                    (!isBook || (show.tags && show.tags.includes('book'))) &&
+                                    (!isSupernatural || (show.tags && show.tags.includes('supernatural'))) &&
+                                    (!isPeriod || (show.tags && show.tags.includes('period'))) &&
+                                    (!isScandi || (show.tags && show.tags.includes('scandi'))) &&
+                                    (!isMini || (show.tags && show.tags.includes('mini'))) &&
+                                    (!isAnimated || (show.tags && show.tags.includes('animated'))) &&
+                                    (!isPwd || (show.tags && show.tags.includes('pwd')));
 
-        filteredShows.forEach(show => {
-            createShowCard(show).then(showCard => {
-                showsGrid.appendChild(showCard);
+                const matchesSearch = !searchQuery || show.title.toLowerCase().includes(searchQuery);
+                return matchesRegion && matchesTags && matchesSearch;
             });
-        });
 
-        if (filteredShows.length === 0) {
-            showsContainer.innerHTML = 'No shows found matching your filters.';
-        }
+            function getStartYear(yearString) {
+                if (!yearString) return -Infinity;
+                const match = yearString.match(/^(\d{4})/);
+                return match ? parseInt(match[1]) : -Infinity;
+            }
+
+            if (sortBy === 'year') {
+                filteredShows.sort((a, b) => getStartYear(b.year) - getStartYear(a.year));
+            } else if (sortBy === 'title') {
+                filteredShows.sort((a, b) => a.title.localeCompare(b.title));
+            }
+
+            console.log("filteredShows:", filteredShows);
+
+            if (filteredShows.length > 0) {
+                const showsGrid = document.createElement('div');
+                showsGrid.className = 'shows-grid';
+                filteredShows.forEach(show => {
+                    let showActualRegion = null;
+                    for (const region in tvShowsData) {
+                        if (tvShowsData[region].some(regionalShow => regionalShow.title === show.title)) {
+                            showActualRegion = region;
+                            break;
+                        }
+                    }
+
+                    const showCard = createShowCard(show, showActualRegion);
+                    showsGrid.appendChild(showCard);
+                });
+                showsContainer.appendChild(showsGrid);
+            } else {
+                showsContainer.innerHTML = 'No shows found matching your filters.';
+            }
+            console.log("renderShows() finished");
+        }, 200);
     }
 
-    async function fetchTmdbPosterUrl(showTitle, showYear) {
-        if (!tmdbImageBaseUrl) return null;
-        let searchQuery = `${TMDB_BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(showTitle)}`;
-        if (showYear) {
-            const yearMatch = showYear.match(/^(\d{4})/);
-            if (yearMatch) {
-                searchQuery += `&first_air_date_year=${yearMatch[1]}`;
-            }
-        }
-        try {
-            const response = await fetch(searchQuery);
-            const data = await response.json();
-            if (data.results?.[0]?.poster_path) {
-                return tmdbImageBaseUrl + tmdbImageSize + data.results[0].poster_path;
-            }
-            return null;
-        } catch (error) {
-            console.error(`Error fetching TMDB poster for ${showTitle}:`, error);
-            return null;
-        }
-    }
-
-    async function createShowCard(show) {
+    function createShowCard(show, region) {
+        console.log("createShowCard() called with show:", show, "and region:", region);
         const showCard = document.createElement('div');
         showCard.classList.add('show-card');
 
         const showImageContainer = document.createElement('div');
         showImageContainer.classList.add('show-image-container');
-        showImageContainer.innerHTML = '<div class="loading-poster">Loading poster...</div>';
+        showImageContainer.innerHTML = '<div class="loading-poster">Loading poster...</div>';  // Show loading first
 
         const showInfo = document.createElement('div');
         showInfo.classList.add('show-info');
@@ -187,10 +189,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const showRegion = document.createElement('p');
         showRegion.classList.add('show-region');
-        showRegion.textContent = findRegion(show.title) || 'Unknown Region';
+        showRegion.textContent = region || 'Unknown Region';
         showInfo.appendChild(showRegion);
 
-        if (show.tags?.length) {
+        if (show.tags && show.tags.length > 0) {
             const tagsContainer = document.createElement('div');
             tagsContainer.classList.add('tags-container');
             show.tags.forEach(tag => {
@@ -203,34 +205,57 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         showCard.appendChild(showInfo);
-        showCard.insertBefore(showImageContainer, showInfo);
 
-        const posterUrl = await fetchTmdbPosterUrl(show.title, show.year);
+        // Fetch poster image asynchronously
+        fetchTmdbPosterUrl(show.title, show.year).then(tmdbPosterUrl => {
+            showImageContainer.innerHTML = ''; // Clear the loading state
 
-        if (posterUrl) {
             const img = document.createElement('img');
             img.classList.add('show-image');
-            img.src = posterUrl;
             img.alt = `${show.title} poster`;
-            img.loading = "lazy"; // ← lazy load images
-            img.onerror = () => {
-                showImageContainer.innerHTML = `<div class="poster-error">Poster not available</div>`;
-            };
-            showImageContainer.innerHTML = '';
-            showImageContainer.appendChild(img);
-        } else {
-            showImageContainer.innerHTML = `<div class="poster-error">Poster not available</div>`;
-        }
 
+            if (tmdbPosterUrl) {
+                img.src = tmdbPosterUrl;
+            } else {
+                showImageContainer.innerHTML = '<div class="poster-error">Poster not available</div>';
+            }
+
+            showImageContainer.appendChild(img);
+        });
+
+        showCard.insertBefore(showImageContainer, showInfo);
+
+        console.log("createShowCard() returning:", showCard);
         return showCard;
     }
 
-    function findRegion(title) {
-        for (const region in tvShowsData) {
-            if (tvShowsData[region].some(show => show.title === title)) {
-                return region;
+    async function fetchTmdbPosterUrl(showTitle, showYear) {
+        if (!tmdbImageBaseUrl) {
+            console.warn("TMDB image base URL not available yet.");
+            return null;
+        }
+
+        let searchQuery = `${TMDB_BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(showTitle)}`;
+        if (showYear) {
+            const yearMatch = showYear.match(/^(\d{4})/);
+            if (yearMatch && yearMatch[1]) {
+                searchQuery += `&first_air_date_year=${yearMatch[1]}`;
             }
         }
-        return null;
+
+        try {
+            const searchResponse = await fetch(searchQuery);
+            const searchData = await searchResponse.json();
+            if (searchData.results && searchData.results.length > 0) {
+                const tmdbShow = searchData.results[0];
+                if (tmdbShow.poster_path) {
+                    return tmdbImageBaseUrl + tmdbImageSize + tmdbShow.poster_path;
+                }
+            }
+            return null;
+        } catch (error) {
+            console.error(`Error fetching TMDB poster for ${showTitle}:`, error);
+            return null;
+        }
     }
 });
