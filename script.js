@@ -1,5 +1,4 @@
-document.addEventListener('DOMContentLoaded', async function() {
-    // DOM elements
+document.addEventListener('DOMContentLoaded', function () {
     const showsContainer = document.getElementById('shows-container');
     const regionFilter = document.getElementById('region-filter');
     const therapistFilter = document.getElementById('therapist-filter');
@@ -8,47 +7,32 @@ document.addEventListener('DOMContentLoaded', async function() {
     const supernaturalFilter = document.getElementById('supernatural-filter');
     const periodFilter = document.getElementById('period-filter');
     const scandiFilter = document.getElementById('scandi-filter');
-    // New Filter DOM elements
     const miniFilter = document.getElementById('mini-filter');
     const animatedFilter = document.getElementById('animated-filter');
     const pwdFilter = document.getElementById('pwd-filter');
-
-
     const searchInput = document.getElementById('search');
     const resetButton = document.getElementById('reset-filters');
     const sortSelect = document.getElementById('sort-select');
 
-    // TMDB API Configuration
     const TMDB_API_KEY = '2f31918e48b6998c0bb8439980c6aa7e';
     const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
-    let tmdbImageBaseUrl = null; // Variable to store the image base URL
-    let tmdbImageSize = 'w500'; // Default size, you can change this (e.g., 'w342', 'original')
+    let tmdbImageBaseUrl = null;
+    let tmdbImageSize = 'w500';
 
-    // Function to fetch TMDB configuration, including image base URL and sizes
     async function fetchTmdbConfig() {
         try {
             const response = await fetch(`${TMDB_BASE_URL}/configuration?api_key=${TMDB_API_KEY}`);
             const config = await response.json();
             tmdbImageBaseUrl = config.images.secure_base_url;
-            console.log('TMDB Image Base URL:', tmdbImageBaseUrl);
-            // You can also inspect config.images.poster_sizes to choose a different size
-            // console.log('Available Poster Sizes:', config.images.poster_sizes);
         } catch (error) {
             console.error('Error fetching TMDB configuration:', error);
         }
     }
 
-    // Call this function when the script loads
-    await fetchTmdbConfig();
-
-
-    // Populate region filter
+    fetchTmdbConfig();
     populateRegionFilter();
-
-    // Initial render
     renderShows();
 
-    // Event listeners
     regionFilter.addEventListener('change', renderShows);
     therapistFilter.addEventListener('change', renderShows);
     gemFilter.addEventListener('change', renderShows);
@@ -56,19 +40,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     supernaturalFilter.addEventListener('change', renderShows);
     periodFilter.addEventListener('change', renderShows);
     scandiFilter.addEventListener('change', renderShows);
-    // New Filter Event listeners
     miniFilter.addEventListener('change', renderShows);
     animatedFilter.addEventListener('change', renderShows);
     pwdFilter.addEventListener('change', renderShows);
-
-
     searchInput.addEventListener('input', renderShows);
     resetButton.addEventListener('click', resetFilters);
     sortSelect.addEventListener('change', renderShows);
 
-    // Functions
     function populateRegionFilter() {
-        console.log("populateRegionFilter() called");
         const regions = Object.keys(tvShowsData);
         regions.forEach(region => {
             const option = document.createElement('option');
@@ -76,11 +55,9 @@ document.addEventListener('DOMContentLoaded', async function() {
             option.textContent = region;
             regionFilter.appendChild(option);
         });
-        console.log("populateRegionFilter() finished");
     }
 
     function resetFilters() {
-        console.log("resetFilters() called");
         regionFilter.value = 'all';
         therapistFilter.checked = false;
         gemFilter.checked = false;
@@ -88,20 +65,15 @@ document.addEventListener('DOMContentLoaded', async function() {
         supernaturalFilter.checked = false;
         periodFilter.checked = false;
         scandiFilter.checked = false;
-        // Reset New Filters
         miniFilter.checked = false;
         animatedFilter.checked = false;
         pwdFilter.checked = false;
-
-
         searchInput.value = '';
         sortSelect.value = 'year';
         renderShows();
-        console.log("resetFilters() finished");
     }
 
     function renderShows() {
-        console.log("renderShows() called");
         const selectedRegion = regionFilter.value;
         const hasTherapist = therapistFilter.checked;
         const isGem = gemFilter.checked;
@@ -109,137 +81,96 @@ document.addEventListener('DOMContentLoaded', async function() {
         const isSupernatural = supernaturalFilter.checked;
         const isPeriod = periodFilter.checked;
         const isScandi = scandiFilter.checked;
-        // Get New Filter states
         const isMini = miniFilter.checked;
         const isAnimated = animatedFilter.checked;
         const isPwd = pwdFilter.checked;
-
         const searchQuery = searchInput.value.toLowerCase().trim();
         const sortBy = sortSelect.value;
 
-        showsContainer.innerHTML = '<div class="loading">Loading shows...</div>';
+        showsContainer.innerHTML = '';
 
-         // Added a slight delay to allow config to fetch if not already
-        setTimeout(() => {
-            showsContainer.innerHTML = '';
+        const showsGrid = document.createElement('div');
+        showsGrid.className = 'shows-grid';
+        showsContainer.appendChild(showsGrid);
 
-            let filteredShows = selectedRegion === 'all' ? Object.values(tvShowsData).flat() : tvShowsData[selectedRegion] || [];
+        let filteredShows = selectedRegion === 'all'
+            ? Object.values(tvShowsData).flat()
+            : tvShowsData[selectedRegion] || [];
 
-            filteredShows = filteredShows.filter(show => {
-                 // Find the actual region of the show from tvShowsData
-                let showActualRegion = null;
-                 for (const region in tvShowsData) {
-                     if (tvShowsData[region].some(regionalShow => regionalShow.title === show.title)) {
-                        showActualRegion = region;
-                        break;
-                    }
+        filteredShows = filteredShows.filter(show => {
+            let showActualRegion = null;
+            for (const region in tvShowsData) {
+                if (tvShowsData[region].some(s => s.title === show.title)) {
+                    showActualRegion = region;
+                    break;
                 }
+            }
+            const matchesRegion = selectedRegion === 'all' || selectedRegion === showActualRegion;
+            const matchesTags = (!hasTherapist || show.tags?.includes('therapist')) &&
+                                (!isGem || show.tags?.includes('gem')) &&
+                                (!isBook || show.tags?.includes('book')) &&
+                                (!isSupernatural || show.tags?.includes('supernatural')) &&
+                                (!isPeriod || show.tags?.includes('period')) &&
+                                (!isScandi || show.tags?.includes('scandi')) &&
+                                (!isMini || show.tags?.includes('mini')) &&
+                                (!isAnimated || show.tags?.includes('animated')) &&
+                                (!isPwd || show.tags?.includes('pwd'));
+            const matchesSearch = !searchQuery || show.title.toLowerCase().includes(searchQuery);
+            return matchesRegion && matchesTags && matchesSearch;
+        });
 
+        function getStartYear(yearString) {
+            if (!yearString) return -Infinity;
+            const match = yearString.match(/^(\d{4})/);
+            return match ? parseInt(match[1]) : -Infinity;
+        }
 
-                 const matchesRegion = selectedRegion === 'all' || selectedRegion === showActualRegion;
+        if (sortBy === 'year') {
+            filteredShows.sort((a, b) => getStartYear(b.year) - getStartYear(a.year));
+        } else if (sortBy === 'title') {
+            filteredShows.sort((a, b) => a.title.localeCompare(b.title));
+        }
 
-                 const matchesTags = (!hasTherapist || (show.tags && show.tags.includes('therapist'))) &&
-                                   (!isGem || (show.tags && show.tags.includes('gem'))) &&
-                                   (!isBook || (show.tags && show.tags.includes('book'))) &&
-                                   (!isSupernatural || (show.tags && show.tags.includes('supernatural'))) &&
-                                   (!isPeriod || (show.tags && show.tags.includes('period'))) &&
-                                   (!isScandi || (show.tags && show.tags.includes('scandi'))) &&
-                                   // New Filter Tag Checks
-                                   (!isMini || (show.tags && show.tags.includes('mini'))) &&
-                                   (!isAnimated || (show.tags && show.tags.includes('animated'))) &&
-                                   (!isPwd || (show.tags && show.tags.includes('pwd')));
-
-
-                const matchesSearch = !searchQuery || show.title.toLowerCase().includes(searchQuery);
-                return matchesRegion && matchesTags && matchesSearch;
+        filteredShows.forEach(show => {
+            createShowCard(show).then(showCard => {
+                showsGrid.appendChild(showCard);
             });
+        });
 
-            // Function to extract the starting year for sorting
-            function getStartYear(yearString) {
-                if (!yearString) return -Infinity; // Handle undefined or null years
-                const match = yearString.match(/^(\d{4})/);
-                return match ? parseInt(match[1]) : -Infinity;
-            }
-
-            // Sort the filtered shows
-            if (sortBy === 'year') {
-                filteredShows.sort((a, b) => getStartYear(b.year) - getStartYear(a.year));
-            } else if (sortBy === 'title') {
-                filteredShows.sort((a, b) => a.title.localeCompare(b.title));
-            }
-
-            console.log("filteredShows:", filteredShows);
-
-            if (filteredShows.length > 0) {
-                const showsGrid = document.createElement('div');
-                showsGrid.className = 'shows-grid';
-                filteredShows.forEach(show => {
-                    // Pass the actual region to createShowCard for display
-                    let showActualRegion = null;
-                    for (const region in tvShowsData) {
-                        if (tvShowsData[region].some(regionalShow => regionalShow.title === show.title)) {
-                           showActualRegion = region;
-                           break;
-                        }
-                    }
-                    const showCard = createShowCard(show, showActualRegion);
-                    showsGrid.appendChild(showCard);
-                });
-                showsContainer.appendChild(showsGrid);
-            } else {
-                showsContainer.innerHTML = 'No shows found matching your filters.';
-            }
-            console.log("renderShows() finished");
-        }, 200); // Increased delay slightly
+        if (filteredShows.length === 0) {
+            showsContainer.innerHTML = 'No shows found matching your filters.';
+        }
     }
 
-     // Function to fetch TMDB poster URL
-     async function fetchTmdbPosterUrl(showTitle, showYear) {
-        if (!tmdbImageBaseUrl) {
-            console.warn("TMDB image base URL not available yet.");
-            // Return a placeholder or indicate that fetching is in progress
-             return null;
-        }
-
-        // Construct the search query, including the year if available
+    async function fetchTmdbPosterUrl(showTitle, showYear) {
+        if (!tmdbImageBaseUrl) return null;
         let searchQuery = `${TMDB_BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(showTitle)}`;
         if (showYear) {
-             // Extract the starting year if the format is like "YYYY–YYYY"
-             const yearMatch = showYear.match(/^(\d{4})/);
-             if (yearMatch && yearMatch[1]) {
-                 searchQuery += `&first_air_date_year=${yearMatch[1]}`;
-             }
-        }
-
-
-        try {
-            const searchResponse = await fetch(searchQuery);
-            const searchData = await searchResponse.json();
-
-            if (searchData.results && searchData.results.length > 0) {
-                const tmdbShow = searchData.results[0]; // Get the first result
-                if (tmdbShow.poster_path) {
-                    return tmdbImageBaseUrl + tmdbImageSize + tmdbShow.poster_path;
-                }
+            const yearMatch = showYear.match(/^(\d{4})/);
+            if (yearMatch) {
+                searchQuery += `&first_air_date_year=${yearMatch[1]}`;
             }
-            return null; // No poster found on TMDB
+        }
+        try {
+            const response = await fetch(searchQuery);
+            const data = await response.json();
+            if (data.results?.[0]?.poster_path) {
+                return tmdbImageBaseUrl + tmdbImageSize + data.results[0].poster_path;
+            }
+            return null;
         } catch (error) {
             console.error(`Error fetching TMDB poster for ${showTitle}:`, error);
             return null;
         }
     }
 
-
-    function createShowCard(show, region) {
-        console.log("createShowCard() called with show:", show, "and region:", region);
+    async function createShowCard(show) {
         const showCard = document.createElement('div');
         showCard.classList.add('show-card');
 
         const showImageContainer = document.createElement('div');
         showImageContainer.classList.add('show-image-container');
-         // Add a placeholder or loading indicator while fetching
         showImageContainer.innerHTML = '<div class="loading-poster">Loading poster...</div>';
-
 
         const showInfo = document.createElement('div');
         showInfo.classList.add('show-info');
@@ -247,10 +178,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         const showTitle = document.createElement('h3');
         showTitle.classList.add('show-title');
         showTitle.textContent = show.title;
-  
         showInfo.appendChild(showTitle);
 
-        // Add the year display here
         const showYear = document.createElement('p');
         showYear.classList.add('show-year');
         showYear.textContent = show.year || 'Year Unknown';
@@ -258,10 +187,10 @@ document.addEventListener('DOMContentLoaded', async function() {
 
         const showRegion = document.createElement('p');
         showRegion.classList.add('show-region');
-        showRegion.textContent = region || 'Unknown Region'; // Use the passed region
+        showRegion.textContent = findRegion(show.title) || 'Unknown Region';
         showInfo.appendChild(showRegion);
 
-        if (show.tags && show.tags.length > 0) {
+        if (show.tags?.length) {
             const tagsContainer = document.createElement('div');
             tagsContainer.classList.add('tags-container');
             show.tags.forEach(tag => {
@@ -274,62 +203,34 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         showCard.appendChild(showInfo);
-        // Append showInfo first, then handle image asynchronously
+        showCard.insertBefore(showImageContainer, showInfo);
 
-        // --- TMDB Fetching Logic ---
-        // Pass the show.year to the fetchTmdbPosterUrl function
-        fetchTmdbPosterUrl(show.title, show.year).then(tmdbPosterUrl => {
-            // Clear loading indicator
-             showImageContainer.innerHTML = '';
+        const posterUrl = await fetchTmdbPosterUrl(show.title, show.year);
 
+        if (posterUrl) {
             const img = document.createElement('img');
             img.classList.add('show-image');
+            img.src = posterUrl;
             img.alt = `${show.title} poster`;
+            img.loading = "lazy"; // ← lazy load images
+            img.onerror = () => {
+                showImageContainer.innerHTML = `<div class="poster-error">Poster not available</div>`;
+            };
+            showImageContainer.innerHTML = '';
+            showImageContainer.appendChild(img);
+        } else {
+            showImageContainer.innerHTML = `<div class="poster-error">Poster not available</div>`;
+        }
 
-            if (tmdbPosterUrl) {
-                // Use TMDB poster if found
-                img.src = tmdbPosterUrl;
-            } else if (show.poster_path) {
-                 // Fallback to existing poster_path from data.js
-                 // Exclude the initial placeholder values
-                 if (show.poster_path === '/coJVIUEOToAEGViuhHPQg1prXHf.jpg' || show.poster_path === '/7Q8RCLcCGd4hY23JzkD6aXU6QQ5.jpg') {
-                     showImageContainer.innerHTML = '<div class="poster-error">Poster not available</div>';
-                     console.warn(`Placeholder poster_path found for ${show.title}.`);
-                     return; // Stop here if it's a placeholder
-                 } else if (show.poster_path.startsWith('http')) {
-                     // If it's an absolute URL starting with http
-                     img.src = show.poster_path;
-                 } else if (show.poster_path.startsWith('/')) {
-                     // If it's an absolute path relative to the domain root (starts with /)
-                     img.src = show.poster_path;
-                 }
-                 else {
-                    // If it's a relative path (doesn't start with http or /)
-                    // Assuming it might be in a local 'posters' directory
-                    img.src = './posters/' + show.poster_path; // Adjust path if necessary
-                 }
-            }
-            else {
-                // If no TMDB poster and no poster_path in data.js
-                showImageContainer.innerHTML = '<div class="poster-error">Poster not available</div>';
-                console.warn(`No poster found for ${show.title}.`);
-                return; // Stop here if no image source is found
-            }
-
-             img.onerror = () => {
-                 console.error(`Error loading image for ${show.title} from ${img.src}.`);
-                 showImageContainer.innerHTML = `<div class="poster-error">Poster not available</div>`;
-             };
-
-            showImageContainer.appendChild(img); // Append the created image
-        });
-        // --- End of TMDB Fetching Logic ---
-
-         // Append the image container to the card
-         showCard.insertBefore(showImageContainer, showInfo);
-
-
-        console.log("createShowCard() returning:", showCard);
         return showCard;
+    }
+
+    function findRegion(title) {
+        for (const region in tvShowsData) {
+            if (tvShowsData[region].some(show => show.title === title)) {
+                return region;
+            }
+        }
+        return null;
     }
 });
