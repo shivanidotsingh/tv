@@ -342,19 +342,19 @@ const tvShowsData = {
     { title: "Criminal Justice", tags: [], year: "2019–present" },
     { title: "Masoom", tags: [], year: "2022–present" },
     { title: "Kohrra", tags: [], year: "2023–present" },
-    { title: "The Trial", tags: [] },
-    { title: "Kaalkoot", tags: [] },
-    { title: "Taali", tags: [] },
-    { title: "Aakhri Sach", tags: [] },
+    { title: "The Trial", tags: [], year: "" },
+    { title: "Kaalkoot", tags: [], year: "" },
+    { title: "Taali", tags: [], year: "" },
+    { title: "Aakhri Sach", tags: [], year: "" },
     { title: "Charlie Chopra", tags: ["mini"], year: "2023–present" },
     { title: "Killer Soup", tags: ["gem"], year: "2024" },
-    { title: "Shehar Lakhot", tags: [] },
+    { title: "Shehar Lakhot", tags: [], year: "" },
     { title: "Guns & Gulaabs", tags: [], year: "2023–present" },
     { title: "Kaala Paani", tags: [], year: "2023–present" },
     { title: "Class", tags: [], year: "2023–present" },
-    { title: "Karmma Calling", tags: [] },
+    { title: "Karmma Calling", tags: [], year: "" },
     { title: "Kumari Srimathi", tags: [], year: "2023"  },
-    { title: "The Night Manager", tags: [] },
+    { title: "The Night Manager", tags: [], year: "" },
     { title: "Sunflower", tags: [], year: "2021–present" },
     { title: "Guilty Minds", tags: ["gem"], year: "2022–present" },
     { title: "Scoop", tags: ["mini"], year: "2023" },
@@ -388,7 +388,7 @@ const tvShowsData = {
     { title: "The Great", tags: ["period"], year: "2020–present" },
     { title: "Ethos", tags: ["gem"], year: "2020" },
     { title: "Expats", tags: ["book"], year: "2024" },
-    { title: "Zindagi Gulzar Hai", tags: [] }
+    { title: "Zindagi Gulzar Hai", tags: [], year: "" }
 ]
 
 }
