@@ -187,6 +187,7 @@ const tvShowsData = {
         { title: "The Gilded age", tags: ["period", "gem"], year: "2022–present" },
         { title: "That 70's Show", tags: ["mini"], year: "1998" },
         { title: "The Four Seasons", tags: [], year: "2025" },
+        { title: "Eric", tags: ["mini", "period"], year: "2024" },
         { title: "Couples Therapy", tags: ["docu", "gem"], year: "2019–present" }
     ],
 
@@ -381,6 +382,7 @@ const tvShowsData = {
     { title: "Dupahiya", tags: [],  year: "2025–present" },
     { title: "Citadel Honey Bunny", tags: ["spy"],  year: "2024" },
     { title: "Waack Girls", tags: ["gem"],  year: "2024" },
+    { title: "The Royals", tags: [],  year: "2025" },
     { title: "Dabba Cartel", tags: [],  year: "2025–present" }
     ],
    
