@@ -393,6 +393,7 @@ const tvShowsData = {
     { title: "The Great", tags: ["period"], year: "2020–present" },
     { title: "Ethos", tags: ["gem"], year: "2020" },
     { title: "Expats", tags: ["book"], year: "2024" },
+    { title: "Asura", tags: ["period"], year: "2025" },
     { title: "Zindagi Gulzar Hai", tags: [], year: "" }
 ]
 
