@@ -187,6 +187,7 @@ const tvShowsData = {
         { title: "The Gilded age", tags: ["period", "gem"], year: "2022–present" },
         { title: "That 70's Show", tags: ["mini"], year: "1998" },
         { title: "The Four Seasons", tags: [], year: "2025" },
+        { title: "Overcompensating", tags: [], year: "2025" },
         { title: "Eric", tags: ["mini", "period"], year: "2024" },
         { title: "Couples Therapy", tags: ["docu", "gem"], year: "2019–present" }
     ],
@@ -194,6 +195,7 @@ const tvShowsData = {
  "America — West": [
     { title: "I'm Sorry", tags: ["comedian"], year: "2017–2019" },
     { title: "Insecure", tags: [], year: "2016–2021" },
+    { title: "The Studio", tags: [], year: "2025" },
     { title: "New Girl", tags: ["classic"], year: "2011–2018" },
     { title: "Silicon Valley", tags: [], year: "2014–2019" },
     { title: "Grace and Frankie", tags: [], year: "2015–2022" },
@@ -268,6 +270,7 @@ const tvShowsData = {
     { title: "Fallet", tags: ["scandi"], year: "2017" },
     { title: "The Åre Murders", tags: ["scandi"], year: "2025" },
     { title: "A Nearly Normal Family", tags: ["scandi"], year: "2023" },
+    { title: "Secrets We Keep", tags: ["Scandi"], year: "2025" },
     { title: "Murder mindfully", tags: [], year: "2024" },
     
    
