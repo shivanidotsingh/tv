@@ -261,8 +261,8 @@ const tvShowsData = {
     { title: "Call my Agent", tags: [], year: "2015–2020" },
     { title: "Two Summers", tags: [], year: "2022" },
     { title: "Off the Hook(Detox)", tags: [], year: "2022" },
-    { title: "Rita", tags: ["Scandi"], year: "2012–2020" },
-    { title: "Love Me", tags: ["Scandi"], year: "2021–present" },
+    { title: "Rita", tags: ["scandi"], year: "2012–2020" },
+    { title: "Love Me", tags: ["scandi"], year: "2021–present" },
     { title: "Bonus Family", tags: ["gem", "scandi"], year: "2017–2020" },
     { title: "Tore", tags: ["gem", "scandi"], year: "2023–present" },
     { title: "Love & Anarchy", tags: ["scandi"], year: "2020–present" },
@@ -270,7 +270,7 @@ const tvShowsData = {
     { title: "Fallet", tags: ["scandi"], year: "2017" },
     { title: "The Åre Murders", tags: ["scandi"], year: "2025" },
     { title: "A Nearly Normal Family", tags: ["scandi"], year: "2023" },
-    { title: "Secrets We Keep", tags: ["Scandi"], year: "2025" },
+    { title: "Secrets We Keep", tags: ["scandi"], year: "2025" },
     { title: "Murder mindfully", tags: [], year: "2024" },
     
    
