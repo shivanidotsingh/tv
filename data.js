@@ -195,7 +195,7 @@ const tvShowsData = {
  "America — West": [
     { title: "I'm Sorry", tags: ["comedian"], year: "2017–2019" },
     { title: "Insecure", tags: [], year: "2016–2021" },
-    { title: "The Studio", tags: [], year: "2025" },
+    { title: "The Studio", tags: ["comedian"], year: "2025" },
     { title: "New Girl", tags: ["classic"], year: "2011–2018" },
     { title: "Silicon Valley", tags: [], year: "2014–2019" },
     { title: "Grace and Frankie", tags: [], year: "2015–2022" },
@@ -298,6 +298,7 @@ const tvShowsData = {
 "India": [
     { title: "Made in Heaven", tags: [], year: "2019–present" },
     { title: "Gram Chikitsalay", tags: [], year:"2025" },
+    { title: "Ghar Waapsi", tags: [], year:"2023—present" },
     { title: "Yeh Meri Family", tags: [], year: "2018–present" },
     { title: "The Family Man", tags: ["gem"], year: "2019–present" },
     { title: "Panchayat", tags: [], year: "2020–present" },
