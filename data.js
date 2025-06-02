@@ -186,6 +186,7 @@ const tvShowsData = {
         { title: "The Residence", tags: ["book"], year: "2025" },
         { title: "The Gilded age", tags: ["period", "gem"], year: "2022–present" },
         { title: "That 70's Show", tags: ["mini"], year: "1998" },
+        { title: "The Better Sister", tags: ["book"], year: "2025" },
         { title: "The Four Seasons", tags: [], year: "2025" },
         { title: "Overcompensating", tags: [], year: "2025" },
         { title: "Eric", tags: ["mini", "period"], year: "2024" },
