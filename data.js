@@ -54,6 +54,7 @@ const tvShowsData = {
         { title: "Black Doves", tags: ["spy"], year: "2024" },
         { title: "Adolescence", tags: [], year: "2025" },
         { title: "Four Weddings & a Funeral", tags: ["mini"], year: "2019" },
+        { title: "Dept. Q", tags: [], year: "2025" },
         { title: "The Agency", tags: ["spy"], year: "2024" }
 
     ],
@@ -399,7 +400,7 @@ const tvShowsData = {
     { title: "The Great", tags: ["period"], year: "2020–present" },
     { title: "Ethos", tags: ["gem"], year: "2020" },
     { title: "Expats", tags: ["book"], year: "2024" },
-    { title: "Asura", tags: ["period"], year: "2025" },
+    { title: "Asura (2025)", tags: ["period"], year: "2025" },
     { title: "Zindagi Gulzar Hai", tags: [], year: "" }
 ]
 
