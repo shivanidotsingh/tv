@@ -92,7 +92,6 @@ const tvShowsData = {
         { title: "Gypsy", tags: ["therapist"], year: "2017" },
         { title: "You", tags: ["book"], year: "2018–present" },
         { title: "Younger", tags: ["book"], year: "2015–2021" },
-        { title: "Sweet Magnolias", tags: ["book"], year: "2020–present" },
         { title: "Glow", tags: ["period"], year: "2017–2019" },
         { title: "Poker Face", tags: ["gem"], year: "2023–present" },
         { title: "The Curse", tags: ["supernatural"], year: "2023" },
