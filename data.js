@@ -102,6 +102,7 @@ const tvShowsData = {
         { title: "The Americans", tags: ["gem", "spy"], year: "2013–2018" },
         { title: "No Good Deed", tags: [], year: "2024" },
         { title: "Deli Boys", tags: ["gem"], year: "2025"},
+        { title: "Sirens", tags: ["mini"], year: "2025"},
         { title: "Sex and the City", tags: ["book", "classic"], year: "1998–2004" },
         { title: "The Affair", tags: [], year: "2014–2019" },
         { title: "Mozart in the Jungle", tags: ["book", "gem"], year: "2014–2018" },
