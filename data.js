@@ -62,6 +62,7 @@ const tvShowsData = {
     "America — East": [
         { title: "Brooklyn Nine Nine", tags: ["classic", "comedian"], year: "2013–2021" },
         { title: "Broad City", tags: ["classic", "comedian"], year: "2014–2019" },
+        { title: "Elsbeth", tags: [], year: "2024-Present" },
         { title: "High Maintenance", tags: ["gem"], year: "2016–2020" },
         { title: "Girls", tags: [], year: "2012–2017" },
         { title: "Community", tags: ["classic"], year: "2009–2015" },
