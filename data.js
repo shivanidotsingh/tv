@@ -291,6 +291,7 @@ const tvShowsData = {
     { title: "Wellmania", tags: [], year: "2023" },
     { title: "Aftertaste", tags: [], year: "2021" },
     { title: "Fisk", tags: [], year: "2021–present" },
+    { title: "The Survivors", tags: ["mini"], year: "2025" },
     { title: "Deadloch", tags: [], year: "2023" },
     { title: "Heartbreak High (2022)", tags: ["gem"], year: "2022–present" },
     { title: "Upload", tags: ["supernatural"], year: "2020–present" },
