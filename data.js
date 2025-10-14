@@ -198,6 +198,7 @@ const tvShowsData = {
 
  "America — West": [
     { title: "I'm Sorry", tags: ["comedian"], year: "2017–2019" },
+    { title: "Platonic", tags: ["comedian", "gem"], year: "2023–present" },
     { title: "Insecure", tags: [], year: "2016–2021" },
     { title: "The Studio", tags: ["comedian"], year: "2025" },
     { title: "New Girl", tags: ["classic"], year: "2011–2018" },
