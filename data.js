@@ -304,6 +304,8 @@ const tvShowsData = {
 "India": [
     { title: "Made in Heaven", tags: [], year: "2019–present" },
     { title: "Gram Chikitsalay", tags: [], year:"2025" },
+    { title: "Gullak", tags: [], year:"2019—present" },
+    { title: "Search: The Naina Murder Case", tags: [], year:"2025" },
     { title: "Do You Wanna Partner", tags: [], year:"2025" },
     { title: "Ghar Waapsi", tags: [], year:"2023–present" },
     { title: "Yeh Meri Family", tags: [], year: "2018–present" },
