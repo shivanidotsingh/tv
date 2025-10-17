@@ -227,7 +227,7 @@ const tvShowsData = {
     { title: "Made for Love", tags: ["book", "supernatural"], year: "2021–2022" },
     { title: "Nine Perfect Strangers", tags: ["book"], year: "2021" },
     { title: "Girlfriends' Guide to Divorce", tags: ["book"], year: "2014–2017" },
-    { title: "Afterparty", tags: ["gem"], year: "2022–present" },
+    { title: "The Afterparty", tags: ["gem"], year: "2022–present" },
     { title: "Pieces of her", tags: ["book"], year: "2022" },
     { title: "On the Verge (LA)", tags: [], year: "2021" },
     { title: "Home Economics", tags: [], year: "2021–2023" },
