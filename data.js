@@ -280,6 +280,7 @@ const tvShowsData = {
     { title: "The Åre Murders", tags: ["scandi"], year: "2025" },
     { title: "A Nearly Normal Family", tags: ["scandi"], year: "2023" },
     { title: "Secrets We Keep", tags: ["scandi"], year: "2025" },
+    { title: "Diary of a Ditched Girl", tags: ["scandi", "book"], year: "2025–present" },
     { title: "Murder mindfully", tags: [], year: "2024" },
     
    
@@ -309,6 +310,7 @@ const tvShowsData = {
 "India": [
     { title: "Made in Heaven", tags: [], year: "2019–present" },
     { title: "Gram Chikitsalay", tags: [], year:"2025" },
+    { title: "Perfect Family", tags: [], year:"2025" },
     { title: "Gullak", tags: [], year:"2019—present" },
     { title: "Search: The Naina Murder Case", tags: [], year:"2025" },
     { title: "The Ba***ds of Bollywood", tags: [], year:"2025" },
