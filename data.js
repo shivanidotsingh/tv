@@ -308,7 +308,7 @@ const tvShowsData = {
 "India": [
     { title: "Made in Heaven", tags: [], year: "2019–present" },
     { title: "Gram Chikitsalay", tags: [], year:"2025" },
-    { title: "Perfect Family", tags: [], year:"2025" },
+    { title: "Perfect Family", tags: ["therapist"], year:"2025" },
     { title: "Gullak", tags: [], year:"2019—present" },
     { title: "Search: The Naina Murder Case", tags: [], year:"2025" },
     { title: "The Ba***ds of Bollywood", tags: [], year:"2025" },
