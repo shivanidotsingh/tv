@@ -80,6 +80,7 @@ const tvShowsData = {
         { title: "Suits", tags: [], year: "2011–2019" },
         { title: "Easy", tags: ["gem"], year: "2016–2019" },
         { title: "Rectify", tags: [], year: "2013–2016" },
+        { title: "Dead Ringers", tags: ["mini"], year: "2023" },
         { title: "Life in Pieces", tags: ["gem"], year: "2015–2019" },
         { title: "The Unicorn", tags: [], year: "2019–2021" },
         { title: "The Other Two", tags: ["gem"], year: "2019–2023" },
