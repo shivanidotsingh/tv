@@ -1,419 +1,270 @@
 /* =========================
-   Base
+   SUPER BASIC / OLD HTML VIBE
+   (minimal styling, mostly default elements)
 ========================= */
+
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: #f9fafb;
-  color: #1f2937;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fff;
+  color: #000;
+}
+
+/* keep things readable */
+header,
+.content-controls,
+.shows-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 /* =========================
    Header
 ========================= */
 header {
-  padding: 0.9rem 2rem;
-  border-bottom: 1px solid #e5e7eb;
-  background: #f9fafb;
-}
-
-.header-top { width: 100%; }
-
-@media (min-width: 900px) {
-  header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-  }
-}
-
-.title-wrap {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #000;
 }
 
 header h3 {
   margin: 0;
-  font-size: 1.05rem;
-  font-weight: 600;
-  line-height: 1.2;
+  font-size: 16px;
+  font-weight: 700;
 }
 
 header p {
-  margin: 0.25rem 0 0;
-  font-size: 0.85rem;
+  margin: 6px 0 0;
+  font-size: 13px;
   line-height: 1.35;
-  color: #6b7280;
-  max-width: 52rem;
+}
+
+/* sticky only on laptop */
+@media (min-width: 900px) {
+  header {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 10;
+  }
 }
 
 /* =========================
-   Filters layout
+   Filters (default look)
 ========================= */
 .filter-container {
-  margin-top: 0.6rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  margin-top: 10px;
 }
 
-/* Controls row */
 #controls-row {
   display: flex;
   flex-wrap: wrap;
+  gap: 10px 16px;
   align-items: flex-end;
-  gap: 0.75rem 1rem;
-}
-
-/* Dropdown groups */
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
 }
 
 .filter-group label {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #6b7280;
+  display: block;
+  font-size: 12px;
+  margin-bottom: 4px;
 }
 
-/* Selects (region only) */
-#region-filter {
-  min-width: 180px;
-  height: 2.2rem;
-  padding: 0.45rem 0.65rem;
-  font-size: 0.85rem;
-  border-radius: 0.6rem;
-  border: 1px solid #d1d5db;
-  background-color: #f9fafb;
-  color: #6b7280;
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5.5 7l4.5 5 4.5-5' stroke='%23111111' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.6rem center;
-  background-size: 1rem;
-  padding-right: 2rem;
-}
-
-#region-filter:focus {
-  outline: none;
-  border-color: #111111;
-  box-shadow: none;
+/* let selects/buttons look default */
+#region-filter,
+#reset-filters {
+  font: inherit;
 }
 
 /* =========================
-   Filter chips + reset
+   Filter buttons
 ========================= */
+
 .checkbox-filters {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
+  gap: 6px 10px;
 }
 
+/* container acts like a button */
 .filter-chip {
   position: relative;
   cursor: pointer;
 }
 
+/* hide checkbox, keep logic */
 .filter-chip input {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
 
+/* button look (inverse of reset) */
 .filter-chip span {
-  display: inline-flex;
-  align-items: center;
-  height: 2rem;
-  padding: 0 0.65rem;
-  font-size: 0.8rem;
-  color: #6b7280;
-  border-radius: 0.6rem;
-  background: #f3f4f6;
-  border: 1px solid #111111;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 12px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  line-height: 1.2;
 }
 
-.filter-chip:hover span { background: #e5e7eb; }
-
+/* active = filled */
 .filter-chip input:checked + span {
-  background: #111111;
-  color: #ffffff;
+  background: #000;
+  color: #fff;
 }
 
-.filter-chip:focus-within span {
-  box-shadow: none;
-}
-
-#reset-filters {
-  height: 2rem;
-  padding: 0 0.85rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  border-radius: 0.6rem;
-  border: 1px solid #111111;
-  background: #111111;
-  color: #ffffff;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-#reset-filters:hover,
-#reset-filters:focus,
-#reset-filters:active {
-  outline: none;
-  box-shadow: none;
+/* hover: subtle old-school */
+.filter-chip:hover span {
+  background: #eee;
 }
 
 /* =========================
-   SEARCH (now includes toggle on right)
+   Reset button (filled)
+========================= */
+#reset-filters {
+  padding: 3px 8px;
+  font-size: 12px;
+  font-weight: normal;
+  border: 1px solid #000;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+
+/* =========================
+   Search row (wide, simple)
 ========================= */
 .content-controls {
-  padding: 0.75rem 2rem 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .search-row {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  width: 100%;
+  gap: 12px;
 }
 
-/* search grows, toggle stays fixed */
-.search-row #search {
+#search {
   flex: 1;
-  min-width: 0;
+  width: 100%;
+  font: inherit;
 }
 
-.search-row .sort-toggle {
-  flex-shrink: 0;
-  margin-left: auto; /* 🔑 pushes toggle to the right */
-}
-
-.content-controls #search::placeholder { color: #cbd5e1; }
-
-.content-controls #search:focus {
-  outline: none;
-  border-bottom-color: #111111;
-  box-shadow: none; /* NO SHADOW EVER */
-}
-
-/* =========================
-   Sort toggle (moved to search row)
-========================= */
+/* toggle: keep functional but plain */
 .sort-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
-  user-select: none;
-  flex-shrink: 0;
-}
-
-.sort-label {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #6b7280;
-  margin: 0;
+  gap: 6px;
   white-space: nowrap;
 }
 
+.sort-label { font-size: 12px; }
+
+/* keep your toggle markup, but visually minimal */
 .sort-switch {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  width: 200px;
-  height: 32px;
-  border-radius: 999px;
-  background: #f3f4f6;
-  border: 1px solid #111111;
-  overflow: hidden;
+  border: 1px solid #000;
+  padding: 2px;
 }
 
-/* hide the real checkbox */
-#sort-toggle {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* sliding pill */
-.sort-switch::before {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: calc(50% - 2px);
-  height: calc(100% - 4px);
-  border-radius: 999px;
-  background: #111111;
-  transform: translateX(0);
-  transition: transform 0.18s ease;
-}
-
-/* pill right when checked */
-#sort-toggle:checked + .sort-switch::before {
-  transform: translateX(100%);
-}
-
-/* labels inside */
+.sort-switch::before { display: none; }
 .sort-option {
-  position: relative;
-  z-index: 1;
-  width: 50%;
-  text-align: center;
-  font-size: 0.78rem;
-  font-weight: 600;
-  line-height: 32px;
-  color: #111111;
-  transition: color 0.18s ease;
+  display: inline-block;
+  padding: 0 6px;
+  font-size: 12px;
+  line-height: 20px;
 }
 
-#sort-toggle:not(:checked) + .sort-switch .sort-option.left { color: #ffffff; }
-#sort-toggle:checked + .sort-switch .sort-option.right { color: #ffffff; }
+#sort-toggle:not(:checked) + .sort-switch .sort-option.left { font-weight: 700; }
+#sort-toggle:checked + .sort-switch .sort-option.right { font-weight: 700; }
 
-
-/* Mobile: stack if tight */
-@media (max-width: 480px) {
-  .search-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .sort-toggle {
-    align-self: flex-end;
-  }
-  .sort-switch {
-    width: 220px;
-  }
+/* mobile: stack */
+@media (max-width: 600px) {
+  .search-row { flex-direction: column; align-items: stretch; }
+  .sort-toggle { align-self: flex-end; }
 }
 
 /* =========================
-   Shows grid
+   Grid + cards (no shadows, no rounding)
 ========================= */
 .shows-grid {
+  padding-top: 12px;
+  padding-bottom: 24px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.5rem;
-  padding: 1.25rem 2rem 2rem;
+  gap: 16px;
 }
 
 .show-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
+  border: 1px solid #000;
+  background: #fff;
   overflow: hidden;
-  transition: transform 0.2s ease; /* no shadow transitions */
 }
 
-.show-card:hover {
-  transform: translateY(-4px);
-  box-shadow: none; /* NO SHADOW EVER */
+.show-image-container {
+  height: 260px;
+  background: #eee;
 }
 
-.show-image-container { height: 300px; background: #f3f4f6; }
-
-.show-image { width: 100%; height: 100%; object-fit: cover; }
-
-.loading-poster,
-.poster-error {
+.show-image {
+  width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #6b7280;
-  font-size: 0.9rem;
+  object-fit: cover;
 }
 
-/* =========================
-   Show info
-========================= */
-.show-info { padding: 1rem; }
+.show-info {
+  padding: 10px;
+}
 
 .show-title {
-  margin: 0 0 0.4rem;
-  font-size: 1rem;
-  font-weight: 600;
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .show-year,
 .show-region {
-  margin: 0 0 0.4rem;
-  font-size: 0.85rem;
-  color: #6b7280;
+  margin: 0 0 4px;
+  font-size: 12px;
 }
 
-/* =========================
-   Tags on cards
-========================= */
+/* tags: super plain */
 .tags-container {
+  margin-top: 6px;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem;
-  margin-top: 0.4rem;
+  gap: 6px;
 }
 
 .tag {
-  padding: 0.125rem 0.5rem;
-  border-radius: 1rem;
-  font-size: 0.7rem;
-  background: #f3f4f6;
-  color: #6b7280;
+  font-size: 11px;
+  border: 1px solid #000;
+  padding: 1px 4px;
 }
 
-.tag-therapist { background:#fee2e2; color:#dc2626; }
-.tag-gem { background:#dbeafe; color:#2563eb; }
-.tag-book { background:#e0e7ff; color:#4f46e5; }
-.tag-supernatural { background:#fef3c7; color:#d97706; }
-.tag-period { background:#d1fae5; color:#059669; }
-.tag-scandi { background:#fce7f3; color:#db2777; }
-.tag-mini { background:#bfdbfe; color:#1d4ed8; }
-.tag-animated { background:#dcfce7; color:#15803d; }
-.tag-pwd { background:#f3e8ff; color:#7e22ce; }
-
-/* =========================
-   Loading
-========================= */
-.loading {
-  padding: 2rem;
+/* loading states */
+.loading,
+.loading-poster,
+.poster-error {
+  padding: 16px;
   text-align: center;
-  color: #6b7280;
+  font-size: 12px;
 }
 
-/* Mobile: force 3 columns */
+/* Mobile: force 3 columns + tiny cards */
 @media (max-width: 600px) {
   .shows-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
-    padding: 1rem;
+    gap: 10px;
   }
-
-  .show-image-container {
-    height: 160px; /* shorter cards */
-  }
-
-  .show-info {
-    padding: 0.6rem;
-  }
-
-  .show-title {
-    font-size: 0.85rem;
-    margin-bottom: 0.25rem;
-  }
-
-  .show-year,
-  .show-region {
-    font-size: 0.75rem;
-    margin-bottom: 0.2rem;
-  }
-
-  .tags-container {
-    display: none; /* optional: keeps cards clean/tiny */
-  }
+  .show-image-container { height: 140px; }
+  .show-info { padding: 6px; }
+  .tags-container { display: none; }
 }
-
