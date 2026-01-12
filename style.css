@@ -63,8 +63,8 @@ header p {
 
 #search:focus {
   outline: none;
-  border-bottom-color: #a855f7;
-  box-shadow: 0 2px 0 rgba(167, 139, 250, 0.25);
+  border-bottom-color: #111111;
+  box-shadow: 0 2px 0 rgba(17, 17, 17, 0.18);
 }
 
 /* Controls row */
@@ -101,7 +101,7 @@ header p {
   color: #6b7280;
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5.5 7l4.5 5 4.5-5' stroke='%23a855f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5.5 7l4.5 5 4.5-5' stroke='%23111111' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.6rem center;
   background-size: 1rem;
@@ -111,8 +111,8 @@ header p {
 #region-filter:focus,
 #sort-select:focus {
   outline: none;
-  border-color: #a855f7;
-  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2);
+  border-color: #111111;
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.12);
 }
 
 /* =========================
@@ -145,21 +145,21 @@ header p {
   color: #6b7280;
   border-radius: 0.6rem;
   background: #f3f4f6;
-  border: 1px solid #a855f7;
+  border: 1px solid #111111;
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .filter-chip:hover span {
-  background: #f3e8ff;
+  background: #e5e7eb;
 }
 
 .filter-chip input:checked + span {
-  background: #a855f7;
+  background: #111111;
   color: #ffffff;
 }
 
 .filter-chip:focus-within span {
-  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.35);
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.16);
 }
 
 /* Reset button inline with chips */
@@ -168,21 +168,21 @@ header p {
   padding: 0 0.75rem;
   font-size: 0.8rem;
   border-radius: 0.6rem;
-  border: 1px solid #a855f7;
+  border: 1px solid #111111;
   background: #f3f4f6;
-  color: #a855f7;
+  color: #111111;
   cursor: pointer;
   white-space: nowrap;
 }
 
 #reset-filters:hover {
-  background: #a855f7;
+  background: #111111;
   color: #ffffff;
 }
 
 #reset-filters:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.35);
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.16);
 }
 
 /* =========================
