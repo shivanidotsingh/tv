@@ -52,91 +52,6 @@ header p {
 }
 
 /* =========================
-   Sort toggle (top-right)
-   - no sort dropdown
-========================= */
-.sort-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  user-select: none;
-}
-
-.sort-label {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #6b7280;
-  margin: 0;
-  white-space: nowrap;
-}
-
-.sort-switch {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  width: 220px;
-  height: 32px;
-  border-radius: 999px;
-  background: #f3f4f6;
-  border: 1px solid #111111;
-  overflow: hidden;
-}
-
-/* hide the real checkbox */
-#sort-toggle {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* the sliding “pill” */
-.sort-switch::before {
-  content: "";
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  width: calc(50% - 2px);
-  height: calc(100% - 4px);
-  border-radius: 999px;
-  background: #111111;
-  transform: translateX(0);
-  transition: transform 0.18s ease;
-}
-
-/* move pill to right when checked */
-#sort-toggle:checked + .sort-switch::before {
-  transform: translateX(100%);
-}
-
-/* the two labels inside */
-.sort-option {
-  position: relative;
-  z-index: 1;
-  width: 50%;
-  text-align: center;
-  font-size: 0.78rem;
-  font-weight: 600;
-  line-height: 32px;
-  color: #111111;
-  transition: color 0.18s ease;
-}
-
-/* left option is active when unchecked */
-#sort-toggle:not(:checked) + .sort-switch .sort-option.left {
-  color: #ffffff;
-}
-
-/* right option is active when checked */
-#sort-toggle:checked + .sort-switch .sort-option.right {
-  color: #ffffff;
-}
-
-/* focus ring */
-.sort-toggle:focus-within .sort-switch {
-  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.14);
-}
-
-/* =========================
    Filters layout
 ========================= */
 .filter-container {
@@ -146,7 +61,7 @@ header p {
   gap: 0.75rem;
 }
 
-/* Controls row (NO sort dropdown here) */
+/* Controls row */
 #controls-row {
   display: flex;
   flex-wrap: wrap;
@@ -189,7 +104,7 @@ header p {
 #region-filter:focus {
   outline: none;
   border-color: #111111;
-  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.12);
+  box-shadow: none;
 }
 
 /* =========================
@@ -234,7 +149,7 @@ header p {
 }
 
 .filter-chip:focus-within span {
-  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.16);
+  box-shadow: none;
 }
 
 #reset-filters {
@@ -249,6 +164,7 @@ header p {
   cursor: pointer;
   white-space: nowrap;
 }
+
 #reset-filters:hover,
 #reset-filters:focus,
 #reset-filters:active {
@@ -256,16 +172,22 @@ header p {
   box-shadow: none;
 }
 
-
-
 /* =========================
-SEARCH
+   SEARCH (now includes toggle on right)
 ========================= */
 .content-controls{
   padding: 0.75rem 2rem 0;
 }
 
+.search-row{
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
 .content-controls #search {
+  flex: 1;
   width: 100%;
   padding: 0.55rem 0;
   font-size: 0.95rem;
@@ -273,6 +195,7 @@ SEARCH
   border-bottom: 1px solid #e5e7eb;
   background: transparent;
   color: #1f2937;
+  min-width: 0;
 }
 
 .content-controls #search::placeholder { color: #cbd5e1; }
@@ -280,7 +203,97 @@ SEARCH
 .content-controls #search:focus {
   outline: none;
   border-bottom-color: #111111;
-  box-shadow: 0 2px 0 rgba(17, 17, 17, 0.18);
+  box-shadow: none; /* NO SHADOW EVER */
+}
+
+/* =========================
+   Sort toggle (moved to search row)
+========================= */
+.sort-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.sort-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #6b7280;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.sort-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 200px;
+  height: 32px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  border: 1px solid #111111;
+  overflow: hidden;
+}
+
+/* hide the real checkbox */
+#sort-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* sliding pill */
+.sort-switch::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(50% - 2px);
+  height: calc(100% - 4px);
+  border-radius: 999px;
+  background: #111111;
+  transform: translateX(0);
+  transition: transform 0.18s ease;
+}
+
+/* pill right when checked */
+#sort-toggle:checked + .sort-switch::before {
+  transform: translateX(100%);
+}
+
+/* labels inside */
+.sort-option {
+  position: relative;
+  z-index: 1;
+  width: 50%;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 32px;
+  color: #111111;
+  transition: color 0.18s ease;
+}
+
+#sort-toggle:not(:checked) + .sort-switch .sort-option.left { color: #ffffff; }
+#sort-toggle:checked + .sort-switch .sort-option.right { color: #ffffff; }
+
+/* NO focus ring / shadow */
+.sort-toggle:focus-within .sort-switch { box-shadow: none; }
+
+/* Mobile: stack if tight */
+@media (max-width: 480px) {
+  .search-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .sort-toggle {
+    align-self: flex-end;
+  }
+  .sort-switch {
+    width: 220px;
+  }
 }
 
 /* =========================
@@ -298,12 +311,12 @@ SEARCH
   border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease; /* no shadow transitions */
 }
 
 .show-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: none; /* NO SHADOW EVER */
 }
 
 .show-image-container { height: 300px; background: #f3f4f6; }
