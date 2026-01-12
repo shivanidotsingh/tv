@@ -1,9 +1,7 @@
 /* =========================
    Base
 ========================= */
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -19,6 +17,15 @@ header {
   padding: 0.9rem 2rem;
   border-bottom: 1px solid #e5e7eb;
   background: #f9fafb;
+}
+
+.header-top { width: 100%; }
+
+.title-wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 header h3 {
@@ -37,6 +44,91 @@ header p {
 }
 
 /* =========================
+   Sort toggle (top-right)
+   - no sort dropdown
+========================= */
+.sort-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  user-select: none;
+}
+
+.sort-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #6b7280;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.sort-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 220px;
+  height: 32px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  border: 1px solid #111111;
+  overflow: hidden;
+}
+
+/* hide the real checkbox */
+#sort-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* the sliding “pill” */
+.sort-switch::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(50% - 2px);
+  height: calc(100% - 4px);
+  border-radius: 999px;
+  background: #111111;
+  transform: translateX(0);
+  transition: transform 0.18s ease;
+}
+
+/* move pill to right when checked */
+#sort-toggle:checked + .sort-switch::before {
+  transform: translateX(100%);
+}
+
+/* the two labels inside */
+.sort-option {
+  position: relative;
+  z-index: 1;
+  width: 50%;
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 32px;
+  color: #111111;
+  transition: color 0.18s ease;
+}
+
+/* left option is active when unchecked */
+#sort-toggle:not(:checked) + .sort-switch .sort-option.left {
+  color: #ffffff;
+}
+
+/* right option is active when checked */
+#sort-toggle:checked + .sort-switch .sort-option.right {
+  color: #ffffff;
+}
+
+/* focus ring */
+.sort-toggle:focus-within .sort-switch {
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.14);
+}
+
+/* =========================
    Filters layout
 ========================= */
 .filter-container {
@@ -46,28 +138,7 @@ header p {
   gap: 0.75rem;
 }
 
-/* Search row (own line, no box) */
-#search {
-  width: 100%;
-  padding: 0.55rem 0;
-  font-size: 0.95rem;
-  border: none;
-  border-bottom: 1px solid #e5e7eb;
-  background: transparent;
-  color: #1f2937;
-}
-
-#search::placeholder {
-  color: #cbd5e1;
-}
-
-#search:focus {
-  outline: none;
-  border-bottom-color: #111111;
-  box-shadow: 0 2px 0 rgba(17, 17, 17, 0.18);
-}
-
-/* Controls row */
+/* Controls row (NO sort dropdown here) */
 #controls-row {
   display: flex;
   flex-wrap: wrap;
@@ -88,9 +159,8 @@ header p {
   color: #6b7280;
 }
 
-/* Selects */
-#region-filter,
-#sort-select {
+/* Selects (region only) */
+#region-filter {
   min-width: 180px;
   height: 2.2rem;
   padding: 0.45rem 0.65rem;
@@ -108,15 +178,14 @@ header p {
   padding-right: 2rem;
 }
 
-#region-filter:focus,
-#sort-select:focus {
+#region-filter:focus {
   outline: none;
   border-color: #111111;
   box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.12);
 }
 
 /* =========================
-   Filter chips
+   Filter chips + reset
 ========================= */
 .checkbox-filters {
   display: flex;
@@ -149,9 +218,7 @@ header p {
   transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.filter-chip:hover span {
-  background: #e5e7eb;
-}
+.filter-chip:hover span { background: #e5e7eb; }
 
 .filter-chip input:checked + span {
   background: #111111;
@@ -162,7 +229,6 @@ header p {
   box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.16);
 }
 
-/* Reset button inline with chips */
 #reset-filters {
   height: 2rem;
   padding: 0 0.75rem;
@@ -186,13 +252,38 @@ header p {
 }
 
 /* =========================
+   Content search (belongs with grid)
+========================= */
+.content-controls{
+  padding: 0.75rem 2rem 0;
+}
+
+.content-controls #search {
+  width: 100%;
+  padding: 0.55rem 0;
+  font-size: 0.95rem;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  background: transparent;
+  color: #1f2937;
+}
+
+.content-controls #search::placeholder { color: #cbd5e1; }
+
+.content-controls #search:focus {
+  outline: none;
+  border-bottom-color: #111111;
+  box-shadow: 0 2px 0 rgba(17, 17, 17, 0.18);
+}
+
+/* =========================
    Shows grid
 ========================= */
 .shows-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1.5rem;
-  padding: 2rem;
+  padding: 1.25rem 2rem 2rem;
 }
 
 .show-card {
@@ -208,16 +299,9 @@ header p {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-.show-image-container {
-  height: 300px;
-  background: #f3f4f6;
-}
+.show-image-container { height: 300px; background: #f3f4f6; }
 
-.show-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+.show-image { width: 100%; height: 100%; object-fit: cover; }
 
 .loading-poster,
 .poster-error {
@@ -232,9 +316,7 @@ header p {
 /* =========================
    Show info
 ========================= */
-.show-info {
-  padding: 1rem;
-}
+.show-info { padding: 1rem; }
 
 .show-title {
   margin: 0 0 0.4rem;
