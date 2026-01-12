@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', function () {
     return;
   }
 
-  // Optional DOM (safe if moved/absent)
+  // Optional DOM
   const searchInput = document.getElementById('search');
   const sortToggle = document.getElementById('sort-toggle'); // unchecked = chronological
 
-  // Tag inputs (safe if any missing)
+  // Tag inputs (safe if missing)
   const tagInputs = {
     therapist: document.getElementById('therapist-filter'),
     gem: document.getElementById('gem-filter'),
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // =========================
-  // TMDB + TVmaze
+  // TMDB + TVmaze (improved matching via TVmaze search + scoring)
   // =========================
   const TMDB_API_KEY = '2f31918e48b6998c0bb8439980c6aa7e';
   const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const config = await res.json();
       tmdbImageBaseUrl = config?.images?.secure_base_url || null;
     } catch (e) {
-      tmdbImageBaseUrl = null; // blocked/timeout/offline is fine
+      tmdbImageBaseUrl = null;
     } finally {
       clearTimeout(t);
     }
@@ -110,49 +110,96 @@ document.addEventListener('DOMContentLoaded', function () {
       const first = data?.results?.[0];
       if (first?.poster_path) return tmdbImageBaseUrl + tmdbImageSize + first.poster_path;
       return null;
-    } catch (e) {
+    } catch {
       return null;
     }
   }
 
-  async function fetchTvmazePosterUrl(showTitle) {
-    const url = `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(showTitle)}`;
+  function getYearStart(y) {
+    const m = String(y || '').match(/^(\d{4})/);
+    return m ? parseInt(m[1], 10) : null;
+  }
+
+  function tvmazeCountryCode(item) {
+    return (
+      item?.show?.network?.country?.code ||
+      item?.show?.webChannel?.country?.code ||
+      null
+    );
+  }
+
+  async function fetchTvmazePosterUrl(show) {
+    // Use broader search results; pick best match based on title + year (+ slight region hint)
+    const url = `https://api.tvmaze.com/search/shows?q=${encodeURIComponent(show.title)}`;
+
     try {
       const res = await fetch(url);
       if (!res.ok) return null;
-      const data = await res.json();
-      return data?.image?.original || data?.image?.medium || null;
-    } catch (e) {
+      const results = await res.json(); // [{score, show}, ...]
+
+      if (!Array.isArray(results) || results.length === 0) return null;
+
+      const targetTitle = String(show.title || '').trim().toLowerCase();
+      const targetYear = getYearStart(show.year);
+      const regionText = String(show.region || '').toLowerCase();
+
+      const wantsIndia = regionText.includes('india');
+      const wantsUK = regionText.includes('united kingdom') || regionText.includes('uk');
+
+      const ranked = results
+        .map((item) => {
+          const candidate = item?.show;
+          const name = String(candidate?.name || '').trim().toLowerCase();
+          const premieredYear = getYearStart(candidate?.premiered);
+          const cc = tvmazeCountryCode(item);
+
+          let score = 0;
+
+          // Strong signals
+          if (name === targetTitle) score += 10;
+          if (targetYear && premieredYear === targetYear) score += 8;
+
+          // Light region hints (helps with ambiguous titles)
+          if (wantsIndia && cc === 'IN') score += 3;
+          if (wantsUK && cc === 'GB') score += 2;
+
+          // Use TVmaze relevance too, but keep it weaker than the above
+          score += (item?.score || 0);
+
+          return { candidate, score };
+        })
+        .sort((a, b) => b.score - a.score);
+
+      const best = ranked[0]?.candidate;
+      return best?.image?.original || best?.image?.medium || null;
+    } catch {
       return null;
     }
   }
 
   // TMDB -> TVmaze fallback with caching + throttling
-  async function fetchPosterUrl(showTitle, showYear) {
-    // Cache key: exact title (we’re intentionally NOT doing fuzzy matching right now)
-    const key = String(showTitle || '').trim();
+  async function fetchPosterUrl(show) {
+    const key = String(show.title || '').trim();
     if (!key) return null;
 
-    // If we already resolved it (url or null)
     if (posterCache.has(key)) {
       const cached = posterCache.get(key);
-      // If it’s a Promise in-flight, await it
       if (cached && typeof cached.then === 'function') return await cached;
       return cached; // url or null
     }
 
-    // Create one in-flight promise so repeated renders don’t re-fetch
     const inFlight = (async () => {
-      const tmdb = await fetchTmdbPosterUrl(key, showYear);
+      const tmdb = await fetchTmdbPosterUrl(show.title, show.year);
       if (tmdb) return tmdb;
-      const tvm = await fetchTvmazePosterUrl(key);
+
+      const tvm = await fetchTvmazePosterUrl(show);
       return tvm || null;
     })();
 
     posterCache.set(key, inFlight);
 
     const result = await inFlight;
-    posterCache.set(key, result); // store final url or null
+    posterCache.set(key, result);
     return result;
   }
 
@@ -230,8 +277,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     filtered = [...filtered].sort((a, b) => {
       if (sortBy === 'year') {
-        const ay = parseInt((a.year || '').slice(0, 4), 10);
-        const by = parseInt((b.year || '').slice(0, 4), 10);
+        const ay = getYearStart(a.year);
+        const by = getYearStart(b.year);
         return (isNaN(by) ? -Infinity : by) - (isNaN(ay) ? -Infinity : ay);
       }
       return (a.title || '').localeCompare(b.title || '');
@@ -295,8 +342,7 @@ document.addEventListener('DOMContentLoaded', function () {
     card.appendChild(imgWrap);
     card.appendChild(info);
 
-    // Throttled fetch so we don’t blast the API and get partial results
-    schedulePosterFetch(() => fetchPosterUrl(show.title, show.year)).then((url) => {
+    schedulePosterFetch(() => fetchPosterUrl(show)).then((url) => {
       imgWrap.innerHTML = '';
       if (url) {
         const img = document.createElement('img');
@@ -322,12 +368,10 @@ document.addEventListener('DOMContentLoaded', function () {
   Object.values(tagInputs).forEach((input) => input && input.addEventListener('change', renderShows));
 
   // =========================
-  // Boot (IMPORTANT: render immediately)
+  // Boot (render immediately)
   // =========================
   setDefaultSort();
   populateRegionFilter();
-  renderShows(); // ✅ cards show on landing no matter what
-
-  // Fetch TMDB config in background (never blocks landing)
+  renderShows();
   fetchTmdbConfigWithTimeout(2500);
 });
