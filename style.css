@@ -106,15 +106,17 @@ header p {
   pointer-events: none;
 }
 
-.filter-chip span {
+.filter-chip span,
+#reset-filters {
   display: inline-flex;
   align-items: center;
-  padding: 2px 8px;
+  height: 20px;       
+  padding: 0 8px;   
   font-size: 12px;
-  line-height: 1.2;
-  background: #f3f4f6;
-  color: #111;
+  line-height: 1;
+  box-sizing: border-box;
 }
+
 
 .filter-chip input:checked + span {
   background: #111;
@@ -125,20 +127,12 @@ header p {
   background: #e5e7eb;
 }
 
-/* reset — SAME metrics as chips */
 #reset-filters {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 8px;
-  font: inherit;
-  font-size: 12px;
-  line-height: 1.2;
-  border: none;
-  background: #111;
-  color: #fff;
-  cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
 }
 
 /* =========================
