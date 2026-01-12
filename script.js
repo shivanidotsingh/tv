@@ -1,34 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Required DOM
+  // =========================
+  // DOM elements (required)
+  // =========================
   const showsContainer = document.getElementById('shows-container');
   const regionFilter = document.getElementById('region-filter');
   const resetButton = document.getElementById('reset-filters');
 
-  // Optional DOM (safe if moved/absent)
-  const searchInput = document.getElementById('search');       // might be in content-controls now
-  const sortToggle = document.getElementById('sort-toggle');   // toggle checkbox
-
-  if (!showsContainer) {
-    console.error('Missing #shows-container');
-    return;
-  }
-  if (!regionFilter) {
-    console.error('Missing #region-filter');
-    showsContainer.innerHTML = '<div class="loading">Error: Region filter element not found.</div>';
-    return;
-  }
-  if (!resetButton) {
-    console.error('Missing #reset-filters');
-    showsContainer.innerHTML = '<div class="loading">Error: Reset button element not found.</div>';
-    return;
-  }
-  if (typeof tvShowsData === 'undefined') {
-    console.error('tvShowsData is undefined. Ensure data.js loads before script.js.');
-    showsContainer.innerHTML = '<div class="loading">Error: data.js did not load.</div>';
+  if (!showsContainer || !regionFilter || !resetButton) {
+    console.error('Missing required DOM:', {
+      showsContainer: !!showsContainer,
+      regionFilter: !!regionFilter,
+      resetButton: !!resetButton,
+    });
     return;
   }
 
-  // Tag checkbox inputs (safe: only attach listeners if present)
+  // Optional DOM (safe if absent/moved)
+  const searchInput = document.getElementById('search');     // can live under content
+  const sortToggle = document.getElementById('sort-toggle'); // checkbox in toggle switch
+
+  // Tag checkbox inputs (safe if any missing)
   const tagInputs = {
     therapist: document.getElementById('therapist-filter'),
     gem: document.getElementById('gem-filter'),
@@ -41,40 +32,68 @@ document.addEventListener('DOMContentLoaded', function () {
     pwd: document.getElementById('pwd-filter'),
   };
 
-  // TMDB API
+  // Data check (must exist)
+  if (typeof tvShowsData === 'undefined') {
+    console.error('tvShowsData is undefined. Ensure data.js loads before script.js.');
+    showsContainer.innerHTML = '<div class="loading">Error: data.js did not load.</div>';
+    return;
+  }
+
+  // =========================
+  // TMDB + TVmaze posters
+  // =========================
   const TMDB_API_KEY = '2f31918e48b6998c0bb8439980c6aa7e';
   const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
   let tmdbImageBaseUrl = null;
   const tmdbImageSize = 'w500';
 
-  // Flatten shows once; region = top-level key (your original logic)
+  // Flatten shows once; region = top-level key (your original intent)
   const ALL_SHOWS = Object.entries(tvShowsData).flatMap(([region, shows]) =>
     (shows || []).map((show) => ({ ...show, region }))
   );
 
+  // =========================
+  // Sorting (toggle)
+  // unchecked = Chronological (year) [DEFAULT]
+  // checked   = Alphabetical (title)
+  // =========================
   function getSortBy() {
-    // unchecked = chronological
     if (!sortToggle) return 'year';
     return sortToggle.checked ? 'title' : 'year';
   }
 
   function setDefaultSort() {
-    // Chronological ON by default
-    if (sortToggle) sortToggle.checked = false;
+    if (sortToggle) sortToggle.checked = false; // chronological ON by default
   }
 
-  async function fetchTmdbConfig() {
-    try {
-      const res = await fetch(`${TMDB_BASE_URL}/configuration?api_key=${TMDB_API_KEY}`);
-      const config = await res.json();
-      tmdbImageBaseUrl = config?.images?.secure_base_url || null;
-    } catch (e) {
-      console.warn('TMDB config failed (posters may be missing).', e);
-      tmdbImageBaseUrl = null;
-    }
-  }
+  // =========================
+  // Init (IMPORTANT: render immediately)
+  // =========================
+  setDefaultSort();
+  populateRegionFilter();
+  renderShows(); // ✅ render on landing, no network gating
 
+  // Fetch TMDB config in the background (never block first paint)
+  fetchTmdbConfigWithTimeout(2500);
+
+  // =========================
+  // Event listeners
+  // =========================
+  regionFilter.addEventListener('change', renderShows);
+  resetButton.addEventListener('click', resetFilters);
+
+  if (searchInput) searchInput.addEventListener('input', renderShows);
+  if (sortToggle) sortToggle.addEventListener('change', renderShows);
+
+  Object.values(tagInputs).forEach((input) => {
+    if (input) input.addEventListener('change', renderShows);
+  });
+
+  // =========================
+  // Functions
+  // =========================
   function populateRegionFilter() {
+    // Always rebuild; show exact keys like "America — East", "America — West", "Europe", etc.
     regionFilter.innerHTML = '<option value="all">All Regions</option>';
     Object.keys(tvShowsData).forEach((region) => {
       const option = document.createElement('option');
@@ -95,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function renderShows() {
-    showsContainer.innerHTML = '<div class="loading">Loading shows...</div>';
+    showsContainer.innerHTML = '<div class="loading">Previously on…</div>';
 
     const selectedRegion = regionFilter.value;
     const searchQuery = (searchInput?.value || '').toLowerCase().trim();
@@ -107,10 +126,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let filtered = ALL_SHOWS;
 
+    // Region
     if (selectedRegion !== 'all') {
       filtered = filtered.filter((show) => show.region === selectedRegion);
     }
 
+    // Tags (AND logic)
     if (activeTags.length > 0) {
       filtered = filtered.filter((show) => {
         const tags = show.tags || [];
@@ -118,12 +139,14 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
+    // Search
     if (searchQuery) {
       filtered = filtered.filter((show) =>
         (show.title || '').toLowerCase().includes(searchQuery)
       );
     }
 
+    // Sort
     filtered = [...filtered].sort((a, b) => {
       if (sortBy === 'year') {
         const ay = parseInt((a.year || '').slice(0, 4), 10);
@@ -148,29 +171,63 @@ document.addEventListener('DOMContentLoaded', function () {
     showsContainer.appendChild(grid);
   }
 
-async function fetchPosterUrl(showTitle, showYear) {
-  // ---- 1) Try TMDB first ----
-  const tmdbUrl = await fetchTmdbPosterUrl(showTitle, showYear);
-  if (tmdbUrl) return tmdbUrl;
+  async function fetchTmdbConfigWithTimeout(ms = 2500) {
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), ms);
 
-  // ---- 2) Fallback to TVmaze ----
-  return await fetchTvmazePosterUrl(showTitle);
-}
-
-async function fetchTvmazePosterUrl(showTitle) {
-  const url = `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(showTitle)}`;
-
-  try {
-    const res = await fetch(url);
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data?.image?.original || data?.image?.medium || null;
-  } catch (e) {
-    console.warn('TVmaze poster fetch failed:', showTitle, e);
-    return null;
+    try {
+      const res = await fetch(`${TMDB_BASE_URL}/configuration?api_key=${TMDB_API_KEY}`, {
+        signal: controller.signal,
+      });
+      const config = await res.json();
+      tmdbImageBaseUrl = config?.images?.secure_base_url || null;
+    } catch (e) {
+      // blocked / timeout / offline — fine
+      tmdbImageBaseUrl = null;
+    } finally {
+      clearTimeout(t);
+    }
   }
-}
 
+  async function fetchTmdbPosterUrl(showTitle, showYear) {
+    if (!tmdbImageBaseUrl) return null;
+
+    let query = `${TMDB_BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(
+      showTitle
+    )}`;
+
+    const yearMatch = String(showYear || '').match(/^(\d{4})/);
+    if (yearMatch?.[1]) query += `&first_air_date_year=${yearMatch[1]}`;
+
+    try {
+      const res = await fetch(query);
+      const data = await res.json();
+      const first = data?.results?.[0];
+      if (first?.poster_path) return tmdbImageBaseUrl + tmdbImageSize + first.poster_path;
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async function fetchTvmazePosterUrl(showTitle) {
+    const url = `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(showTitle)}`;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data?.image?.original || data?.image?.medium || null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // TMDB -> TVmaze fallback (fast in India)
+  async function fetchPosterUrl(showTitle, showYear) {
+    const tmdb = await fetchTmdbPosterUrl(showTitle, showYear);
+    if (tmdb) return tmdb;
+    return await fetchTvmazePosterUrl(showTitle);
+  }
 
   function createShowCard(show, region) {
     const card = document.createElement('div');
@@ -215,32 +272,19 @@ async function fetchTvmazePosterUrl(showTitle) {
     card.appendChild(imgWrap);
     card.appendChild(info);
 
-    fetchPosterUrl(show.title, show.year).then((posterUrl) => {
-  showImageContainer.innerHTML = '';
-  if (posterUrl) {
-    const img = document.createElement('img');
-    img.classList.add('show-image');
-    img.alt = `${show.title} poster`;
-    img.src = posterUrl;
-    showImageContainer.appendChild(img);
-  } else {
-    showImageContainer.innerHTML = '<div class="poster-error">Poster not available</div>';
-  }
-});
-
+    fetchPosterUrl(show.title, show.year).then((url) => {
+      imgWrap.innerHTML = '';
+      if (url) {
+        const img = document.createElement('img');
+        img.classList.add('show-image');
+        img.alt = `${show.title} poster`;
+        img.src = url;
+        imgWrap.appendChild(img);
+      } else {
+        imgWrap.innerHTML = '<div class="poster-error">Poster not available</div>';
+      }
+    });
 
     return card;
   }
-
-  // Wire listeners (safe)
-  regionFilter.addEventListener('change', renderShows);
-  resetButton.addEventListener('click', resetFilters);
-  if (searchInput) searchInput.addEventListener('input', renderShows);
-  if (sortToggle) sortToggle.addEventListener('change', renderShows);
-  Object.values(tagInputs).forEach((input) => input && input.addEventListener('change', renderShows));
-
-  // Boot
-  setDefaultSort();
-  populateRegionFilter();
-  fetchTmdbConfig().finally(renderShows);
 });
