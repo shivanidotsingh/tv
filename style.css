@@ -6,207 +6,178 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
   margin: 0;
-  padding: 0;
+  font-family: 'Inter', sans-serif;
   background-color: #f9fafb;
+  color: #1f2937;
 }
 
 /* =========================
-   Header + Filters
+   Header
 ========================= */
 header {
-  background-color: #f9fafb;
-  color: #6b7280;
-  padding: 1.5rem 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  padding: 0.9rem 2rem;
   border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
 }
 
-header h1 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #1f2937;
+header h3 {
   margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
-/* More compact overall spacing */
+header p {
+  margin: 0.25rem 0 0;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: #6b7280;
+  max-width: 52rem;
+}
+
+/* =========================
+   Filters layout
+========================= */
 .filter-container {
-  margin-top: 1rem;
+  margin-top: 0.6rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 1rem;
-  width: 100%;
+  gap: 0.75rem;
 }
 
+/* Search row (own line, no box) */
+#search {
+  width: 100%;
+  padding: 0.55rem 0;
+  font-size: 0.95rem;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  background: transparent;
+  color: #1f2937;
+}
+
+#search::placeholder {
+  color: #cbd5e1;
+}
+
+#search:focus {
+  outline: none;
+  border-bottom-color: #a855f7;
+  box-shadow: 0 2px 0 rgba(167, 139, 250, 0.25);
+}
+
+/* Controls row */
+#controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem 1rem;
+}
+
+/* Dropdown groups */
 .filter-group {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-bottom: 0;
-  width: 100%;
+  gap: 0.25rem;
 }
 
-.filter-group > label {
-  margin-bottom: 0.35rem;
+.filter-group label {
+  font-size: 0.75rem;
   font-weight: 500;
   color: #6b7280;
-  font-size: 0.8rem;
 }
 
-/* Region/Search/Sort row (tighter) */
-#region-search-sort-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem 1rem;
-  width: 100%;
-}
-
-#region-filter-group,
-#search-filter-group,
-#sort-filter-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  flex: 1;
-  min-width: 180px;
-}
-
-/* Inputs/selects: consistent rounded system */
+/* Selects */
 #region-filter,
 #sort-select {
-  padding: 0.55rem 0.65rem;
+  min-width: 180px;
+  height: 2.2rem;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.85rem;
   border-radius: 0.6rem;
   border: 1px solid #d1d5db;
   background-color: #f9fafb;
   color: #6b7280;
-  width: 100%;
-  max-width: 20rem;
-  font-size: 0.875rem;
-  transition: border-color 0.2s ease;
   appearance: none;
   -webkit-appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M5.5 7l4.5 5 4.5-5' stroke='%23a855f7' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.6rem center;
   background-size: 1rem;
-}
-
-#search {
-  padding: 0.55rem 0.65rem;
-  border-radius: 0.6rem;
-  border: 1px solid #d1d5db;
-  background-color: #f9fafb;
-  color: #6b7280;
-  font-size: 0.875rem;
-  transition: border-color 0.2s ease;
-  appearance: none;
-  -webkit-appearance: none;
-  width: 100%;
-  max-width: 20rem;
+  padding-right: 2rem;
 }
 
 #region-filter:focus,
-#search:focus,
 #sort-select:focus {
   outline: none;
   border-color: #a855f7;
   box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2);
 }
 
-#search::placeholder {
-  color: #d1d5db;
-}
-
-/* Filter-by section: tighter divider + layout */
-#filter-by-group {
-  order: 3;
-  width: 100%;
-  border-top: 1px solid #e5e7eb;
-  padding-top: 1rem;
-  margin-top: 0.5rem;
-}
-
-/* Chip row */
+/* =========================
+   Filter chips
+========================= */
 .checkbox-filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 0;
-}
-
-/* You will use this HTML structure for each chip:
-   <label class="filter-chip">
-     <input type="checkbox" ...>
-     <span class="chip-text">Label</span>
-   </label>
-*/
-
-/* label becomes a click-target wrapper */
-.checkbox-filters label.filter-chip {
-  display: inline-flex;
   align-items: center;
-  cursor: pointer;
-  user-select: none;
+  gap: 0.5rem;
 }
 
-/* hide checkbox UI but keep it accessible */
-.checkbox-filters label.filter-chip input[type="checkbox"] {
+.filter-chip {
+  position: relative;
+  cursor: pointer;
+}
+
+.filter-chip input {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
 
-/* the chip itself is the span */
-.checkbox-filters label.filter-chip .chip-text {
+.filter-chip span {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 0.25rem 0.6rem;
-  border-radius: 0.6rem;
-  background-color: #f3f4f6; /* light grey */
-  border: 1px solid #a855f7; /* same purple outline as reset */
-  color: #6b7280;
+  height: 2rem;
+  padding: 0 0.65rem;
   font-size: 0.8rem;
-  line-height: 1.2;
-  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  color: #6b7280;
+  border-radius: 0.6rem;
+  background: #f3f4f6;
+  border: 1px solid #a855f7;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.checkbox-filters label.filter-chip:hover .chip-text {
-  background-color: #f3e8ff; /* subtle purple tint */
+.filter-chip:hover span {
+  background: #f3e8ff;
 }
 
-/* checked state */
-.checkbox-filters label.filter-chip input[type="checkbox"]:checked + .chip-text {
-  background-color: #a855f7;
+.filter-chip input:checked + span {
+  background: #a855f7;
   color: #ffffff;
 }
 
-/* keyboard focus */
-.checkbox-filters label.filter-chip:focus-within .chip-text {
+.filter-chip:focus-within span {
   box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.35);
 }
 
-/* Reset button: match chip system */
+/* Reset button inline with chips */
 #reset-filters {
-  padding: 0.25rem 0.6rem;
-  border-radius: 0.6rem;
-  background-color: #f3f4f6;
-  color: #a855f7;
+  height: 2rem;
+  padding: 0 0.75rem;
   font-size: 0.8rem;
-  cursor: pointer;
+  border-radius: 0.6rem;
   border: 1px solid #a855f7;
-  margin-top: 0.5rem;
-  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  background: #f3f4f6;
+  color: #a855f7;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 #reset-filters:hover {
-  background-color: #a855f7;
+  background: #a855f7;
   color: #ffffff;
-  border-color: #a855f7;
 }
 
 #reset-filters:focus {
@@ -215,7 +186,7 @@ header h1 {
 }
 
 /* =========================
-   Shows grid and cards
+   Shows grid
 ========================= */
 .shows-grid {
   display: grid;
@@ -225,23 +196,21 @@ header h1 {
 }
 
 .show-card {
+  background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  background-color: #ffffff;
 }
 
 .show-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .show-image-container {
   height: 300px;
-  overflow: hidden;
-  background-color: #f3f4f6;
-  position: relative;
+  background: #f3f4f6;
 }
 
 .show-image {
@@ -250,105 +219,70 @@ header h1 {
   object-fit: cover;
 }
 
+.loading-poster,
 .poster-error {
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  text-align: center;
   color: #6b7280;
-  font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
+/* =========================
+   Show info
+========================= */
 .show-info {
   padding: 1rem;
 }
 
 .show-title {
-  margin: 0 0 0.5rem 0;
+  margin: 0 0 0.4rem;
   font-size: 1rem;
   font-weight: 600;
-  color: #1f2937;
 }
 
 .show-year,
 .show-region {
-  margin: 0 0 0.5rem 0;
-  font-size: 0.875rem;
+  margin: 0 0 0.4rem;
+  font-size: 0.85rem;
   color: #6b7280;
 }
 
 /* =========================
-   Tags
+   Tags on cards
 ========================= */
 .tags-container {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
 }
 
 .tag {
   padding: 0.125rem 0.5rem;
   border-radius: 1rem;
-  font-size: 0.75rem;
-  background-color: #f3f4f6;
+  font-size: 0.7rem;
+  background: #f3f4f6;
   color: #6b7280;
 }
 
-.tag-therapist {
-  background-color: #fee2e2;
-  color: #dc2626;
-}
-
-.tag-gem {
-  background-color: #dbeafe;
-  color: #2563eb;
-}
-
-.tag-book {
-  background-color: #e0e7ff;
-  color: #4f46e5;
-}
-
-.tag-supernatural {
-  background-color: #fef3c7;
-  color: #d97706;
-}
-
-.tag-period {
-  background-color: #d1fae5;
-  color: #059669;
-}
-
-.tag-scandi {
-  background-color: #fce7f3;
-  color: #db2777;
-}
-
-.tag-mini {
-  background-color: #bfdbfe; /* Light Blue */
-  color: #1d4ed8; /* Darker Blue */
-}
-
-.tag-animated {
-  background-color: #dcfce7; /* Light Green */
-  color: #15803d; /* Darker Green */
-}
-
-.tag-pwd {
-  background-color: #f3e8ff; /* Light Purple */
-  color: #7e22ce; /* Darker Purple */
-}
+.tag-therapist { background:#fee2e2; color:#dc2626; }
+.tag-gem { background:#dbeafe; color:#2563eb; }
+.tag-book { background:#e0e7ff; color:#4f46e5; }
+.tag-supernatural { background:#fef3c7; color:#d97706; }
+.tag-period { background:#d1fae5; color:#059669; }
+.tag-scandi { background:#fce7f3; color:#db2777; }
+.tag-mini { background:#bfdbfe; color:#1d4ed8; }
+.tag-animated { background:#dcfce7; color:#15803d; }
+.tag-pwd { background:#f3e8ff; color:#7e22ce; }
 
 /* =========================
    Loading
 ========================= */
 .loading {
-  text-align: center;
   padding: 2rem;
+  text-align: center;
   color: #6b7280;
   font-weight: 500;
 }
