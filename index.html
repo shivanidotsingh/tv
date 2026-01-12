@@ -14,7 +14,13 @@
     <p>series which I have either completed, or consumed more than half of its total released content.</p>
 
 <div class="filter-container">
-  <div id="region-search-sort-group">
+  <!-- Search: its own line -->
+  <div id="search-row" class="filter-group">
+    <input type="text" id="search" placeholder="Search shows..." />
+  </div>
+
+  <!-- Everything else: one row -->
+  <div id="controls-row">
     <div id="region-filter-group" class="filter-group">
       <label for="region-filter">Region:</label>
       <select id="region-filter">
@@ -30,64 +36,60 @@
       </select>
     </div>
 
-    <div id="search-filter-group" class="filter-group">
-      <label for="search">Search:</label>
-      <input type="text" id="search" placeholder="Search shows...">
+    <div id="filter-by-group" class="filter-group">
+      <label>Filter:</label>
+      <div class="checkbox-filters">
+        <label class="filter-chip">
+          <input type="checkbox" id="book-filter">
+          <span class="chip-text">Based on a Book</span>
+        </label>
+
+        <label class="filter-chip">
+          <input type="checkbox" id="supernatural-filter">
+          <span class="chip-text">SciFi or Supernatural</span>
+        </label>
+
+        <label class="filter-chip">
+          <input type="checkbox" id="period-filter">
+          <span class="chip-text">Period Pieces</span>
+        </label>
+
+        <label class="filter-chip">
+          <input type="checkbox" id="scandi-filter">
+          <span class="chip-text">Scandinavian</span>
+        </label>
+
+        <label class="filter-chip">
+          <input type="checkbox" id="mini-filter">
+          <span class="chip-text">Mini-series</span>
+        </label>
+
+        <label class="filter-chip">
+          <input type="checkbox" id="animated-filter">
+          <span class="chip-text">Animated</span>
+        </label>
+
+        <label class="filter-chip">
+          <input type="checkbox" id="therapist-filter">
+          <span class="chip-text">Features a Therapist</span>
+        </label>
+
+        <label class="filter-chip">
+          <input type="checkbox" id="pwd-filter">
+          <span class="chip-text">Features person with disability</span>
+        </label>
+
+        <label class="filter-chip">
+          <input type="checkbox" id="gem-filter">
+          <span class="chip-text">💎</span>
+        </label>
+      </div>
     </div>
-  </div>
 
-  <div id="filter-by-group" class="filter-group">
-    <label>Filter:</label>
-
-    <div class="checkbox-filters">
-      <label class="filter-chip">
-        <input type="checkbox" id="book-filter">
-        <span class="chip-text">Based on a Book</span>
-      </label>
-
-      <label class="filter-chip">
-        <input type="checkbox" id="supernatural-filter">
-        <span class="chip-text">SciFi or Supernatural</span>
-      </label>
-
-      <label class="filter-chip">
-        <input type="checkbox" id="period-filter">
-        <span class="chip-text">Period Pieces</span>
-      </label>
-
-      <label class="filter-chip">
-        <input type="checkbox" id="scandi-filter">
-        <span class="chip-text">Scandinavian</span>
-      </label>
-
-      <label class="filter-chip">
-        <input type="checkbox" id="mini-filter">
-        <span class="chip-text">Mini-series</span>
-      </label>
-
-      <label class="filter-chip">
-        <input type="checkbox" id="animated-filter">
-        <span class="chip-text">Animated</span>
-      </label>
-
-      <label class="filter-chip">
-        <input type="checkbox" id="therapist-filter">
-        <span class="chip-text">Features a Therapist</span>
-      </label>
-
-      <label class="filter-chip">
-        <input type="checkbox" id="pwd-filter">
-        <span class="chip-text">Features person with disability</span>
-      </label>
-
-      <label class="filter-chip">
-        <input type="checkbox" id="gem-filter">
-        <span class="chip-text">💎</span>
-      </label>
-      <button id="reset-filters" type="button">Reset</button>
-    </div>
+    <button id="reset-filters" type="button">Reset</button>
   </div>
 </div>
+
 
   </header>
 
