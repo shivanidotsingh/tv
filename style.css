@@ -231,25 +231,28 @@ header p {
 
 #reset-filters {
   height: 2rem;
-  padding: 0 0.75rem;
+  padding: 0 0.85rem;
   font-size: 0.8rem;
+  font-weight: 600;
   border-radius: 0.6rem;
   border: 1px solid #111111;
-  background: #f3f4f6;
-  color: #111111;
+  background: #111111;   /* black base */
+  color: #ffffff;       /* white text */
   cursor: pointer;
   white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 #reset-filters:hover {
-  background: #111111;
-  color: #ffffff;
+  background: #ffffff;  /* invert on hover */
+  color: #111111;
 }
 
 #reset-filters:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.16);
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.18);
 }
+
 
 /* =========================
    Content search (belongs with grid)
