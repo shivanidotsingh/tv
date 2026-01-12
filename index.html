@@ -18,15 +18,18 @@
         </div>
 
         <!-- Sort toggle (top-right) -->
-        <div class="sort-toggle" aria-label="Sort toggle">
-          <button type="button" class="sort-chip is-active" data-sort="year">Chronological</button>
-          <button type="button" class="sort-chip" data-sort="title">Alphabetical</button>
-          <!-- keep the real select for JS compatibility (hidden) -->
-          <select id="sort-select" aria-hidden="true" tabindex="-1">
-            <option value="year" selected>Year</option>
-            <option value="title">Title</option>
-          </select>
+        <div class="sort-toggle">
+        <p class="sort-label">Sort</p>
+
+      <label class="sort-toggle" aria-label="Sort toggle">
+        <input id="sort-toggle" type="checkbox">
+        <div class="sort-switch">
+          <div class="sort-option left">Chronological</div>
+        <div class="sort-option right">Alphabetical</div>
         </div>
+        </label>
+      </div>
+
       </div>
     </div>
 
