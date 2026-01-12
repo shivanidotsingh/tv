@@ -175,27 +175,26 @@ header p {
 /* =========================
    SEARCH (now includes toggle on right)
 ========================= */
-.content-controls{
+.content-controls {
   padding: 0.75rem 2rem 0;
 }
 
-.search-row{
+.search-row {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   width: 100%;
 }
 
-.content-controls #search {
+/* search grows, toggle stays fixed */
+.search-row #search {
   flex: 1;
-  width: 100%;
-  padding: 0.55rem 0;
-  font-size: 0.95rem;
-  border: none;
-  border-bottom: 1px solid #e5e7eb;
-  background: transparent;
-  color: #1f2937;
   min-width: 0;
+}
+
+.search-row .sort-toggle {
+  flex-shrink: 0;
+  margin-left: auto; /* 🔑 pushes toggle to the right */
 }
 
 .content-controls #search::placeholder { color: #cbd5e1; }
@@ -279,8 +278,6 @@ header p {
 #sort-toggle:not(:checked) + .sort-switch .sort-option.left { color: #ffffff; }
 #sort-toggle:checked + .sort-switch .sort-option.right { color: #ffffff; }
 
-/* NO focus ring / shadow */
-.sort-toggle:focus-within .sort-switch { box-shadow: none; }
 
 /* Mobile: stack if tight */
 @media (max-width: 480px) {
