@@ -1,14 +1,34 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // DOM elements
+  // Required DOM
   const showsContainer = document.getElementById('shows-container');
   const regionFilter = document.getElementById('region-filter');
-  const searchInput = document.getElementById('search');
   const resetButton = document.getElementById('reset-filters');
 
-  // Sort toggle: unchecked = chronological (year), checked = alphabetical (title)
-  const sortToggle = document.getElementById('sort-toggle');
+  // Optional DOM (safe if moved/absent)
+  const searchInput = document.getElementById('search');       // might be in content-controls now
+  const sortToggle = document.getElementById('sort-toggle');   // toggle checkbox
 
-  // Tag checkbox inputs (keep your HTML ids)
+  if (!showsContainer) {
+    console.error('Missing #shows-container');
+    return;
+  }
+  if (!regionFilter) {
+    console.error('Missing #region-filter');
+    showsContainer.innerHTML = '<div class="loading">Error: Region filter element not found.</div>';
+    return;
+  }
+  if (!resetButton) {
+    console.error('Missing #reset-filters');
+    showsContainer.innerHTML = '<div class="loading">Error: Reset button element not found.</div>';
+    return;
+  }
+  if (typeof tvShowsData === 'undefined') {
+    console.error('tvShowsData is undefined. Ensure data.js loads before script.js.');
+    showsContainer.innerHTML = '<div class="loading">Error: data.js did not load.</div>';
+    return;
+  }
+
+  // Tag checkbox inputs (safe: only attach listeners if present)
   const tagInputs = {
     therapist: document.getElementById('therapist-filter'),
     gem: document.getElementById('gem-filter'),
@@ -21,19 +41,19 @@ document.addEventListener('DOMContentLoaded', function () {
     pwd: document.getElementById('pwd-filter'),
   };
 
-  // TMDB API Configuration
+  // TMDB API
   const TMDB_API_KEY = '2f31918e48b6998c0bb8439980c6aa7e';
   const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
   let tmdbImageBaseUrl = null;
-  let tmdbImageSize = 'w500';
+  const tmdbImageSize = 'w500';
 
-  // Flatten shows once; keep region from tvShowsData keys (this is your "original logic", but fast)
+  // Flatten shows once; region = top-level key (your original logic)
   const ALL_SHOWS = Object.entries(tvShowsData).flatMap(([region, shows]) =>
     (shows || []).map((show) => ({ ...show, region }))
   );
 
   function getSortBy() {
-    // default chronological if toggle missing
+    // unchecked = chronological
     if (!sortToggle) return 'year';
     return sortToggle.checked ? 'title' : 'year';
   }
@@ -45,39 +65,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   async function fetchTmdbConfig() {
     try {
-      const response = await fetch(`${TMDB_BASE_URL}/configuration?api_key=${TMDB_API_KEY}`);
-      const config = await response.json();
+      const res = await fetch(`${TMDB_BASE_URL}/configuration?api_key=${TMDB_API_KEY}`);
+      const config = await res.json();
       tmdbImageBaseUrl = config?.images?.secure_base_url || null;
-    } catch (error) {
-      console.error('Error fetching TMDB configuration:', error);
+    } catch (e) {
+      console.warn('TMDB config failed (posters may be missing).', e);
       tmdbImageBaseUrl = null;
     }
   }
 
-  // Init
-  setDefaultSort();
-
-  fetchTmdbConfig().then(() => {
-    populateRegionFilter();
-    renderShows();
-  });
-
-  // Event listeners
-  regionFilter.addEventListener('change', renderShows);
-  searchInput.addEventListener('input', renderShows);
-  resetButton.addEventListener('click', resetFilters);
-
-  if (sortToggle) sortToggle.addEventListener('change', renderShows);
-
-  Object.values(tagInputs).forEach((input) => {
-    if (input) input.addEventListener('change', renderShows);
-  });
-
   function populateRegionFilter() {
-    // ✅ This is the original behavior you want:
-    // region options = Object.keys(tvShowsData), i.e. "America — East", "Europe", etc.
     regionFilter.innerHTML = '<option value="all">All Regions</option>';
-
     Object.keys(tvShowsData).forEach((region) => {
       const option = document.createElement('option');
       option.value = region;
@@ -88,16 +86,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function resetFilters() {
     regionFilter.value = 'all';
-
     Object.values(tagInputs).forEach((input) => {
       if (input) input.checked = false;
     });
-
-    searchInput.value = '';
-
-    // Reset sort to chronological ON
+    if (searchInput) searchInput.value = '';
     setDefaultSort();
-
     renderShows();
   }
 
@@ -105,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
     showsContainer.innerHTML = '<div class="loading">Loading shows...</div>';
 
     const selectedRegion = regionFilter.value;
-    const searchQuery = searchInput.value.toLowerCase().trim();
+    const searchQuery = (searchInput?.value || '').toLowerCase().trim();
     const sortBy = getSortBy();
 
     const activeTags = Object.entries(tagInputs)
@@ -114,12 +107,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let filtered = ALL_SHOWS;
 
-    // Region filter (exact match against region key)
     if (selectedRegion !== 'all') {
       filtered = filtered.filter((show) => show.region === selectedRegion);
     }
 
-    // Tags (AND logic)
     if (activeTags.length > 0) {
       filtered = filtered.filter((show) => {
         const tags = show.tags || [];
@@ -127,21 +118,18 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
-    // Search
     if (searchQuery) {
       filtered = filtered.filter((show) =>
         (show.title || '').toLowerCase().includes(searchQuery)
       );
     }
 
-    // Sort
     filtered = [...filtered].sort((a, b) => {
       if (sortBy === 'year') {
         const ay = parseInt((a.year || '').slice(0, 4), 10);
         const by = parseInt((b.year || '').slice(0, 4), 10);
         return (isNaN(by) ? -Infinity : by) - (isNaN(ay) ? -Infinity : ay);
       }
-      // title
       return (a.title || '').localeCompare(b.title || '');
     });
 
@@ -151,70 +139,60 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    const showsGrid = document.createElement('div');
-    showsGrid.className = 'shows-grid';
+    const grid = document.createElement('div');
+    grid.className = 'shows-grid';
 
-    filtered.forEach((show) => {
-      showsGrid.appendChild(createShowCard(show, show.region));
-    });
+    filtered.forEach((show) => grid.appendChild(createShowCard(show, show.region)));
 
     showsContainer.innerHTML = '';
-    showsContainer.appendChild(showsGrid);
+    showsContainer.appendChild(grid);
   }
 
   async function fetchTmdbPosterUrl(showTitle, showYear) {
     if (!tmdbImageBaseUrl) return null;
 
-    let query = `${TMDB_BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(
-      showTitle
-    )}`;
+    let q = `${TMDB_BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(showTitle)}`;
 
-    if (showYear) {
-      const yearMatch = String(showYear).match(/^(\d{4})/);
-      if (yearMatch && yearMatch[1]) {
-        query += `&first_air_date_year=${yearMatch[1]}`;
-      }
-    }
+    const yearMatch = String(showYear || '').match(/^(\d{4})/);
+    if (yearMatch?.[1]) q += `&first_air_date_year=${yearMatch[1]}`;
 
     try {
-      const searchResponse = await fetch(query);
-      const searchData = await searchResponse.json();
-      const tmdbShow = searchData?.results?.[0];
-      if (tmdbShow?.poster_path) {
-        return tmdbImageBaseUrl + tmdbImageSize + tmdbShow.poster_path;
-      }
+      const res = await fetch(q);
+      const data = await res.json();
+      const first = data?.results?.[0];
+      if (first?.poster_path) return tmdbImageBaseUrl + tmdbImageSize + first.poster_path;
       return null;
-    } catch (error) {
-      console.error(`Error fetching TMDB poster for ${showTitle}:`, error);
+    } catch (e) {
+      console.warn(`TMDB poster fetch failed for ${showTitle}`, e);
       return null;
     }
   }
 
   function createShowCard(show, region) {
-    const showCard = document.createElement('div');
-    showCard.classList.add('show-card');
+    const card = document.createElement('div');
+    card.classList.add('show-card');
 
-    const showImageContainer = document.createElement('div');
-    showImageContainer.classList.add('show-image-container');
-    showImageContainer.innerHTML = '<div class="loading-poster">Loading poster...</div>';
+    const imgWrap = document.createElement('div');
+    imgWrap.classList.add('show-image-container');
+    imgWrap.innerHTML = '<div class="loading-poster">Loading poster...</div>';
 
-    const showInfo = document.createElement('div');
-    showInfo.classList.add('show-info');
+    const info = document.createElement('div');
+    info.classList.add('show-info');
 
-    const showTitle = document.createElement('h3');
-    showTitle.classList.add('show-title');
-    showTitle.textContent = show.title;
-    showInfo.appendChild(showTitle);
+    const title = document.createElement('h3');
+    title.classList.add('show-title');
+    title.textContent = show.title || '';
+    info.appendChild(title);
 
-    const showYear = document.createElement('p');
-    showYear.classList.add('show-year');
-    showYear.textContent = show.year || 'Year Unknown';
-    showInfo.appendChild(showYear);
+    const year = document.createElement('p');
+    year.classList.add('show-year');
+    year.textContent = show.year || 'Year Unknown';
+    info.appendChild(year);
 
-    const showRegion = document.createElement('p');
-    showRegion.classList.add('show-region');
-    showRegion.textContent = region || 'Unknown Region';
-    showInfo.appendChild(showRegion);
+    const reg = document.createElement('p');
+    reg.classList.add('show-region');
+    reg.textContent = region || 'Unknown Region';
+    info.appendChild(reg);
 
     if (show.tags && show.tags.length > 0) {
       const tagsContainer = document.createElement('div');
@@ -227,25 +205,37 @@ document.addEventListener('DOMContentLoaded', function () {
         tagsContainer.appendChild(tagSpan);
       });
 
-      showInfo.appendChild(tagsContainer);
+      info.appendChild(tagsContainer);
     }
 
-    showCard.appendChild(showImageContainer);
-    showCard.appendChild(showInfo);
+    card.appendChild(imgWrap);
+    card.appendChild(info);
 
-    fetchTmdbPosterUrl(show.title, show.year).then((tmdbPosterUrl) => {
-      showImageContainer.innerHTML = '';
-      if (tmdbPosterUrl) {
+    fetchTmdbPosterUrl(show.title, show.year).then((url) => {
+      imgWrap.innerHTML = '';
+      if (url) {
         const img = document.createElement('img');
         img.classList.add('show-image');
         img.alt = `${show.title} poster`;
-        img.src = tmdbPosterUrl;
-        showImageContainer.appendChild(img);
+        img.src = url;
+        imgWrap.appendChild(img);
       } else {
-        showImageContainer.innerHTML = '<div class="poster-error">Poster not available</div>';
+        imgWrap.innerHTML = '<div class="poster-error">Poster not available</div>';
       }
     });
 
-    return showCard;
+    return card;
   }
+
+  // Wire listeners (safe)
+  regionFilter.addEventListener('change', renderShows);
+  resetButton.addEventListener('click', resetFilters);
+  if (searchInput) searchInput.addEventListener('input', renderShows);
+  if (sortToggle) sortToggle.addEventListener('change', renderShows);
+  Object.values(tagInputs).forEach((input) => input && input.addEventListener('change', renderShows));
+
+  // Boot
+  setDefaultSort();
+  populateRegionFilter();
+  fetchTmdbConfig().finally(renderShows);
 });
