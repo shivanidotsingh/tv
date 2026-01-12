@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   // =========================
-  // DOM elements (required)
+  // Required DOM
   // =========================
   const showsContainer = document.getElementById('shows-container');
   const regionFilter = document.getElementById('region-filter');
@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', function () {
     return;
   }
 
-  // Optional DOM (safe if absent/moved)
-  const searchInput = document.getElementById('search');     // can live under content
-  const sortToggle = document.getElementById('sort-toggle'); // checkbox in toggle switch
+  // Optional DOM (safe if moved/absent)
+  const searchInput = document.getElementById('search');
+  const sortToggle = document.getElementById('sort-toggle'); // unchecked = chronological
 
-  // Tag checkbox inputs (safe if any missing)
+  // Tag inputs (safe if any missing)
   const tagInputs = {
     therapist: document.getElementById('therapist-filter'),
     gem: document.getElementById('gem-filter'),
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     pwd: document.getElementById('pwd-filter'),
   };
 
-  // Data check (must exist)
+  // Data check
   if (typeof tvShowsData === 'undefined') {
     console.error('tvShowsData is undefined. Ensure data.js loads before script.js.');
     showsContainer.innerHTML = '<div class="loading">Error: data.js did not load.</div>';
@@ -40,22 +40,131 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // =========================
-  // TMDB + TVmaze posters
+  // Poster fetching: cache + throttle
+  // =========================
+  const posterCache = new Map(); // key: show.title -> url|null|Promise
+
+  const MAX_CONCURRENT_POSTERS = 6;
+  let activePosterFetches = 0;
+  const posterQueue = [];
+
+  function schedulePosterFetch(task) {
+    return new Promise((resolve) => {
+      posterQueue.push({ task, resolve });
+      pumpPosterQueue();
+    });
+  }
+
+  function pumpPosterQueue() {
+    while (activePosterFetches < MAX_CONCURRENT_POSTERS && posterQueue.length) {
+      const { task, resolve } = posterQueue.shift();
+      activePosterFetches++;
+      task()
+        .then(resolve)
+        .catch(() => resolve(null))
+        .finally(() => {
+          activePosterFetches--;
+          pumpPosterQueue();
+        });
+    }
+  }
+
+  // =========================
+  // TMDB + TVmaze
   // =========================
   const TMDB_API_KEY = '2f31918e48b6998c0bb8439980c6aa7e';
   const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
   let tmdbImageBaseUrl = null;
   const tmdbImageSize = 'w500';
 
-  // Flatten shows once; region = top-level key (your original intent)
+  async function fetchTmdbConfigWithTimeout(ms = 2500) {
+    const controller = new AbortController();
+    const t = setTimeout(() => controller.abort(), ms);
+    try {
+      const res = await fetch(`${TMDB_BASE_URL}/configuration?api_key=${TMDB_API_KEY}`, {
+        signal: controller.signal,
+      });
+      const config = await res.json();
+      tmdbImageBaseUrl = config?.images?.secure_base_url || null;
+    } catch (e) {
+      tmdbImageBaseUrl = null; // blocked/timeout/offline is fine
+    } finally {
+      clearTimeout(t);
+    }
+  }
+
+  async function fetchTmdbPosterUrl(showTitle, showYear) {
+    if (!tmdbImageBaseUrl) return null;
+
+    let query = `${TMDB_BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(
+      showTitle
+    )}`;
+
+    const yearMatch = String(showYear || '').match(/^(\d{4})/);
+    if (yearMatch?.[1]) query += `&first_air_date_year=${yearMatch[1]}`;
+
+    try {
+      const res = await fetch(query);
+      if (!res.ok) return null;
+      const data = await res.json();
+      const first = data?.results?.[0];
+      if (first?.poster_path) return tmdbImageBaseUrl + tmdbImageSize + first.poster_path;
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  async function fetchTvmazePosterUrl(showTitle) {
+    const url = `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(showTitle)}`;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data?.image?.original || data?.image?.medium || null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  // TMDB -> TVmaze fallback with caching + throttling
+  async function fetchPosterUrl(showTitle, showYear) {
+    // Cache key: exact title (we’re intentionally NOT doing fuzzy matching right now)
+    const key = String(showTitle || '').trim();
+    if (!key) return null;
+
+    // If we already resolved it (url or null)
+    if (posterCache.has(key)) {
+      const cached = posterCache.get(key);
+      // If it’s a Promise in-flight, await it
+      if (cached && typeof cached.then === 'function') return await cached;
+      return cached; // url or null
+    }
+
+    // Create one in-flight promise so repeated renders don’t re-fetch
+    const inFlight = (async () => {
+      const tmdb = await fetchTmdbPosterUrl(key, showYear);
+      if (tmdb) return tmdb;
+      const tvm = await fetchTvmazePosterUrl(key);
+      return tvm || null;
+    })();
+
+    posterCache.set(key, inFlight);
+
+    const result = await inFlight;
+    posterCache.set(key, result); // store final url or null
+    return result;
+  }
+
+  // =========================
+  // Data prep
+  // =========================
   const ALL_SHOWS = Object.entries(tvShowsData).flatMap(([region, shows]) =>
     (shows || []).map((show) => ({ ...show, region }))
   );
 
   // =========================
   // Sorting (toggle)
-  // unchecked = Chronological (year) [DEFAULT]
-  // checked   = Alphabetical (title)
   // =========================
   function getSortBy() {
     if (!sortToggle) return 'year';
@@ -67,33 +176,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // =========================
-  // Init (IMPORTANT: render immediately)
-  // =========================
-  setDefaultSort();
-  populateRegionFilter();
-  renderShows(); // ✅ render on landing, no network gating
-
-  // Fetch TMDB config in the background (never block first paint)
-  fetchTmdbConfigWithTimeout(2500);
-
-  // =========================
-  // Event listeners
-  // =========================
-  regionFilter.addEventListener('change', renderShows);
-  resetButton.addEventListener('click', resetFilters);
-
-  if (searchInput) searchInput.addEventListener('input', renderShows);
-  if (sortToggle) sortToggle.addEventListener('change', renderShows);
-
-  Object.values(tagInputs).forEach((input) => {
-    if (input) input.addEventListener('change', renderShows);
-  });
-
-  // =========================
-  // Functions
+  // UI functions
   // =========================
   function populateRegionFilter() {
-    // Always rebuild; show exact keys like "America — East", "America — West", "Europe", etc.
     regionFilter.innerHTML = '<option value="all">All Regions</option>';
     Object.keys(tvShowsData).forEach((region) => {
       const option = document.createElement('option');
@@ -126,12 +211,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let filtered = ALL_SHOWS;
 
-    // Region
     if (selectedRegion !== 'all') {
       filtered = filtered.filter((show) => show.region === selectedRegion);
     }
 
-    // Tags (AND logic)
     if (activeTags.length > 0) {
       filtered = filtered.filter((show) => {
         const tags = show.tags || [];
@@ -139,14 +222,12 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
-    // Search
     if (searchQuery) {
       filtered = filtered.filter((show) =>
         (show.title || '').toLowerCase().includes(searchQuery)
       );
     }
 
-    // Sort
     filtered = [...filtered].sort((a, b) => {
       if (sortBy === 'year') {
         const ay = parseInt((a.year || '').slice(0, 4), 10);
@@ -169,64 +250,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     showsContainer.innerHTML = '';
     showsContainer.appendChild(grid);
-  }
-
-  async function fetchTmdbConfigWithTimeout(ms = 2500) {
-    const controller = new AbortController();
-    const t = setTimeout(() => controller.abort(), ms);
-
-    try {
-      const res = await fetch(`${TMDB_BASE_URL}/configuration?api_key=${TMDB_API_KEY}`, {
-        signal: controller.signal,
-      });
-      const config = await res.json();
-      tmdbImageBaseUrl = config?.images?.secure_base_url || null;
-    } catch (e) {
-      // blocked / timeout / offline — fine
-      tmdbImageBaseUrl = null;
-    } finally {
-      clearTimeout(t);
-    }
-  }
-
-  async function fetchTmdbPosterUrl(showTitle, showYear) {
-    if (!tmdbImageBaseUrl) return null;
-
-    let query = `${TMDB_BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(
-      showTitle
-    )}`;
-
-    const yearMatch = String(showYear || '').match(/^(\d{4})/);
-    if (yearMatch?.[1]) query += `&first_air_date_year=${yearMatch[1]}`;
-
-    try {
-      const res = await fetch(query);
-      const data = await res.json();
-      const first = data?.results?.[0];
-      if (first?.poster_path) return tmdbImageBaseUrl + tmdbImageSize + first.poster_path;
-      return null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  async function fetchTvmazePosterUrl(showTitle) {
-    const url = `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(showTitle)}`;
-    try {
-      const res = await fetch(url);
-      if (!res.ok) return null;
-      const data = await res.json();
-      return data?.image?.original || data?.image?.medium || null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  // TMDB -> TVmaze fallback (fast in India)
-  async function fetchPosterUrl(showTitle, showYear) {
-    const tmdb = await fetchTmdbPosterUrl(showTitle, showYear);
-    if (tmdb) return tmdb;
-    return await fetchTvmazePosterUrl(showTitle);
   }
 
   function createShowCard(show, region) {
@@ -272,7 +295,8 @@ document.addEventListener('DOMContentLoaded', function () {
     card.appendChild(imgWrap);
     card.appendChild(info);
 
-    fetchPosterUrl(show.title, show.year).then((url) => {
+    // Throttled fetch so we don’t blast the API and get partial results
+    schedulePosterFetch(() => fetchPosterUrl(show.title, show.year)).then((url) => {
       imgWrap.innerHTML = '';
       if (url) {
         const img = document.createElement('img');
@@ -287,4 +311,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     return card;
   }
+
+  // =========================
+  // Listeners
+  // =========================
+  regionFilter.addEventListener('change', renderShows);
+  resetButton.addEventListener('click', resetFilters);
+  if (searchInput) searchInput.addEventListener('input', renderShows);
+  if (sortToggle) sortToggle.addEventListener('change', renderShows);
+  Object.values(tagInputs).forEach((input) => input && input.addEventListener('change', renderShows));
+
+  // =========================
+  // Boot (IMPORTANT: render immediately)
+  // =========================
+  setDefaultSort();
+  populateRegionFilter();
+  renderShows(); // ✅ cards show on landing no matter what
+
+  // Fetch TMDB config in background (never blocks landing)
+  fetchTmdbConfigWithTimeout(2500);
 });
