@@ -117,6 +117,7 @@ header p {
   font-size: 12px;
   line-height: 1;
   box-sizing: border-box;
+  background: #f3f4f6;
 }
 
 
@@ -126,7 +127,7 @@ header p {
 }
 
 .filter-chip:hover span {
-  background: #e5e7eb;
+  background: #e8f1fb;
 }
 
 #reset-filters {
