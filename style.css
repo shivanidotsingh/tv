@@ -2,7 +2,10 @@
    Base
 ========================= */
 * { box-sizing: border-box; }
-:root { --control-h: 26px; }
+:root {
+   --control-h: 26px;
+   --ui-font: 12px;
+}
 
 body {
   margin: 0;
@@ -11,12 +14,11 @@ body {
   color: #111111;
 }
 
-/* constrain main content */
 header,
 .content-controls,
 #shows-container {
-  max-width: 1100px;
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
   padding-left: 16px;
   padding-right: 16px;
 }
@@ -85,7 +87,7 @@ header p {
 /* region select */
 #region-filter {
   font: inherit;
-  font-size: 12px;
+  font-size: var(--ui-font);
   height: var(--control-h);
   padding: 0 4px;
 }
@@ -157,9 +159,7 @@ header p {
   flex: 1 1 0;
   min-width: 340px;
   font: inherit;
-  font-size: 14px;
-  height: var(--control-h);
-  padding: 0 6px;
+  font-size: var(--ui-font);
 }
 
 
@@ -174,7 +174,7 @@ header p {
 }
 
 .sort-label {
-  font-size: 11px;
+  font-size: var(--ui-font);
   color: #6b7280;
 }
 
@@ -209,7 +209,7 @@ header p {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: var(--ui-font);
   line-height: 1;
   white-space: nowrap;
 }
