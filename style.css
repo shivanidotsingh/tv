@@ -236,26 +236,22 @@ header p {
   font-weight: 600;
   border-radius: 0.6rem;
   border: 1px solid #111111;
-  background: #111111;   /* black base */
-  color: #ffffff;       /* white text */
+  background: #111111;
+  color: #ffffff;
   cursor: pointer;
   white-space: nowrap;
-  transition: background-color 0.15s ease, color 0.15s ease;
 }
-
-#reset-filters:hover {
-  background: #ffffff;  /* invert on hover */
-  color: #111111;
-}
-
-#reset-filters:focus {
+#reset-filters:hover,
+#reset-filters:focus,
+#reset-filters:active {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.18);
+  box-shadow: none;
 }
+
 
 
 /* =========================
-   Content search (belongs with grid)
+SEARCH
 ========================= */
 .content-controls{
   padding: 0.75rem 2rem 0;
@@ -369,5 +365,4 @@ header p {
   padding: 2rem;
   text-align: center;
   color: #6b7280;
-  font-weight: 500;
 }
