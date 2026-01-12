@@ -387,3 +387,36 @@ header p {
   text-align: center;
   color: #6b7280;
 }
+
+/* Mobile: force 3 columns */
+@media (max-width: 600px) {
+  .shows-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .show-image-container {
+    height: 160px; /* shorter cards */
+  }
+
+  .show-info {
+    padding: 0.6rem;
+  }
+
+  .show-title {
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .show-year,
+  .show-region {
+    font-size: 0.75rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .tags-container {
+    display: none; /* optional: keeps cards clean/tiny */
+  }
+}
+
