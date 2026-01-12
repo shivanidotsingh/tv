@@ -2,6 +2,7 @@
    Base
 ========================= */
 * { box-sizing: border-box; }
+:root { --control-h: 26px; }
 
 body {
   margin: 0;
@@ -85,7 +86,8 @@ header p {
 #region-filter {
   font: inherit;
   font-size: 12px;
-  padding: 2px 4px;
+  height: var(--control-h);
+  padding: 0 4px;
 }
 
 /* filter buttons */
@@ -150,13 +152,15 @@ header p {
   width: 100%;
 }
 
-/* search is dominant */
 #search {
   flex: 1 1 0;
   min-width: 340px;
   font: inherit;
   font-size: 14px;
+  height: var(--control-h);
+  padding: 0 6px;
 }
+
 
 /* sort toggle */
 .sort-toggle {
@@ -173,25 +177,17 @@ header p {
   color: #6b7280;
 }
 
-/* switch */
 .sort-switch {
   position: relative;
   display: flex;
   align-items: center;
   width: 260px;
-  height: 26px;
+  height: var(--control-h);
   background: #f3f4f6;
   border: 1px solid #e5e7eb;
   overflow: hidden;
 }
 
-#sort-toggle {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* sliding pill */
 .sort-switch::before {
   content: "";
   position: absolute;
@@ -205,11 +201,6 @@ header p {
   transition: transform 0.15s ease;
 }
 
-#sort-toggle:checked + .sort-switch::before {
-  transform: translateX(100%);
-}
-
-/* labels */
 .sort-option {
   position: relative;
   z-index: 1;
@@ -219,8 +210,20 @@ header p {
   justify-content: center;
   font-size: 11px;
   line-height: 1;
-  color: #6b7280;
   white-space: nowrap;
+}
+
+
+#sort-toggle {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+
+#sort-toggle:checked + .sort-switch::before {
+  transform: translateX(100%);
 }
 
 #sort-toggle:not(:checked) + .sort-switch .left { color: #111; }
