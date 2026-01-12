@@ -5,13 +5,10 @@ document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.getElementById('search');
   const resetButton = document.getElementById('reset-filters');
 
-  // Hidden select still exists (used by renderShows)
-  const sortSelect = document.getElementById('sort-select');
-
-  // NEW: toggle switch checkbox (unchecked = chronological)
+  // Sort toggle: unchecked = chronological (year), checked = alphabetical (title)
   const sortToggle = document.getElementById('sort-toggle');
 
-  // Tag checkbox inputs (by id; keep your HTML ids the same)
+  // Tag checkbox inputs (keep your HTML ids)
   const tagInputs = {
     therapist: document.getElementById('therapist-filter'),
     gem: document.getElementById('gem-filter'),
@@ -30,25 +27,22 @@ document.addEventListener('DOMContentLoaded', function () {
   let tmdbImageBaseUrl = null;
   let tmdbImageSize = 'w500';
 
-  // Precompute shows with region baked in
+  // Flatten shows once; keep region from tvShowsData keys (this is your "original logic", but fast)
   const ALL_SHOWS = Object.entries(tvShowsData).flatMap(([region, shows]) =>
     (shows || []).map((show) => ({ ...show, region }))
   );
 
-  // Sync sort toggle -> select
-  function syncSortFromToggle() {
-    // unchecked = chronological (year), checked = alphabetical (title)
-    sortSelect.value = sortToggle && sortToggle.checked ? 'title' : 'year';
-    renderShows();
+  function getSortBy() {
+    // default chronological if toggle missing
+    if (!sortToggle) return 'year';
+    return sortToggle.checked ? 'title' : 'year';
   }
 
-  // Ensure default = chronological ON
   function setDefaultSort() {
-    if (sortToggle) sortToggle.checked = false; // chronological
-    sortSelect.value = 'year';
+    // Chronological ON by default
+    if (sortToggle) sortToggle.checked = false;
   }
 
-  // Fetch TMDB configuration for image base URL
   async function fetchTmdbConfig() {
     try {
       const response = await fetch(`${TMDB_BASE_URL}/configuration?api_key=${TMDB_API_KEY}`);
@@ -73,27 +67,18 @@ document.addEventListener('DOMContentLoaded', function () {
   searchInput.addEventListener('input', renderShows);
   resetButton.addEventListener('click', resetFilters);
 
-  // Toggle listener (this replaces the sort dropdown UI)
-  if (sortToggle) sortToggle.addEventListener('change', syncSortFromToggle);
+  if (sortToggle) sortToggle.addEventListener('change', renderShows);
 
-  // If anything else changes sortSelect (rare), keep toggle synced too
-  if (sortSelect) {
-    sortSelect.addEventListener('change', () => {
-      if (!sortToggle) return;
-      sortToggle.checked = sortSelect.value === 'title';
-      renderShows();
-    });
-  }
-
-  // One listener for all tag checkboxes
   Object.values(tagInputs).forEach((input) => {
     if (input) input.addEventListener('change', renderShows);
   });
 
   function populateRegionFilter() {
-    const existing = new Set(Array.from(regionFilter.options).map((o) => o.value));
+    // ✅ This is the original behavior you want:
+    // region options = Object.keys(tvShowsData), i.e. "America — East", "Europe", etc.
+    regionFilter.innerHTML = '<option value="all">All Regions</option>';
+
     Object.keys(tvShowsData).forEach((region) => {
-      if (existing.has(region)) return;
       const option = document.createElement('option');
       option.value = region;
       option.textContent = region;
@@ -103,9 +88,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function resetFilters() {
     regionFilter.value = 'all';
+
     Object.values(tagInputs).forEach((input) => {
       if (input) input.checked = false;
     });
+
     searchInput.value = '';
 
     // Reset sort to chronological ON
@@ -119,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const selectedRegion = regionFilter.value;
     const searchQuery = searchInput.value.toLowerCase().trim();
-    const sortBy = sortSelect.value; // 'year' or 'title'
+    const sortBy = getSortBy();
 
     const activeTags = Object.entries(tagInputs)
       .filter(([_, el]) => el && el.checked)
@@ -127,10 +114,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let filtered = ALL_SHOWS;
 
+    // Region filter (exact match against region key)
     if (selectedRegion !== 'all') {
       filtered = filtered.filter((show) => show.region === selectedRegion);
     }
 
+    // Tags (AND logic)
     if (activeTags.length > 0) {
       filtered = filtered.filter((show) => {
         const tags = show.tags || [];
@@ -138,22 +127,22 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
 
+    // Search
     if (searchQuery) {
       filtered = filtered.filter((show) =>
         (show.title || '').toLowerCase().includes(searchQuery)
       );
     }
 
+    // Sort
     filtered = [...filtered].sort((a, b) => {
       if (sortBy === 'year') {
         const ay = parseInt((a.year || '').slice(0, 4), 10);
         const by = parseInt((b.year || '').slice(0, 4), 10);
         return (isNaN(by) ? -Infinity : by) - (isNaN(ay) ? -Infinity : ay);
       }
-      if (sortBy === 'title') {
-        return (a.title || '').localeCompare(b.title || '');
-      }
-      return 0;
+      // title
+      return (a.title || '').localeCompare(b.title || '');
     });
 
     if (filtered.length === 0) {
@@ -166,8 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
     showsGrid.className = 'shows-grid';
 
     filtered.forEach((show) => {
-      const showCard = createShowCard(show, show.region);
-      showsGrid.appendChild(showCard);
+      showsGrid.appendChild(createShowCard(show, show.region));
     });
 
     showsContainer.innerHTML = '';
@@ -192,4 +180,72 @@ document.addEventListener('DOMContentLoaded', function () {
       const searchResponse = await fetch(query);
       const searchData = await searchResponse.json();
       const tmdbShow = searchData?.results?.[0];
-      if (tmdbShow?.p
+      if (tmdbShow?.poster_path) {
+        return tmdbImageBaseUrl + tmdbImageSize + tmdbShow.poster_path;
+      }
+      return null;
+    } catch (error) {
+      console.error(`Error fetching TMDB poster for ${showTitle}:`, error);
+      return null;
+    }
+  }
+
+  function createShowCard(show, region) {
+    const showCard = document.createElement('div');
+    showCard.classList.add('show-card');
+
+    const showImageContainer = document.createElement('div');
+    showImageContainer.classList.add('show-image-container');
+    showImageContainer.innerHTML = '<div class="loading-poster">Loading poster...</div>';
+
+    const showInfo = document.createElement('div');
+    showInfo.classList.add('show-info');
+
+    const showTitle = document.createElement('h3');
+    showTitle.classList.add('show-title');
+    showTitle.textContent = show.title;
+    showInfo.appendChild(showTitle);
+
+    const showYear = document.createElement('p');
+    showYear.classList.add('show-year');
+    showYear.textContent = show.year || 'Year Unknown';
+    showInfo.appendChild(showYear);
+
+    const showRegion = document.createElement('p');
+    showRegion.classList.add('show-region');
+    showRegion.textContent = region || 'Unknown Region';
+    showInfo.appendChild(showRegion);
+
+    if (show.tags && show.tags.length > 0) {
+      const tagsContainer = document.createElement('div');
+      tagsContainer.classList.add('tags-container');
+
+      show.tags.forEach((tag) => {
+        const tagSpan = document.createElement('span');
+        tagSpan.classList.add('tag', `tag-${tag}`);
+        tagSpan.textContent = tag;
+        tagsContainer.appendChild(tagSpan);
+      });
+
+      showInfo.appendChild(tagsContainer);
+    }
+
+    showCard.appendChild(showImageContainer);
+    showCard.appendChild(showInfo);
+
+    fetchTmdbPosterUrl(show.title, show.year).then((tmdbPosterUrl) => {
+      showImageContainer.innerHTML = '';
+      if (tmdbPosterUrl) {
+        const img = document.createElement('img');
+        img.classList.add('show-image');
+        img.alt = `${show.title} poster`;
+        img.src = tmdbPosterUrl;
+        showImageContainer.appendChild(img);
+      } else {
+        showImageContainer.innerHTML = '<div class="poster-error">Poster not available</div>';
+      }
+    });
+
+    return showCard;
+  }
+});
