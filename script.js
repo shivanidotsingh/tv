@@ -148,25 +148,29 @@ document.addEventListener('DOMContentLoaded', function () {
     showsContainer.appendChild(grid);
   }
 
-  async function fetchTmdbPosterUrl(showTitle, showYear) {
-    if (!tmdbImageBaseUrl) return null;
+async function fetchPosterUrl(showTitle, showYear) {
+  // ---- 1) Try TMDB first ----
+  const tmdbUrl = await fetchTmdbPosterUrl(showTitle, showYear);
+  if (tmdbUrl) return tmdbUrl;
 
-    let q = `${TMDB_BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(showTitle)}`;
+  // ---- 2) Fallback to TVmaze ----
+  return await fetchTvmazePosterUrl(showTitle);
+}
 
-    const yearMatch = String(showYear || '').match(/^(\d{4})/);
-    if (yearMatch?.[1]) q += `&first_air_date_year=${yearMatch[1]}`;
+async function fetchTvmazePosterUrl(showTitle) {
+  const url = `https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(showTitle)}`;
 
-    try {
-      const res = await fetch(q);
-      const data = await res.json();
-      const first = data?.results?.[0];
-      if (first?.poster_path) return tmdbImageBaseUrl + tmdbImageSize + first.poster_path;
-      return null;
-    } catch (e) {
-      console.warn(`TMDB poster fetch failed for ${showTitle}`, e);
-      return null;
-    }
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data?.image?.original || data?.image?.medium || null;
+  } catch (e) {
+    console.warn('TVmaze poster fetch failed:', showTitle, e);
+    return null;
   }
+}
+
 
   function createShowCard(show, region) {
     const card = document.createElement('div');
@@ -211,18 +215,19 @@ document.addEventListener('DOMContentLoaded', function () {
     card.appendChild(imgWrap);
     card.appendChild(info);
 
-    fetchTmdbPosterUrl(show.title, show.year).then((url) => {
-      imgWrap.innerHTML = '';
-      if (url) {
-        const img = document.createElement('img');
-        img.classList.add('show-image');
-        img.alt = `${show.title} poster`;
-        img.src = url;
-        imgWrap.appendChild(img);
-      } else {
-        imgWrap.innerHTML = '<div class="poster-error">Poster not available</div>';
-      }
-    });
+    fetchPosterUrl(show.title, show.year).then((posterUrl) => {
+  showImageContainer.innerHTML = '';
+  if (posterUrl) {
+    const img = document.createElement('img');
+    img.classList.add('show-image');
+    img.alt = `${show.title} poster`;
+    img.src = posterUrl;
+    showImageContainer.appendChild(img);
+  } else {
+    showImageContainer.innerHTML = '<div class="poster-error">Poster not available</div>';
+  }
+});
+
 
     return card;
   }
