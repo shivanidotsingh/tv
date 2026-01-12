@@ -10,88 +10,95 @@
 
 <body>
   <header>
-    <h3>shivi's television show database</h3>
-    <p>series which I have either completed, or consumed more than half of its total released content.</p>
+    <div class="header-top">
+      <div class="title-wrap">
+        <div>
+          <h3>shivi's television show database</h3>
+          <p>series which I have either completed, or consumed more than half of its total released content.</p>
+        </div>
 
-<div class="filter-container">
-  <!-- Search: its own line -->
-  <div id="search-row" class="filter-group">
-    <input type="text" id="search" placeholder="Search shows..." />
-  </div>
-
-  <!-- Everything else: one row -->
-  <div id="controls-row">
-    <div id="region-filter-group" class="filter-group">
-      <label for="region-filter">Region:</label>
-      <select id="region-filter">
-        <option value="all">All Regions</option>
-      </select>
-    </div>
-
-    <div id="sort-filter-group" class="filter-group">
-      <label for="sort-select">Sort by:</label>
-      <select id="sort-select">
-        <option value="year">Year</option>
-        <option value="title">Title</option>
-      </select>
-    </div>
-
-    <div id="filter-by-group" class="filter-group">
-      <label>Filter:</label>
-      <div class="checkbox-filters">
-        <label class="filter-chip">
-          <input type="checkbox" id="book-filter">
-          <span class="chip-text">Based on a Book</span>
-        </label>
-
-        <label class="filter-chip">
-          <input type="checkbox" id="supernatural-filter">
-          <span class="chip-text">SciFi or Supernatural</span>
-        </label>
-
-        <label class="filter-chip">
-          <input type="checkbox" id="period-filter">
-          <span class="chip-text">Period Pieces</span>
-        </label>
-
-        <label class="filter-chip">
-          <input type="checkbox" id="scandi-filter">
-          <span class="chip-text">Scandinavian</span>
-        </label>
-
-        <label class="filter-chip">
-          <input type="checkbox" id="mini-filter">
-          <span class="chip-text">Mini-series</span>
-        </label>
-
-        <label class="filter-chip">
-          <input type="checkbox" id="animated-filter">
-          <span class="chip-text">Animated</span>
-        </label>
-
-        <label class="filter-chip">
-          <input type="checkbox" id="therapist-filter">
-          <span class="chip-text">Features a Therapist</span>
-        </label>
-
-        <label class="filter-chip">
-          <input type="checkbox" id="pwd-filter">
-          <span class="chip-text">Features person with disability</span>
-        </label>
-
-        <label class="filter-chip">
-          <input type="checkbox" id="gem-filter">
-          <span class="chip-text">💎</span>
-        </label>
+        <!-- Sort toggle (top-right) -->
+        <div class="sort-toggle" aria-label="Sort toggle">
+          <button type="button" class="sort-chip is-active" data-sort="year">Chronological</button>
+          <button type="button" class="sort-chip" data-sort="title">Alphabetical</button>
+          <!-- keep the real select for JS compatibility (hidden) -->
+          <select id="sort-select" aria-hidden="true" tabindex="-1">
+            <option value="year" selected>Year</option>
+            <option value="title">Title</option>
+          </select>
+        </div>
       </div>
     </div>
 
-    <button id="reset-filters" type="button">Reset</button>
-  </div>
-</div>
+    <!-- Filters row (NO search here) -->
+    <div class="filter-container">
+      <div id="controls-row">
+        <div id="region-filter-group" class="filter-group">
+          <label for="region-filter">Region:</label>
+          <select id="region-filter">
+            <option value="all">All Regions</option>
+          </select>
+        </div>
 
+        <div id="filter-by-group" class="filter-group">
+          <label>Filter:</label>
+          <div class="checkbox-filters">
+            <label class="filter-chip">
+              <input type="checkbox" id="book-filter">
+              <span class="chip-text">Based on a Book</span>
+            </label>
 
+            <label class="filter-chip">
+              <input type="checkbox" id="supernatural-filter">
+              <span class="chip-text">SciFi / Supernatural</span>
+            </label>
+
+            <label class="filter-chip">
+              <input type="checkbox" id="period-filter">
+              <span class="chip-text">Period</span>
+            </label>
+
+            <label class="filter-chip">
+              <input type="checkbox" id="scandi-filter">
+              <span class="chip-text">Scandi</span>
+            </label>
+
+            <label class="filter-chip">
+              <input type="checkbox" id="mini-filter">
+              <span class="chip-text">Mini-series</span>
+            </label>
+
+            <label class="filter-chip">
+              <input type="checkbox" id="animated-filter">
+              <span class="chip-text">Animated</span>
+            </label>
+
+            <label class="filter-chip">
+              <input type="checkbox" id="therapist-filter">
+              <span class="chip-text">Therapist</span>
+            </label>
+
+            <label class="filter-chip">
+              <input type="checkbox" id="pwd-filter">
+              <span class="chip-text">Disability</span>
+            </label>
+
+            <label class="filter-chip">
+              <input type="checkbox" id="gem-filter">
+              <span class="chip-text">💎</span>
+            </label>
+
+            <button id="reset-filters" type="button">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </header>
+
+  <!-- Search belongs to content (top of main) -->
+  <div class="content-controls">
+    <input type="text" id="search" placeholder="Search shows..." />
+  </div>
 
   <main id="shows-container">
     <div class="loading">Loading your collection...</div>
@@ -99,5 +106,23 @@
 
   <script src="data.js"></script>
   <script src="script.js"></script>
+
+  <!-- tiny helper for the sort toggle -->
+  <script>
+    (function () {
+      const select = document.getElementById('sort-select');
+      const chips = document.querySelectorAll('.sort-chip');
+
+      function setActive(value) {
+        chips.forEach(btn => btn.classList.toggle('is-active', btn.dataset.sort === value));
+        select.value = value;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+
+      chips.forEach(btn => {
+        btn.addEventListener('click', () => setActive(btn.dataset.sort));
+      });
+    })();
+  </script>
 </body>
 </html>
