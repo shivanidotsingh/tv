@@ -13,82 +13,82 @@
     <h3>shivi's television show database</h3>
     <p>series which I have either completed, or consumed more than half of its total released content.</p>
 
-    <div class="filter-container">
-      <div id="region-search-sort-group">
-        <div id="region-filter-group" class="filter-group">
-          <label for="region-filter">Region:</label>
-          <select id="region-filter">
-            <option value="all">All Regions</option>
-          </select>
-        </div>
-
-        <div id="sort-filter-group" class="filter-group">
-          <label for="sort-select">Sort by:</label>
-          <select id="sort-select">
-            <option value="year">Year</option>
-            <option value="title">Title</option>
-          </select>
-        </div>
-
-        <div id="search-filter-group" class="filter-group">
-          <label for="search">Search:</label>
-          <input type="text" id="search" placeholder="Search shows..." />
-        </div>
-      </div>
-
-      <div id="filter-by-group" class="filter-group">
-        <label>Filter:</label>
-
-        <div class="checkbox-filters">
-          <label class="filter-chip">
-            <input type="checkbox" id="book-filter" />
-            <span class="chip-text">Based on a Book</span>
-          </label>
-
-          <label class="filter-chip">
-            <input type="checkbox" id="supernatural-filter" />
-            <span class="chip-text">SciFi or Supernatural</span>
-          </label>
-
-          <label class="filter-chip">
-            <input type="checkbox" id="period-filter" />
-            <span class="chip-text">Period Pieces</span>
-          </label>
-
-          <label class="filter-chip">
-            <input type="checkbox" id="scandi-filter" />
-            <span class="chip-text">Scandinavian</span>
-          </label>
-
-          <label class="filter-chip">
-            <input type="checkbox" id="mini-filter" />
-            <span class="chip-text">Mini-series</span>
-          </label>
-
-          <label class="filter-chip">
-            <input type="checkbox" id="animated-filter" />
-            <span class="chip-text">Animated</span>
-          </label>
-
-          <label class="filter-chip">
-            <input type="checkbox" id="therapist-filter" />
-            <span class="chip-text">Features a Therapist</span>
-          </label>
-
-          <label class="filter-chip">
-            <input type="checkbox" id="pwd-filter" />
-            <span class="chip-text">Person with disability</span>
-          </label>
-
-          <label class="filter-chip">
-            <input type="checkbox" id="gem-filter" />
-            <span class="chip-text">💎</span>
-          </label>
-        </div>
-      </div>
-
-      <button id="reset-filters" type="button">Reset Filters</button>
+<div class="filter-container">
+  <div id="region-search-sort-group">
+    <div id="region-filter-group" class="filter-group">
+      <label for="region-filter">Region:</label>
+      <select id="region-filter">
+        <option value="all">All Regions</option>
+      </select>
     </div>
+
+    <div id="sort-filter-group" class="filter-group">
+      <label for="sort-select">Sort by:</label>
+      <select id="sort-select">
+        <option value="year">Year</option>
+        <option value="title">Title</option>
+      </select>
+    </div>
+
+    <div id="search-filter-group" class="filter-group">
+      <label for="search">Search:</label>
+      <input type="text" id="search" placeholder="Search shows...">
+    </div>
+  </div>
+
+  <div id="filter-by-group" class="filter-group">
+    <label>Filter:</label>
+
+    <div class="checkbox-filters">
+      <label class="filter-chip">
+        <input type="checkbox" id="book-filter">
+        <span class="chip-text">Based on a Book</span>
+      </label>
+
+      <label class="filter-chip">
+        <input type="checkbox" id="supernatural-filter">
+        <span class="chip-text">SciFi or Supernatural</span>
+      </label>
+
+      <label class="filter-chip">
+        <input type="checkbox" id="period-filter">
+        <span class="chip-text">Period Pieces</span>
+      </label>
+
+      <label class="filter-chip">
+        <input type="checkbox" id="scandi-filter">
+        <span class="chip-text">Scandinavian</span>
+      </label>
+
+      <label class="filter-chip">
+        <input type="checkbox" id="mini-filter">
+        <span class="chip-text">Mini-series</span>
+      </label>
+
+      <label class="filter-chip">
+        <input type="checkbox" id="animated-filter">
+        <span class="chip-text">Animated</span>
+      </label>
+
+      <label class="filter-chip">
+        <input type="checkbox" id="therapist-filter">
+        <span class="chip-text">Features a Therapist</span>
+      </label>
+
+      <label class="filter-chip">
+        <input type="checkbox" id="pwd-filter">
+        <span class="chip-text">Features person with disability</span>
+      </label>
+
+      <label class="filter-chip">
+        <input type="checkbox" id="gem-filter">
+        <span class="chip-text">💎</span>
+      </label>
+      <button id="reset-filters" type="button">Reset</button>
+    </div>
+  </div>
+</div>
+
   </header>
 
   <main id="shows-container">
