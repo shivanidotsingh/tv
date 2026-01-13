@@ -193,7 +193,7 @@ const tvShowsData = {
         { title: "The Four Seasons", tags: [], year: "2025" },
         { title: "Overcompensating", tags: [], year: "2025" },
         { title: "Eric", tags: ["mini", "period"], year: "2024" },
-        { title: "All Her Fault", tags: [], year: "2025–present" },
+        { title: "All Her Fault", tags: ["book"], year: "2025–present" },
         { title: "The Beast in Me", tags: ["mini"], year: "2025" },
         { title: "Couples Therapy", tags: ["docu", "gem"], year: "2019–present" }
     ],
