@@ -71,16 +71,20 @@ header p{
 #controls-row{
   display: flex;
   flex-wrap: wrap;
-  align-items: center;          /* key */
+  align-items: flex-start;
   gap: var(--ui-gap) 16px;
 }
 
+
 .filter-group label{
   display: block;
+  height: 14px;
+  line-height: 14px;
   margin: 0 0 4px;
   font-size: var(--ui-font);
   color: var(--muted);
 }
+
 
 /* shared control base */
 #region-filter,
