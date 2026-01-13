@@ -182,7 +182,7 @@ const tvShowsData = {
         { title: "How I met your Mother", tags: ["essential"], year: "2005–2014"  },
         { title: "Friends", tags: ["essential"], year: "1994–2004"},
         { title: "One Tree Hill", tags: [], year: "2003–2012"  },
-        { title: "Don't Trust the B in Apt 23", tags: [], year: "2012–2014" },
+        { title: "Don't Trust the B---- in Apartment 23", tags: [], year: "2012–2014" },
         { title: "American Crime Story", tags: [], year: "2016–present" },
         { title: "Feud", tags: [], year: "2017–present" },
         { title: "The Sopranos", tags: ["essential", "therapist"], year: "1999–2007" },
