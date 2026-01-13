@@ -74,7 +74,6 @@ header p{margin:6px 0 0;font-size:13px;line-height:1.35;color:var(--muted);max-w
 .filter-chip input:checked + span{background:var(--ink);color:#fff;}
 .filter-chip:hover span{background:var(--chip-hover);}
 
-
 /* reset */
 #reset-filters{
   background:var(--ink);
