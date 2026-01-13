@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', function () {
     mini: document.getElementById('mini-filter'),
     animated: document.getElementById('animated-filter'),
     pwd: document.getElementById('pwd-filter'),
-    classic: document.getElementById('classic-filter'),
+    essential: document.getElementById('essential-filter'),
+    comedian: document.getElementById('comedian-filter'),
   };
 
   // Data check
