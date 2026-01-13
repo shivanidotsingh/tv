@@ -68,7 +68,7 @@ header p{margin:6px 0 0;font-size:13px;line-height:1.35;color:var(--muted);max-w
 
 /* filter chips */
 .checkbox-filters{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;}
-.filter-chip{position:relative;cursor:pointer;}
+.filter-chip{position:relative;cursor:pointer;display:inline-flex;}
 .filter-chip input{position:absolute;opacity:0;pointer-events:none;}
 .filter-chip span{background:var(--chip);color:var(--ink);}
 .filter-chip input:checked + span{background:var(--ink);color:#fff;}
