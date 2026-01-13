@@ -55,7 +55,7 @@ const tvShowsData = {
         { title: "Adolescence", tags: ["essential"], year: "2025" },
         { title: "Four Weddings & a Funeral", tags: ["mini"], year: "2019" },
         { title: "Dept. Q", tags: [], year: "2025" },
-        { title: "The Agency", tags: ["spy"], year: "2024" }
+        { title: "The Agency: Central Intelligence", tags: ["spy"], year: "2024—present" }
 
     ],
     "America — East": [
@@ -286,7 +286,7 @@ const tvShowsData = {
   
 "Australia/Canada": [
     { title: "Please Like Me", tags: ["gem", "comedian"], year: "2013–2016" },
-    { title: "Everything's gonna be okay", tags: ["gem"], year: "2020–2021" },
+    { title: "Everything's gonna be okay", tags: ["gem", "comedian"], year: "2020–2021" },
     { title: "Workin' Moms", tags: ["therapist"], year: "2017–present" },
     { title: "Why are you like this?", tags: [], year: "2021" },
     { title: "The Letdown", tags: [], year: "2016–2019" },
@@ -294,11 +294,11 @@ const tvShowsData = {
     { title: "No Tomorrow", tags: ["mini"], year: "2016" },
     { title: "Wellmania", tags: [], year: "2023" },
     { title: "Aftertaste", tags: [], year: "2021" },
-    { title: "Fisk", tags: [], year: "2021–present" },
+    { title: "Fisk", tags: ["comedian"], year: "2021–present" },
     { title: "The Survivors", tags: ["mini"], year: "2025" },
     { title: "Deadloch", tags: [], year: "2023" },
     { title: "Offspring", tags: [], year: "2010-2017" },
-    { title: "Heartbreak High (2022)", tags: ["gem"], year: "2022–present" },
+    { title: "Heartbreak High", tags: ["gem"], year: "2022–present" },
     { title: "Upload", tags: ["supernatural"], year: "2020–present" },
     { title: "Apple Cider Vinegar", tags: [ "mini"], year: "2025"},
     { title: "Orphan Black", tags: ["supernatural"], year: "2013–2017" },
@@ -331,7 +331,7 @@ const tvShowsData = {
     { title: "Taj Mahal 1989", tags: [], year: "2020" },
     { title: "Humorously Yours", tags: ["comedian"], year: "2016" },
     { title: "Mismatched", tags: ["pwd", "book"], year: "2020–present" },
-    { title: "A Suitable Boy", tags: ["period"], year: "2020" },
+    { title: "A Suitable Boy", tags: ["period", "book"], year: "2020" },
     { title: "Pitchers", tags: [], year: "2015–present" },
     { title: "Little Things", tags: [], year: "2016–present" },
     { title: "Bhaag Beanie Bhaag", tags: [], year: "2020–present" },
@@ -402,6 +402,7 @@ const tvShowsData = {
     { title: "Dupahiya", tags: [],  year: "2025–present" },
     { title: "Citadel Honey Bunny", tags: ["spy"],  year: "2024" },
     { title: "Waack Girls", tags: ["gem"],  year: "2024" },
+    { title: "Ziddi Girls", tags: [],  year: ""},
     { title: "The Royals", tags: [],  year: "2025" },
     { title: "Black, White & Gray", tags: [],  year: "2025–present" },
     { title: "Dabba Cartel", tags: [],  year: "2025–present" }
