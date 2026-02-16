@@ -1,6 +1,7 @@
 const tvShowsData = {
    "United Kingdom": [
         { title: "Fleabag", tags: ["essential"], year: "2016–2019"},
+        { title: "How to get to Heaven from Belfast", tags: [], year: "2025"},
         { title: "Too Much", tags: [], year: "2025"},
         { title: "The Crown", tags: ["period", "essential"], year: "2016–present"},
         { title: "Black Mirror", tags: ["supernatural"], year: "2011–present" },
@@ -308,6 +309,8 @@ const tvShowsData = {
 "India": [
     { title: "Made in Heaven", tags: [], year: "2019–present" },
     { title: "Gram Chikitsalay", tags: [], year:"2025" },
+    { title: "Taskaree", tags: [], year:"2025" },
+    { title: "Bandwaale", tags: [], year:"2025" },
     { title: "Perfect फैमिली", tags: ["therapist"], year:"2025" },
     { title: "Gullak", tags: [], year:"2019—present" },
     { title: "Search: The Naina Murder Case", tags: [], year:"2025" },
