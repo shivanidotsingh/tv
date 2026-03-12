@@ -196,6 +196,7 @@ const tvShowsData = {
         { title: "Eric", tags: ["mini", "period"], year: "2024" },
         { title: "All Her Fault", tags: ["book"], year: "2025–present" },
         { title: "The Beast in Me", tags: ["mini"], year: "2025" },
+        { title: "Vladimir", tags: [], year: "2026" },
         { title: "Couples Therapy", tags: ["docu", "gem"], year: "2019–present" }
     ],
 
