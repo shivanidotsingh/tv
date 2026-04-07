@@ -197,7 +197,7 @@ const tvShowsData = {
         { title: "Eric", tags: ["mini", "period"], year: "2024" },
         { title: "All Her Fault", tags: ["book"], year: "2025–present" },
         { title: "The Beast in Me", tags: ["mini"], year: "2025" },
-        { title: "Vladimir", tags: [], year: "2026" },
+        { title: "Vladimir", tags: ["book"], year: "2026" },
         { title: "Couples Therapy", tags: ["docu", "gem"], year: "2019–present" }
     ],
 
@@ -312,7 +312,7 @@ const tvShowsData = {
     { title: "Made in Heaven", tags: [], year: "2019–present" },
     { title: "Gram Chikitsalay", tags: [], year:"2025" },
     { title: "Taskaree: The Smuggler's Web", tags: [], year:"2026" },
-    { title: "Bandwaale", tags: [], year:"2025" },
+    { title: "Bandwaale", tags: [], year:"2026" },
     { title: "Perfect फैमिली", tags: ["therapist"], year:"2025" },
     { title: "Gullak", tags: [], year:"2019—present" },
     { title: "Search: The Naina Murder Case", tags: [], year:"2025" },
@@ -406,7 +406,7 @@ const tvShowsData = {
     { title: "Dupahiya", tags: [],  year: "2025–present" },
     { title: "Citadel Honey Bunny", tags: ["spy"],  year: "2024" },
     { title: "Waack Girls", tags: ["gem"],  year: "2024" },
-    { title: "Ziddi Girls", tags: [],  year: ""},
+    { title: "Ziddi Girls", tags: [],  year: "2025"},
     { title: "The Royals", tags: [],  year: "2025" },
     { title: "Black, White & Gray", tags: [],  year: "2025–present" },
     { title: "Dabba Cartel", tags: [],  year: "2025–present" }
