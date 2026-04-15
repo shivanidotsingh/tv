@@ -65,6 +65,7 @@ const tvShowsData = {
         { title: "Broad City", tags: ["essential", "comedian"], year: "2014–2019" },
         { title: "Something Very Bad Is Going to Happen", tags: [""], year: "2026" },
         { title: "Elsbeth", tags: [], year: "2024-Present" },
+        { title: "Your Friends and Neighbours", tags: [], year: "2025-Present" },
         { title: "Big Mistakes", tags: [], year: "2026" },
         { title: "High Maintenance", tags: ["gem"], year: "2016–2020" },
         { title: "Girls", tags: [], year: "2012–2017" },
