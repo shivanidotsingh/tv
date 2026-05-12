@@ -200,12 +200,14 @@ const tvShowsData = {
         { title: "All Her Fault", tags: ["book"], year: "2025–present" },
         { title: "The Beast in Me", tags: ["mini"], year: "2025" },
         { title: "Vladimir", tags: ["book"], year: "2026" },
+        { title: "Rooster", tags: [], year: "2026" },
         { title: "Couples Therapy", tags: ["docu", "gem"], year: "2019–present" }
     ],
 
  "America — West": [
     { title: "I'm Sorry", tags: ["comedian"], year: "2017–2019" },
     { title: "Platonic", tags: ["comedian", "gem"], year: "2023–present" },
+    { title: "Physical", tags: ["period"], year: "2021–2023" },
     { title: "Insecure", tags: [], year: "2016–2021" },
     { title: "The Studio", tags: ["comedian"], year: "2025" },
     { title: "New Girl", tags: ["essential"], year: "2011–2018" },
