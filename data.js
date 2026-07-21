@@ -150,6 +150,7 @@ const tvShowsData = {
         { title: "Masters of Sex", tags: ["book", "period"], year: "2013–2016" },
         { title: "Marvelous Mrs Maisel", tags: ["period"], year: "2017–2023" },
         { title: "Handmaid's Tale", tags: ["period"], year: "2017–present" },
+       { title: "The Testaments", tags: ["period"], year: "2026" },
         { title: "The Good Place", tags: ["supernatural", "essential"], year: "2016–2020" },
         { title: "The Leftovers", tags: ["supernatural"], year: "2014–2017" },
         { title: "Russian Doll", tags: ["supernatural"], year: "2019–present" },
