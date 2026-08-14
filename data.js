@@ -94,6 +94,7 @@ const tvShowsData = {
         { title: "Homecoming", tags: ["therapist"], year: "2018–2020" },
         { title: "About a boy", tags: [], year: "2014–2015" },
         { title: "Good Girls", tags: [], year: "2018–2021" },
+        { title: "The Five-Star Weekend", tags: ["book"], year: "2026" },
         { title: "How to get away with murder", tags: [], year: "2014–2020" },
         { title: "13 Reasons Why", tags: ["therapist", "book"], year: "2017–2020" },
         { title: "Gypsy", tags: ["therapist"], year: "2017" },
