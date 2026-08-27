@@ -320,7 +320,7 @@ const tvShowsData = {
     { title: "Gram Chikitsalay", tags: [], year:"2025" },
     { title: "Taskaree: The Smuggler's Web", tags: [], year:"2026" },
     { title: "Bandwaale", tags: [], year:"2026" },
-    { title: "Perfect फैमिली", tags: ["therapist"], year:"2025" },
+    { title: "Perfect Family", tags: ["therapist"], year:"2025" },
     { title: "Gullak", tags: [], year:"2019—present" },
     { title: "Search: The Naina Murder Case", tags: [], year:"2025" },
     { title: "The Ba***ds of Bollywood", tags: [], year:"2025" },
