@@ -15,19 +15,16 @@
         <div>
           <h3>shivi's television show database</h3>
           <p>series I've completed or watched at least halfway through.</p>
-        </div>      
-
+        </div>
       </div>
     </div>
 
-    <!-- Filters row (NO search here) -->
+    <!-- Search + filters row -->
     <div class="filter-container">
       <div id="controls-row">
-        <div id="region-filter-group" class="filter-group">
-          <label for="region-filter">Region:</label>
-          <select id="region-filter">
-            <option value="all">All Regions</option>
-          </select>
+        <div id="search-group" class="filter-group">
+          <label for="search">Search:</label>
+          <input type="text" id="search" placeholder="search shows..." />
         </div>
 
         <div id="filter-by-group" class="filter-group">
@@ -72,45 +69,43 @@
               <input type="checkbox" id="pwd-filter">
               <span class="chip-text">Includes Person with Disability</span>
             </label>
-            
+
             <label class="filter-chip">
               <input type="checkbox" id="comedian-filter">
               <span class="chip-text">Comedian</span>
             </label>
-            
+
             <label class="filter-chip">
               <input type="checkbox" id="essential-filter">
               <span class="chip-text">Essential</span>
             </label>
-            
+
             <label class="filter-chip">
               <input type="checkbox" id="gem-filter">
               <span class="chip-text">💎</span>
             </label>
-
-            
-
-            <button id="reset-filters" type="button">Clear Filters</button>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Search -->
+  <!-- Region (left) + sort (right) -->
   <div class="content-controls">
-    <input type="text" id="search" placeholder="search shows..." />
+    <div id="region-filter-group" class="filter-group">
+      <label for="region-filter">Region:</label>
+      <select id="region-filter">
+        <option value="all">All Regions</option>
+      </select>
+    </div>
 
-      <div class="sort-toggle">
-      <label class="sort-toggle" aria-label="Sort toggle">
-        <input id="sort-toggle" type="checkbox">
-        <div class="sort-switch">
-          <div class="sort-option left">Chronological</div>
+    <label class="sort-toggle" aria-label="Sort toggle">
+      <input id="sort-toggle" type="checkbox">
+      <div class="sort-switch">
+        <div class="sort-option left">Chronological</div>
         <div class="sort-option right">Alphabetical</div>
-        </div>
-        </label>
       </div>
-    
+    </label>
   </div>
 
   <main id="shows-container">
@@ -119,23 +114,5 @@
 
   <script src="data.js"></script>
   <script src="script.js"></script>
-
-  <!-- tiny helper for the sort toggle -->
-  <script>
-    (function () {
-      const select = document.getElementById('sort-select');
-      const chips = document.querySelectorAll('.sort-chip');
-
-      function setActive(value) {
-        chips.forEach(btn => btn.classList.toggle('is-active', btn.dataset.sort === value));
-        select.value = value;
-        select.dispatchEvent(new Event('change', { bubbles: true }));
-      }
-
-      chips.forEach(btn => {
-        btn.addEventListener('click', () => setActive(btn.dataset.sort));
-      });
-    })();
-  </script>
 </body>
 </html>
