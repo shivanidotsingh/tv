@@ -63,6 +63,7 @@ const tvShowsData = {
         { title: "Brooklyn Nine Nine", tags: ["essential", "comedian"], year: "2013–2021" },
         { title: "Broad City", tags: ["essential", "comedian"], year: "2014–2019" },
         { title: "Something Very Bad Is Going to Happen", tags: [""], year: "2026" },
+        { title: "Adults", tags: [""], year: "2025-Present" },
         { title: "Elsbeth", tags: [], year: "2024-Present" },
         { title: "Your Friends and Neighbours", tags: [], year: "2025-Present" },
         { title: "Big Mistakes", tags: [], year: "2026" },
